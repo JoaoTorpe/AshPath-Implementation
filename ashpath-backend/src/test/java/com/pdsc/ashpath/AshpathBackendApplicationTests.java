@@ -1,4 +1,4 @@
-package com.pdsc.ashpath_backend;
+package com.pdsc.ashpath;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

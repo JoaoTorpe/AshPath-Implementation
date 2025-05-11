@@ -1,4 +1,4 @@
-package com.pdsc.ashpath_backend.entity;
+package com.pdsc.ashpath.domain.enums;
 
 public enum UserRole {
   ADMIN,
