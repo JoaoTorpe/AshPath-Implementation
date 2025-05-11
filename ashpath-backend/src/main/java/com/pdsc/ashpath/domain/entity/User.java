@@ -4,16 +4,26 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 import com.pdsc.ashpath.domain.enums.UserRole;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "APP_USER")
+@NoArgsConstructor
+@Getter
+@Setter
 public class User {
 
     @Id
@@ -23,6 +33,9 @@ public class User {
 
     @Column(name = "APP_USER_EMAIL", length = 50, nullable = false)
     private String email;
+
+    @Column(name = "APP_USER_PASSWORD", length = 50, nullable = false)
+    private String password;
 
     @Column(name = "APP_USER_FULL_NAME", length = 100, nullable = false)
     private String fullName;
@@ -37,53 +50,21 @@ public class User {
     @Column(name = "APP_USER_ROLE", nullable = false)
     private UserRole userRole;
 
-    public Long getId() {
-        return id;
+    public User(
+        String email,
+        String password,
+        String fullName,
+        LocalDateTime registrationDate,
+        LocalDateTime lastActivityDate,
+        UserRole userRole
+    ) {
+        setEmail(email);
+        setPassword(password);
+        setFullName(fullName);
+        setRegistrationDate(registrationDate);
+        setLastActivityDate(lastActivityDate);
+        setUserRole(userRole);
     }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public LocalDateTime getRegistrationDate() {
-        return registrationDate;
-    }
-
-    public void setRegistrationDate(LocalDateTime registrationDate) {
-        this.registrationDate = registrationDate;
-    }
-
-    public LocalDateTime getLastActivityDate() {
-        return lastActivityDate;
-    }
-
-    public void setLastActivityDate(LocalDateTime lastActivityDate) {
-        this.lastActivityDate = lastActivityDate;
-    }
-
-    public UserRole getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(UserRole userRole) {
-        this.userRole = userRole;
-    }    
 
     @Override
     public int hashCode() {
