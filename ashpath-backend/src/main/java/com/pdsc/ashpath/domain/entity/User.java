@@ -13,28 +13,28 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "app_user")
+@Table(name = "APP_USER")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "APP_USER_ID")
     private Long id;
 
-    @Column(name = "email", length = 50, nullable = false)
+    @Column(name = "APP_USER_EMAIL", length = 50, nullable = false)
     private String email;
 
-    @Column(name = "fullname", length = 100, nullable = false)
+    @Column(name = "APP_USER_FULL_NAME", length = 100, nullable = false)
     private String fullName;
 
-    @Column(name = "registrationDate", columnDefinition = "TIMESTAMP")
+    @Column(name = "APP_USER_REGISTRATION_DATE", columnDefinition = "TIMESTAMP")
     private LocalDateTime registrationDate;
 
-    @Column(name = "lastActivityDate", columnDefinition = "TIMESTAMP")
+    @Column(name = "APP_USER_LAST_ACTIVE_DATE", columnDefinition = "TIMESTAMP")
     private LocalDateTime lastActivityDate;
 
     @Enumerated
-    @Column(name = "userRole", nullable = false)
+    @Column(name = "APP_USER_ROLE", nullable = false)
     private UserRole userRole;
 
     public Long getId() {
