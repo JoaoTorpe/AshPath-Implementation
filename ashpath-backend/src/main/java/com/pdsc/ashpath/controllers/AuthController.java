@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pdsc.ashpath.domain.entity.User;
-import com.pdsc.ashpath.dto.request.LoginRequest;
+import com.pdsc.ashpath.domain.dto.request.LoginRequest;
 import com.pdsc.ashpath.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
