@@ -53,6 +53,8 @@ public class User
     inverseJoinColumns = @JoinColumn(name = "Role_App_Id")
   )
   private Set<AppRole> appRoleSet = new HashSet<>();
+  @Column(name = "SPECIALIZATION")
+  private String specialization;
 
   @OneToMany(mappedBy = "necrotomist")
   private Set<CremationQueue> cremationQueueSet = new HashSet<>();

@@ -3,12 +3,8 @@ package com.pdsc.ashpath.domain.entity;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import com.pdsc.ashpath.domain.enums.CremationStatus;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -35,9 +31,9 @@ public class CremationQueue
   @Column(name = "EnteredDate", columnDefinition = "DATE")
   private LocalDate enteredDate;
 
-  @Enumerated(EnumType.STRING)
-  @Column(name = "Status", nullable = false)
-  private CremationStatus status;
+
+  @Column(name = "CREMATION_COMPLETED")
+  private Boolean completed;
 
   @OneToOne
   @JoinColumn(name = "Deceased_Id")

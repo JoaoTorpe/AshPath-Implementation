@@ -1,8 +1,9 @@
 package com.pdsc.ashpath.controllers;
 
 import java.io.IOException;
-import java.util.Optional;
+import java.util.Objects;
 
+import com.pdsc.ashpath.domain.service.DeceasedService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,12 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.pdsc.ashpath.domain.entity.Deceased;
 import com.pdsc.ashpath.domain.dto.request.CreateDeceasedRequest;
 import com.pdsc.ashpath.domain.dto.response.DeceasedResponse;
-import com.pdsc.ashpath.repository.DeceasedRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,63 +27,41 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class DeceasedController
 {
-
-  private final DeceasedRepository deceasedRepository;
+  private final DeceasedService deceasedService;
 
   @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-  public ResponseEntity<Void> createDeceased(
+  public ResponseEntity<?> createDeceased(
     @RequestPart(name = "deceasedData") CreateDeceasedRequest request,
     @RequestPart(name = "deceasedDeathCertificate") MultipartFile deathCertificateFile
-  ) throws IOException {
+  ){
+      try {
+          deceasedService.createDeceased(request,deathCertificateFile);
+      } catch (IOException e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+      }
 
-    Deceased deceased = new Deceased();
-
-    deceased.setFullname(request.getFullname());
-    deceased.setBirthDate(request.getBirthDate());
-    deceased.setDeathDate(request.getDeathDate());
-    deceased.setCauseOfDeath(request.getCauseOfDeath());
-    deceased.setFatherName(request.getFatherName());
-    deceased.setMotherName(request.getMotherName());
-
-    deceased.setDeathCertificate(deathCertificateFile.getBytes());
-
-    deceasedRepository.save(deceased);
-
-    return ResponseEntity.status(HttpStatus.OK).build();
+      return ResponseEntity.status(HttpStatus.OK).build();
   }
 
   @GetMapping("/{deceasedId}")
   public ResponseEntity<DeceasedResponse> readDeceasedById(@PathVariable Long deceasedId)
   {
-    Optional<Deceased> optionalDeceased = deceasedRepository.findById(deceasedId);
+          DeceasedResponse response = deceasedService.readDeceasedById(deceasedId);
 
-    if (optionalDeceased.isPresent())
-    {
-        Deceased deceased = optionalDeceased.get();
-
-        String server = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
-        
-        DeceasedResponse deceasedResponse = new DeceasedResponse(deceased);
-        deceasedResponse.setDeathCertificateDownloadLink(server +"/deceased/"+ deceased.getId() +"/deathCertificate");
-
-        return ResponseEntity.status(HttpStatus.OK).body(deceasedResponse);
-    }
-
-    return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+  return Objects.isNull(response) ? ResponseEntity.status(HttpStatus.NOT_FOUND).build() :
+          ResponseEntity.status(HttpStatus.OK).body(response);
   }
 
   @GetMapping("/{deceasedId}/deathCertificate")
   public ResponseEntity<byte[]> readDeceasedDeathCertificate(@PathVariable Long deceasedId)
   {
-    Optional<Deceased> optionalDeceased = deceasedRepository.findById(deceasedId);
+    Deceased deceased = deceasedService.findById(deceasedId);
 
-    if (optionalDeceased.isPresent())
+    if (!Objects.isNull(deceased))
     {
-        Deceased deceased = optionalDeceased.get();
-
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"DeathCertificate.png\"")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"DeathCertificate.pdf\"")
                 .body(deceased.getDeathCertificate());
     }
 
