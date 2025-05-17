@@ -9,12 +9,14 @@ import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
 @Setter
-public class createDeceasedRequest {
-
-    private String fullname;
-    private String causeOfDeath;
-    private LocalDate birthDate;
-    private LocalDate deathDate;
+@Getter
+public class CreateDeceasedRequest
+{
+  private String fullname;
+  private LocalDate birthDate;
+  private LocalDate deathDate;
+  private String causeOfDeath;
+  private String fatherName;
+  private String motherName;
 }

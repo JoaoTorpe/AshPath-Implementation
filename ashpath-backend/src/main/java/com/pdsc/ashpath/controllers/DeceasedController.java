@@ -1,24 +1,23 @@
 package com.pdsc.ashpath.controllers;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
+import java.io.IOException;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.pdsc.ashpath.domain.entity.Deceased;
-import com.pdsc.ashpath.dto.request.createDeceasedRequest;
+import com.pdsc.ashpath.dto.request.CreateDeceasedRequest;
 import com.pdsc.ashpath.dto.response.DeceasedResponse;
 import com.pdsc.ashpath.repository.DeceasedRepository;
 
@@ -29,65 +28,67 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class DeceasedController
 {
-    private final DeceasedRepository deceasedRepository;
 
-    @PostMapping
-    public ResponseEntity<Void> createDeceased(@RequestBody createDeceasedRequest request)
+  private final DeceasedRepository deceasedRepository;
+
+  @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  public ResponseEntity<Void> createDeceased(
+    @RequestPart(name = "deceasedData") CreateDeceasedRequest request,
+    @RequestPart(name = "deceasedDeathCertificate") MultipartFile deathCertificateFile
+  ) throws IOException {
+
+    Deceased deceased = new Deceased();
+
+    deceased.setFullname(request.getFullname());
+    deceased.setBirthDate(request.getBirthDate());
+    deceased.setDeathDate(request.getDeathDate());
+    deceased.setCauseOfDeath(request.getCauseOfDeath());
+    deceased.setFatherName(request.getFatherName());
+    deceased.setMotherName(request.getMotherName());
+
+    deceased.setDeathCertificate(deathCertificateFile.getBytes());
+
+    deceasedRepository.save(deceased);
+
+    return ResponseEntity.status(HttpStatus.OK).build();
+  }
+
+  @GetMapping("/{deceasedId}")
+  public ResponseEntity<DeceasedResponse> readDeceasedById(@PathVariable Long deceasedId)
+  {
+    Optional<Deceased> optionalDeceased = deceasedRepository.findById(deceasedId);
+
+    if (optionalDeceased.isPresent())
     {
-        Deceased deceased = new Deceased();
+        Deceased deceased = optionalDeceased.get();
 
-        deceased.setFullname(request.getFullname());
-        deceased.setCauseOfDeath(request.getCauseOfDeath());
-        deceased.setBirthDate(request.getBirthDate());
-        deceased.setDeathDate(request.getDeathDate());
+        String server = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
+        
+        DeceasedResponse deceasedResponse = new DeceasedResponse(deceased);
+        deceasedResponse.setDeathCertificateDownloadLink(server +"/deceased/"+ deceased.getId() +"/deathCertificate");
 
-        deceasedRepository.save(deceased);
-
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body(deceasedResponse);
     }
 
-    @GetMapping("/{deceasedId}")
-    public ResponseEntity<DeceasedResponse> readDeceasedById(@PathVariable Long deceasedId)
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+  }
+
+  @GetMapping("/{deceasedId}/deathCertificate")
+  public ResponseEntity<byte[]> readDeceasedDeathCertificate(@PathVariable Long deceasedId)
+  {
+    Optional<Deceased> optionalDeceased = deceasedRepository.findById(deceasedId);
+
+    if (optionalDeceased.isPresent())
     {
-        Optional<Deceased> deceasedOptional = deceasedRepository.findById(deceasedId);
+        Deceased deceased = optionalDeceased.get();
 
-        if (deceasedOptional.isPresent())
-        {
-            Deceased deceased = deceasedOptional.get();
-            DeceasedResponse response = new DeceasedResponse(deceased);
-            return ResponseEntity.status(HttpStatus.OK).body(response);
-        }
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"DeathCertificate.png\"")
+                .body(deceased.getDeathCertificate());
     }
 
-    // You could also use this solution in the signature method: 
-    // @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start –   
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+  }
 
-    @GetMapping
-    public ResponseEntity<List<Deceased>> readAllDeceaseds(
-        @RequestParam(name = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
-        @RequestParam(name = "endDate"  , required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end
-    ) {
-        List<Deceased> deceaseds = deceasedRepository.findAll();
-
-        
-        if (start != null)
-        {
-            deceaseds = deceaseds
-                            .stream()
-                            .filter(deceased -> deceased.getDeathDate().isAfter(start))
-                            .collect(Collectors.toList());
-        }
-        
-        if (end != null)
-        {
-            deceaseds = deceaseds
-                            .stream()
-                            .filter(deceased -> deceased.getDeathDate().isBefore(end))
-                            .collect(Collectors.toList());
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(deceaseds);
-    }
 }

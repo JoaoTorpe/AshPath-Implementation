@@ -2,7 +2,6 @@ package com.pdsc.ashpath.controllers;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
@@ -11,17 +10,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pdsc.ashpath.domain.entity.Admin;
-import com.pdsc.ashpath.domain.entity.Necrotomist;
+import com.pdsc.ashpath.domain.entity.AppRole;
 import com.pdsc.ashpath.domain.entity.User;
-import com.pdsc.ashpath.domain.enums.UserRole;
-import com.pdsc.ashpath.dto.request.LoginRequest;
-import com.pdsc.ashpath.dto.request.createAdminUserRequest;
-import com.pdsc.ashpath.dto.request.createNecrotomistUserRequest;
-import com.pdsc.ashpath.repository.NecrotomistRepository;
+import com.pdsc.ashpath.domain.enums.UserAppRole;
+import com.pdsc.ashpath.dto.request.CreateAdminUserRequest;
+import com.pdsc.ashpath.dto.request.CreateNecrotomistRequest;
+import com.pdsc.ashpath.dto.response.NecrotomistUserResponse;
+import com.pdsc.ashpath.repository.AppRoleRepository;
 import com.pdsc.ashpath.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -29,80 +26,64 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
-public class UserController {
-    
-    private final UserRepository userRepository;
-    private final NecrotomistRepository necrotomistRepository;
+public class UserController
+{
+  private final UserRepository userRepository;
+  private final AppRoleRepository appRoleRepository;
 
-    @PostMapping("/admin")
-    public ResponseEntity<Void> createAdminUser(@RequestBody createAdminUserRequest request)
-    {
-        if (request.getEmail().isEmpty() || request.getFullname().isEmpty())
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+  @PostMapping("/admin")
+  public ResponseEntity<Void> createAdminUser(@RequestBody CreateAdminUserRequest request)
+  {
+    User user = new User();
 
-        Admin admin = new Admin();
+    user.setEmail(request.getEmail());
+    user.setPassword(request.getPassword());
+    user.setFullname(request.getFullname());
+    user.setRegistrationDate(LocalDateTime.now());
+    user.setLastActivityDate(LocalDateTime.now());
 
-        admin.setEmail(request.getEmail());
-        admin.setPassword(request.getPassword());
-        admin.setFullName(request.getFullname());
-        admin.setRegistrationDate(LocalDateTime.now());
-        admin.setLastActivityDate(LocalDateTime.now());
-        admin.setUserRole(UserRole.ADMIN);
+    user.addAppRole(appRoleRepository.findByName(UserAppRole.ADMIN).get());
 
-        userRepository.save(admin);
+    userRepository.save(user);
 
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
+    return ResponseEntity.status(HttpStatus.CREATED).build();
+  }
 
-    @PostMapping("/necrotomist")
-    public ResponseEntity<Void> createNecrotomistUser(@RequestBody createNecrotomistUserRequest request)
-    {
-        if (request.getEmail().isEmpty() || request.getFullname().isEmpty())
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        
-        Necrotomist necrotomist = new Necrotomist();
+  @PostMapping("/necrotomist")
+  public ResponseEntity<Void> createNecrotomistUser(@RequestBody CreateNecrotomistRequest request)
+  {
+    User user = new User();
 
-        necrotomist.setEmail(request.getEmail());
-        necrotomist.setPassword(request.getPassword());
-        necrotomist.setFullName(request.getFullname());
-        necrotomist.setRegistrationDate(LocalDateTime.now());
-        necrotomist.setLastActivityDate(LocalDateTime.now());
-        necrotomist.setUserRole(UserRole.NECROTOMIST);
-        necrotomist.setSpecialization(request.getSpecialization());
+    user.setEmail(request.getEmail());
+    user.setPassword(request.getPassword());
+    user.setFullname(request.getFullname());
+    user.setRegistrationDate(LocalDateTime.now());
+    user.setLastActivityDate(LocalDateTime.now());
 
-        userRepository.save(necrotomist);
+    user.addAppRole(appRoleRepository.findByName(UserAppRole.NECROTOMIST).get());
 
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
+    userRepository.save(user);
 
-    @GetMapping("/necrotomist")
-    public ResponseEntity<List<Necrotomist>> readAllNecrotomistUsers(@RequestParam(required = false) String specialization)
-    {
-        List<Necrotomist> necrotomists = necrotomistRepository.findAll();
+    return ResponseEntity.status(HttpStatus.CREATED).build();
+  }
 
-        if (specialization != null)
-        {
-            necrotomists = necrotomists
-                            .stream()
-                            .filter(necrotomist -> necrotomist.getSpecialization().toLowerCase().contains(specialization))
-                            .collect(Collectors.toList());
-        }
+  @GetMapping("/necrotomist")
+  public ResponseEntity<List<NecrotomistUserResponse>> readAllNecrotomistUsers()
+  {
+    List<User> users;
+    List<NecrotomistUserResponse> response;
+    AppRole necrotomistAppRole;
 
-        return ResponseEntity.status(HttpStatus.OK).body(necrotomists);
-    }
+    users = userRepository.findAll();
+    necrotomistAppRole = appRoleRepository.findByName(UserAppRole.NECROTOMIST).get();
 
-    @PostMapping("/login")
-    public ResponseEntity<Void> login(@RequestBody LoginRequest request)
-    {
-        Optional<User> user = userRepository.findByEmail(request.getEmail());
+    response = users
+      .stream()
+      .filter(user -> user.getAppRoleSet().contains(necrotomistAppRole))
+      .map(necrotomist -> new NecrotomistUserResponse(necrotomist))
+      .collect(Collectors.toList());
 
-        if (user.isPresent())
-        {
-            User retrievedUser = user.get();
-            if (retrievedUser.getPassword().equals(request.getPassword()))
-                return ResponseEntity.status(HttpStatus.OK).build();
-        }
+    return ResponseEntity.status(HttpStatus.OK).body(response);
+  }
 
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-    }
 }

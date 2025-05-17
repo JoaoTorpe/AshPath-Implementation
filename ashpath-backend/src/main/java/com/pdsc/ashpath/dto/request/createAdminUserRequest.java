@@ -9,9 +9,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class createAdminUserRequest {
-
-    private String email;
-    private String password;
-    private String fullname;
+public class CreateAdminUserRequest
+{
+  private String email;
+  private String password;
+  private String fullname;
 }

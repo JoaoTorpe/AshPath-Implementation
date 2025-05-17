@@ -1,41 +1,52 @@
 package com.pdsc.ashpath.domain.entity;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
+import com.pdsc.ashpath.domain.enums.UserAppRole;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "GRAVE")
-@NoArgsConstructor
+@Table(name = "APP_ROLE")
 @Getter
 @Setter
-public class Grave
+public class AppRole
 {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "Id")
   private Long id;
+  
+  @Enumerated(EnumType.STRING)
+  @Column(name = "Name", unique = true, nullable = false)
+  private UserAppRole name;
 
-  @Column(name = "Location", length = 128)
-  private String location;
+  @ManyToMany(mappedBy = "appRoleSet")
+  private Set<User> usersSet = new HashSet<>();
 
-  @OneToOne(mappedBy = "grave")
-  private Deceased deceased;
+  public void addUser(User user)
+  {
+    usersSet.add(user);
+    user.getAppRoleSet().add(this);
+  }
 
   @Override
   public int hashCode()
   {
-    int hash = 3;
-    hash = 11 * hash + Objects.hashCode(this.id);
+    int hash = 5;
+    hash = 97 * hash + Objects.hashCode(this.id);
     return hash;
   }
 
@@ -55,7 +66,7 @@ public class Grave
       return false;
     }
 
-    final Grave other = (Grave) obj;
+    final AppRole other = (AppRole) obj;
     return Objects.equals(this.id, other.id);
   }
 }

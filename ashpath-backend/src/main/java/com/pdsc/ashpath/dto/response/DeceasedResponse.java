@@ -13,20 +13,25 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class DeceasedResponse {
-
+public class DeceasedResponse
+{
   private Long id;
   private String fullname;
-  private String causeOfDeath;
   private LocalDate birthDate;
   private LocalDate deathDate;
+  private String causeOfDeath;
+  private String deathCertificateDownloadLink;
+  private String fatherName;
+  private String motherName;
 
   public DeceasedResponse(Deceased deceased)
   {
     setId(deceased.getId());
     setFullname(deceased.getFullname());
-    setCauseOfDeath(deceased.getCauseOfDeath());
     setBirthDate(deceased.getBirthDate());
     setDeathDate(deceased.getDeathDate());
+    setCauseOfDeath(deceased.getCauseOfDeath());
+    setFatherName(deceased.getFatherName());
+    setMotherName(deceased.getMotherName());
   }
 }

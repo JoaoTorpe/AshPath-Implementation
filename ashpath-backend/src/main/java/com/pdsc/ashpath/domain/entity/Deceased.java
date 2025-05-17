@@ -8,6 +8,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,62 +21,72 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Deceased {
+public class Deceased
+{
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "Id")
+  private Long id;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
-    private Long id;
+  @Column(name = "Fullname", length = 128)
+  private String fullname;
 
-    @Column(name = "FULLNAME", length = 100, nullable = false)
-    private String fullname;
+  @Column(name = "BirthDate", columnDefinition = "DATE")
+  private LocalDate birthDate;
 
-    @Column(name = "CAUSE_OF_DEATH", length = 255, nullable = false)
-    private String causeOfDeath;
+  @Column(name = "DeathDate", columnDefinition = "DATE")
+  private LocalDate deathDate;
 
-    @Column(name = "BIRTH_DATE", columnDefinition = "DATE")
-    private LocalDate birthDate;
+  @Column(name = "CauseOfDeath", length = 128)
+  private String causeOfDeath;
 
-    @Column(name = "DEATH_DATE", columnDefinition = "DATE")
-    private LocalDate deathDate;
+  @Lob
+  private byte[] deathCertificate;
 
-    public Deceased(
-        String fullname,
-        String causeOfDeath,
-        LocalDate birthDate,
-        LocalDate deathDate
-    ) {
-        setFullname(fullname);
-        setCauseOfDeath(causeOfDeath);
-        setBirthDate(birthDate);
-        setDeathDate(deathDate);
-    }
+  @Column(name = "FatherName", length = 128)
+  private String fatherName;
 
-    @Override
-    public int hashCode()
+  @Column(name = "MotherName", length = 128)
+  private String motherName;
+
+  @OneToOne
+  @JoinColumn(name = "GraveId", nullable = true)
+  private Grave grave;
+
+  @OneToOne(mappedBy = "deceased")
+  private CremationQueue cremationQueue;
+
+  @Override
+  public int hashCode()
+  {
+    int hash = 7;
+    hash = 79 * hash + Objects.hashCode(this.id);
+    return hash;
+  }
+
+  @Override
+  public boolean equals(Object obj)
+  {
+    if (this == obj)
     {
-        int hash = 5;
-        hash = 89 * hash + Objects.hashCode(this.id);
-        return hash;
+      return true;
     }
-
-    @Override
-    public boolean equals(Object obj)
+    if (obj == null)
     {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (getClass() != obj.getClass())
-        {
-            return false;
-        }
-
-        final Deceased other =(Deceased) obj;
-        return Objects.equals(this.id, other.id);
+      return false;
     }
+    if (getClass() != obj.getClass())
+    {
+      return false;
+    }
+
+    final Deceased other = (Deceased) obj;
+    return Objects.equals(this.id, other.id);
+  }
+
+  @Override
+  public String toString() {
+    return "Deceased [id=" + id + ", fullname=" + fullname + ", birthDate=" + birthDate + ", deathDate=" + deathDate
+        + ", fatherName=" + fatherName + ", motherName=" + motherName + "]";
+  }
 }

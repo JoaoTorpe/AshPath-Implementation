@@ -9,10 +9,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class createNecrotomistUserRequest {
-
-    private String email;
-    private String password;
-    private String fullname;
-    private String specialization;
+public class CreateNecrotomistRequest
+{
+  private String email;
+  private String password;
+  private String fullname;
 }
