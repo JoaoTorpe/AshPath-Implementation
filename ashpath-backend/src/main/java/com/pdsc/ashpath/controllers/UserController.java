@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pdsc.ashpath.domain.entity.AppRole;
 import com.pdsc.ashpath.domain.entity.User;
 import com.pdsc.ashpath.domain.enums.UserAppRole;
-import com.pdsc.ashpath.dto.request.CreateAdminUserRequest;
-import com.pdsc.ashpath.dto.request.CreateNecrotomistRequest;
-import com.pdsc.ashpath.dto.response.NecrotomistUserResponse;
+import com.pdsc.ashpath.domain.dto.request.CreateAdminUserRequest;
+import com.pdsc.ashpath.domain.dto.request.CreateNecrotomistRequest;
+import com.pdsc.ashpath.domain.dto.response.NecrotomistUserResponse;
 import com.pdsc.ashpath.repository.AppRoleRepository;
 import com.pdsc.ashpath.repository.UserRepository;
 

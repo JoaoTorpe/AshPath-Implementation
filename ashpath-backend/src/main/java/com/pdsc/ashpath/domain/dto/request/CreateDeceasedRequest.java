@@ -1,4 +1,4 @@
-package com.pdsc.ashpath.dto.request;
+package com.pdsc.ashpath.domain.dto.request;
 
 import java.time.LocalDate;
 

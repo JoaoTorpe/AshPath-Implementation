@@ -17,8 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.pdsc.ashpath.domain.entity.Deceased;
-import com.pdsc.ashpath.dto.request.CreateDeceasedRequest;
-import com.pdsc.ashpath.dto.response.DeceasedResponse;
+import com.pdsc.ashpath.domain.dto.request.CreateDeceasedRequest;
+import com.pdsc.ashpath.domain.dto.response.DeceasedResponse;
 import com.pdsc.ashpath.repository.DeceasedRepository;
 
 import lombok.RequiredArgsConstructor;
