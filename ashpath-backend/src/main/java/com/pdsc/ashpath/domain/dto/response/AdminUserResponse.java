@@ -13,22 +13,20 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class NecrotomistUserResponse
+public class AdminUserResponse
 {
   private Long id;
   private String email;
   private String fullname;
   private LocalDateTime registrationDate;
   private LocalDateTime lastActivityDate;
-  private String specialization;
 
-  public NecrotomistUserResponse(User user)
+  public AdminUserResponse(User user)
   {
     setId(user.getId());
     setEmail(user.getEmail());
     setFullname(user.getFullname());
     setRegistrationDate(user.getRegistrationDate());
     setLastActivityDate(user.getLastActivityDate());
-    setSpecialization(user.getSpecialization());
   }
 }

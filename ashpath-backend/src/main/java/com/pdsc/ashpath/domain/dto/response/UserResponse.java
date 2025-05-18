@@ -13,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class NecrotomistUserResponse
+public class UserResponse
 {
   private Long id;
   private String email;
@@ -22,7 +22,7 @@ public class NecrotomistUserResponse
   private LocalDateTime lastActivityDate;
   private String specialization;
 
-  public NecrotomistUserResponse(User user)
+  public UserResponse(User user)
   {
     setId(user.getId());
     setEmail(user.getEmail());

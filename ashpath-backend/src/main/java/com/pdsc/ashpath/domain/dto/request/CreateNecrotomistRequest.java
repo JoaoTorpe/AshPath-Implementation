@@ -14,4 +14,5 @@ public class CreateNecrotomistRequest
   private String email;
   private String password;
   private String fullname;
+  private String specialization;
 }

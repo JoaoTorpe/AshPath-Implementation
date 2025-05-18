@@ -3,7 +3,6 @@ package com.pdsc.ashpath.controllers;
 import java.io.IOException;
 import java.util.Objects;
 
-import com.pdsc.ashpath.domain.service.DeceasedService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,9 +15,10 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.pdsc.ashpath.domain.entity.Deceased;
 import com.pdsc.ashpath.domain.dto.request.CreateDeceasedRequest;
 import com.pdsc.ashpath.domain.dto.response.DeceasedResponse;
+import com.pdsc.ashpath.domain.entity.Deceased;
+import com.pdsc.ashpath.domain.service.DeceasedService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -34,22 +34,23 @@ public class DeceasedController
     @RequestPart(name = "deceasedData") CreateDeceasedRequest request,
     @RequestPart(name = "deceasedDeathCertificate") MultipartFile deathCertificateFile
   ){
-      try {
-          deceasedService.createDeceased(request,deathCertificateFile);
-      } catch (IOException e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-      }
+    try {
+      deceasedService.createDeceased(request,deathCertificateFile);
+    } catch (IOException e) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+    }
 
-      return ResponseEntity.status(HttpStatus.OK).build();
+    return ResponseEntity.status(HttpStatus.OK).build();
   }
 
   @GetMapping("/{deceasedId}")
   public ResponseEntity<DeceasedResponse> readDeceasedById(@PathVariable Long deceasedId)
   {
-          DeceasedResponse response = deceasedService.readDeceasedById(deceasedId);
+    DeceasedResponse response = deceasedService.readDeceasedById(deceasedId);
 
-  return Objects.isNull(response) ? ResponseEntity.status(HttpStatus.NOT_FOUND).build() :
-          ResponseEntity.status(HttpStatus.OK).body(response);
+    return Objects.isNull(response) ?
+      ResponseEntity.status(HttpStatus.NOT_FOUND).build() :
+      ResponseEntity.status(HttpStatus.OK).body(response);
   }
 
   @GetMapping("/{deceasedId}/deathCertificate")
