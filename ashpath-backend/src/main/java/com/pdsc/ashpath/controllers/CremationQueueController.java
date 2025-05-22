@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pdsc.ashpath.domain.dto.request.AddDeceasedToCremationQueueRequest;
 import com.pdsc.ashpath.domain.dto.request.CreateCremationQueueRequest;
 import com.pdsc.ashpath.domain.service.CremationQueueService;
 
@@ -24,5 +25,12 @@ public class CremationQueueController
   {
     cremationQueueService.createCremationQueue(request.getNecrotomistId());
     return ResponseEntity.status(HttpStatus.CREATED).build();
+  }
+
+  @PostMapping("/add_deceased")
+  public ResponseEntity<Void> addDeceasedToCremationQueue(@RequestBody AddDeceasedToCremationQueueRequest request)
+  {
+    cremationQueueService.addDeceasedToCremationQueue(request.getCremationQueueId(), request.getDeceasedId());
+    return ResponseEntity.status(HttpStatus.OK).build();
   }
 }

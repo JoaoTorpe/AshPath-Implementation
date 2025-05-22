@@ -6,8 +6,11 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.pdsc.ashpath.domain.entity.CremationQueue;
+import com.pdsc.ashpath.domain.entity.Deceased;
 import com.pdsc.ashpath.domain.entity.User;
+import com.pdsc.ashpath.domain.enums.DeceasedStatus;
 import com.pdsc.ashpath.repository.CremationQueueRepository;
+import com.pdsc.ashpath.repository.DeceasedRepository;
 import com.pdsc.ashpath.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -18,6 +21,7 @@ public class CremationQueueService
 {
   private final CremationQueueRepository cremationQueueRepository;
   private final UserRepository userRepository;
+  private final DeceasedRepository deceasedRepository;
 
   public void createCremationQueue(Long necrotomistId)
   {
@@ -30,6 +34,24 @@ public class CremationQueueService
 
       cremationQueue.setNecrotomist(necrotomist);
       cremationQueue.setCreationDate(LocalDateTime.now());
+
+      cremationQueueRepository.save(cremationQueue);
+    }
+  }
+
+  public void addDeceasedToCremationQueue(Long cremationQueueId, Long deceasedId)
+  {
+    Optional<CremationQueue> optionalCremationQueue = cremationQueueRepository.findById(cremationQueueId);
+    Optional<Deceased> optionalDeceased = deceasedRepository.findById(deceasedId);
+
+    if (optionalCremationQueue.isPresent() && optionalDeceased.isPresent())
+    {
+      CremationQueue cremationQueue = optionalCremationQueue.get();
+      Deceased deceased = optionalDeceased.get();
+
+      cremationQueue.addDeceased(deceased);
+      deceased.setStatus(DeceasedStatus.WAITING_CREMATION);
+      deceased.setCremationEnteredDate(LocalDateTime.now());
 
       cremationQueueRepository.save(cremationQueue);
     }
