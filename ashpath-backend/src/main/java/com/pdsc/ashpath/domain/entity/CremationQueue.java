@@ -1,6 +1,6 @@
 package com.pdsc.ashpath.domain.entity;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;
 
@@ -29,8 +29,8 @@ public class CremationQueue
   @Column(name = "Id")
   private Long id;
 
-  @Column(name = "EnteredDate", columnDefinition = "DATE")
-  private LocalDate creationDate;
+  @Column(name = "EnteredDate", columnDefinition = "TIMESTAMP")
+  private LocalDateTime creationDate;
 
   @ManyToOne
   @JoinColumn(name = "Necrotomist_Id")
