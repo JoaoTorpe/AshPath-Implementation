@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pdsc.ashpath.domain.dto.request.CreateAdminUserRequest;
@@ -63,6 +64,13 @@ public class UserController
   public ResponseEntity<List<NecrotomistUserResponse>> readAllNecrotomistUsers()
   {
     List<NecrotomistUserResponse> necrotomistUsers = userService.readAllNecrotomistUsers();
+    return ResponseEntity.status(HttpStatus.OK).body(necrotomistUsers);
+  }
+
+  @GetMapping("/necrotomist/filter")
+  public ResponseEntity<List<NecrotomistUserResponse>> readAllNecrotomistUsersBySpecialization(@RequestParam String specialization)
+  {
+    List<NecrotomistUserResponse> necrotomistUsers = userService.filterNecrotomistBySpecialization(specialization);
     return ResponseEntity.status(HttpStatus.OK).body(necrotomistUsers);
   }
 }
