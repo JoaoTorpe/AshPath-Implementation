@@ -56,4 +56,20 @@ public class CremationQueueService
       cremationQueueRepository.save(cremationQueue);
     }
   }
+
+  public void executeCremation(Long deceasedId)
+  {
+    Optional<Deceased> optionalDeceased = deceasedRepository.findById(deceasedId);
+
+    if (optionalDeceased.isPresent())
+    {
+      Deceased deceased = optionalDeceased.get();
+
+      if (deceased.getStatus() == DeceasedStatus.WAITING_CREMATION)
+      {
+        deceased.setStatus(DeceasedStatus.CREMATED);
+        deceasedRepository.save(deceased);
+      }
+    }
+  }
 }

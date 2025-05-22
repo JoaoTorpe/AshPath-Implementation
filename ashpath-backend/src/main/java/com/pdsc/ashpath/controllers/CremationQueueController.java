@@ -2,6 +2,7 @@ package com.pdsc.ashpath.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +32,13 @@ public class CremationQueueController
   public ResponseEntity<Void> addDeceasedToCremationQueue(@RequestBody AddDeceasedToCremationQueueRequest request)
   {
     cremationQueueService.addDeceasedToCremationQueue(request.getCremationQueueId(), request.getDeceasedId());
+    return ResponseEntity.status(HttpStatus.OK).build();
+  }
+
+  @PostMapping("/execute_cremation/{deceasedId}")
+  public ResponseEntity<Void> executeDeceasedCremation(@PathVariable Long deceasedId)
+  {
+    cremationQueueService.executeCremation(deceasedId);
     return ResponseEntity.status(HttpStatus.OK).build();
   }
 }
