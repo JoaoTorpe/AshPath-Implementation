@@ -2,6 +2,7 @@ package com.pdsc.ashpath.domain.entity;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,7 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,19 +30,20 @@ public class CremationQueue
   private Long id;
 
   @Column(name = "EnteredDate", columnDefinition = "DATE")
-  private LocalDate enteredDate;
-
-
-  @Column(name = "CREMATION_COMPLETED")
-  private Boolean completed;
-
-  @OneToOne
-  @JoinColumn(name = "Deceased_Id")
-  private Deceased deceased;
+  private LocalDate creationDate;
 
   @ManyToOne
   @JoinColumn(name = "Necrotomist_Id")
   private User necrotomist;
+
+  @OneToMany(mappedBy = "cremationQueue")
+  private Set<Deceased> deceasedSet;
+
+  public void addDeceased(Deceased deceased)
+  {
+    this.deceasedSet.add(deceased);
+    deceased.setCremationQueue(this);
+  }
 
   @Override
   public int hashCode()
