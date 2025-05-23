@@ -99,4 +99,18 @@ public class UserService
 
     return response;
   }
+
+  public List<NecrotomistUserResponse> filterNecrotomistBySpecialization(String specialization)
+  {
+    List<User> necrotomistUsers;
+    List<NecrotomistUserResponse> response;
+
+    necrotomistUsers = userRepository.findAllNecrotomistUsersBySpecialization(specialization);
+    response = necrotomistUsers
+      .stream()
+      .map(necrotomist -> new NecrotomistUserResponse(necrotomist))
+      .collect(Collectors.toList());
+
+    return response;
+  }
 }

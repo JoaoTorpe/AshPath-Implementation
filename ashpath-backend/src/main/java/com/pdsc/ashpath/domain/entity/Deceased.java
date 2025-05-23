@@ -1,15 +1,21 @@
 package com.pdsc.ashpath.domain.entity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
+
+import com.pdsc.ashpath.domain.enums.DeceasedStatus;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -49,12 +55,20 @@ public class Deceased
   @Column(name = "MotherName", length = 128)
   private String motherName;
 
+  @Enumerated(EnumType.STRING)
+  @Column(name = "Status")
+  private DeceasedStatus status;
+
+  @Column(name = "CremationEnteredDate", columnDefinition = "TIMESTAMP")
+  private LocalDateTime cremationEnteredDate;
+
+  @ManyToOne
+  @JoinColumn(name = "CremationQueueId")
+  private CremationQueue cremationQueue;
+
   @OneToOne
   @JoinColumn(name = "GraveId", nullable = true)
   private Grave grave;
-
-  @OneToOne(mappedBy = "deceased")
-  private CremationQueue cremationQueue;
 
   @Override
   public int hashCode()

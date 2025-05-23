@@ -46,6 +46,9 @@ public class User
   @Column(name = "LastActivityDate", columnDefinition = "TIMESTAMP")
   private LocalDateTime lastActivityDate;
 
+  @Column(name = "Specialization")
+  private String specialization;
+
   @ManyToMany
   @JoinTable(
     name = "ROLE_APP_USER",
@@ -53,9 +56,7 @@ public class User
     inverseJoinColumns = @JoinColumn(name = "Role_App_Id")
   )
   private Set<AppRole> appRoleSet = new HashSet<>();
-  @Column(name = "SPECIALIZATION")
-  private String specialization;
-
+  
   @OneToMany(mappedBy = "necrotomist")
   private Set<CremationQueue> cremationQueueSet = new HashSet<>();
 

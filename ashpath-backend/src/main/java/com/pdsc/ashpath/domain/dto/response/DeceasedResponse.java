@@ -1,8 +1,10 @@
 package com.pdsc.ashpath.domain.dto.response;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.pdsc.ashpath.domain.entity.Deceased;
+import com.pdsc.ashpath.domain.enums.DeceasedStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,6 +25,8 @@ public class DeceasedResponse
   private String deathCertificateDownloadLink;
   private String fatherName;
   private String motherName;
+  private DeceasedStatus status;
+  private LocalDateTime cremationEnteredDate;
 
   public DeceasedResponse(Deceased deceased)
   {
@@ -33,5 +37,7 @@ public class DeceasedResponse
     setCauseOfDeath(deceased.getCauseOfDeath());
     setFatherName(deceased.getFatherName());
     setMotherName(deceased.getMotherName());
+    setStatus(deceased.getStatus());
+    setCremationEnteredDate(deceased.getCremationEnteredDate());
   }
 }
