@@ -18,11 +18,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "CREMATION_QUEUE")
+@Table(name = "CREMATION_ENTRY")
 @NoArgsConstructor
 @Getter
 @Setter
-public class CremationQueue
+public class CremationEntry
 {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,13 +36,13 @@ public class CremationQueue
   @JoinColumn(name = "Necrotomist_Id")
   private User necrotomist;
 
-  @OneToMany(mappedBy = "cremationQueue")
+  @OneToMany(mappedBy = "cremationEntry")
   private Set<Deceased> deceasedSet;
 
   public void addDeceased(Deceased deceased)
   {
     this.deceasedSet.add(deceased);
-    deceased.setCremationQueue(this);
+    deceased.setCremationEntry(this);
   }
 
   @Override
@@ -60,7 +60,7 @@ public class CremationQueue
     if (obj == null || getClass() != obj.getClass())
       return false;
     
-    CremationQueue other = (CremationQueue) obj;
+    CremationEntry other = (CremationEntry) obj;
     return Objects.equals(this.id, other.id);
   }
 }

@@ -58,7 +58,7 @@ public class User
   private Set<AppRole> appRoleSet = new HashSet<>();
   
   @OneToMany(mappedBy = "necrotomist")
-  private Set<CremationQueue> cremationQueueSet = new HashSet<>();
+  private Set<CremationEntry> cremationEntrySet = new HashSet<>();
 
   public void addAppRole(AppRole appRole)
   {
@@ -66,10 +66,10 @@ public class User
     appRole.getUsersSet().add(this);
   }
 
-  public void addCremationQueue(CremationQueue cremationQueue)
+  public void addCremationQueue(CremationEntry cremationEntry)
   {
-    cremationQueueSet.add(cremationQueue);
-    cremationQueue.setNecrotomist(this);
+    cremationEntrySet.add(cremationEntry);
+    cremationEntry.setNecrotomist(this);
   }
 
   @Override

@@ -64,7 +64,7 @@ public class Deceased
 
   @ManyToOne
   @JoinColumn(name = "CremationQueueId")
-  private CremationQueue cremationQueue;
+  private CremationEntry cremationEntry;
 
   @OneToOne
   @JoinColumn(name = "GraveId", nullable = true)
