@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,6 +60,10 @@ public class DeceasedService {
 
     public List<Deceased> findByGraveLocation(String graveLocation){
         return deceasedRepository.findAllDeceasedByGraveLocation(graveLocation);
+    }
+
+    public List<Deceased> findAllByDeathDate(LocalDate deathDate){
+        return deceasedRepository.findAllDeceasedByDeathDate(deathDate);
     }
 
     public Deceased findById(Long id ){

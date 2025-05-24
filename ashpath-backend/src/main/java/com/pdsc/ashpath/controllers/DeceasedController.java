@@ -1,6 +1,7 @@
 package com.pdsc.ashpath.controllers;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -56,6 +57,13 @@ public class DeceasedController
     if(Objects.isNull(location))
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     return ResponseEntity.status(HttpStatus.OK).body(deceasedService.findByGraveLocation(location));
+  }
+
+  @GetMapping("/findByDeathDate/{deathDate}")
+  public ResponseEntity<List<Deceased>> findAllByDeathDate(@PathVariable LocalDate deathDate ){
+    if(Objects.isNull(deathDate))
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+    return ResponseEntity.status(HttpStatus.OK).body(deceasedService.findAllByDeathDate(deathDate));
   }
 
   @GetMapping("/{deceasedId}")
