@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.pdsc.ashpath.domain.entity.CremationQueue;
+import com.pdsc.ashpath.domain.entity.CremationEntry;
 import com.pdsc.ashpath.domain.entity.Deceased;
 import com.pdsc.ashpath.domain.entity.User;
 import com.pdsc.ashpath.domain.enums.DeceasedStatus;
@@ -26,34 +26,34 @@ public class CremationQueueService
   public void createCremationQueue(Long necrotomistId)
   {
     Optional<User> optionalNecrotomist = userRepository.findById(necrotomistId);
-    CremationQueue cremationQueue = new CremationQueue();
+    CremationEntry cremationEntry = new CremationEntry();
 
     if (optionalNecrotomist.isPresent())
     {
       User necrotomist = optionalNecrotomist.get();
 
-      cremationQueue.setNecrotomist(necrotomist);
-      cremationQueue.setCreationDate(LocalDateTime.now());
+      cremationEntry.setNecrotomist(necrotomist);
+      cremationEntry.setCreationDate(LocalDateTime.now());
 
-      cremationQueueRepository.save(cremationQueue);
+      cremationQueueRepository.save(cremationEntry);
     }
   }
 
   public void addDeceasedToCremationQueue(Long cremationQueueId, Long deceasedId)
   {
-    Optional<CremationQueue> optionalCremationQueue = cremationQueueRepository.findById(cremationQueueId);
+    Optional<CremationEntry> optionalCremationQueue = cremationQueueRepository.findById(cremationQueueId);
     Optional<Deceased> optionalDeceased = deceasedRepository.findById(deceasedId);
 
     if (optionalCremationQueue.isPresent() && optionalDeceased.isPresent())
     {
-      CremationQueue cremationQueue = optionalCremationQueue.get();
+      CremationEntry cremationEntry = optionalCremationQueue.get();
       Deceased deceased = optionalDeceased.get();
 
-      cremationQueue.addDeceased(deceased);
+      cremationEntry.addDeceased(deceased);
       deceased.setStatus(DeceasedStatus.WAITING_CREMATION);
       deceased.setCremationEnteredDate(LocalDateTime.now());
 
-      cremationQueueRepository.save(cremationQueue);
+      cremationQueueRepository.save(cremationEntry);
     }
   }
 

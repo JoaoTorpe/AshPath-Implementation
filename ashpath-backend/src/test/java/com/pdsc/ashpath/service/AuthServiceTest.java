@@ -38,7 +38,7 @@ public class AuthServiceTest {
         user.setLastActivityDate(LocalDateTime.now());
         user.setSpecialization("Specialist");
         user.setAppRoleSet(new HashSet<>());
-        user.setCremationQueueSet(new HashSet<>());
+        user.setCremationEntrySet(new HashSet<>());
 
         userRepository.saveAndFlush(user);
     }

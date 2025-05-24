@@ -2,7 +2,7 @@ package com.pdsc.ashpath.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.pdsc.ashpath.domain.entity.CremationQueue;
+import com.pdsc.ashpath.domain.entity.CremationEntry;
 
-public interface CremationQueueRepository extends JpaRepository<CremationQueue, Long>
+public interface CremationQueueRepository extends JpaRepository<CremationEntry, Long>
 {}
