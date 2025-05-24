@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -50,6 +51,10 @@ public class DeceasedService {
             return deceasedResponse;
         }
         return null;
+    }
+
+    public List<Deceased> findAllByCremationEntryId(Long cremationId){
+        return deceasedRepository.findAllDeceasedByQueueId(cremationId);
     }
 
     public Deceased findById(Long id ){

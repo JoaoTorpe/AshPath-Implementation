@@ -1,6 +1,7 @@
 package com.pdsc.ashpath.controllers;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.http.HttpHeaders;
@@ -41,6 +42,13 @@ public class DeceasedController
     }
 
     return ResponseEntity.status(HttpStatus.OK).build();
+  }
+
+  @GetMapping("/findAllByCremation/{cremationEntryId}")
+  public ResponseEntity<List<Deceased>> findAllByCremationEntryId(@PathVariable Long cremationEntryId ){
+    if(Objects.isNull(cremationEntryId))
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+    return ResponseEntity.status(HttpStatus.OK).body(deceasedService.findAllByCremationEntryId(cremationEntryId));
   }
 
   @GetMapping("/{deceasedId}")
