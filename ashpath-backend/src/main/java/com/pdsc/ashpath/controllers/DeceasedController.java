@@ -51,6 +51,13 @@ public class DeceasedController
     return ResponseEntity.status(HttpStatus.OK).body(deceasedService.findAllByCremationEntryId(cremationEntryId));
   }
 
+  @GetMapping("/findByGraveLocation/{location}")
+  public ResponseEntity<List<Deceased>> findByGraveLocation(@PathVariable String location ){
+    if(Objects.isNull(location))
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+    return ResponseEntity.status(HttpStatus.OK).body(deceasedService.findByGraveLocation(location));
+  }
+
   @GetMapping("/{deceasedId}")
   public ResponseEntity<DeceasedResponse> readDeceasedById(@PathVariable Long deceasedId)
   {

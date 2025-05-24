@@ -14,4 +14,7 @@ public interface DeceasedRepository extends JpaRepository<Deceased, Long> {
     @Query("SELECT d FROM Deceased d WHERE d.cremationEntry.id = :cremationID")
     List<Deceased> findAllDeceasedByQueueId(@Param("cremationID") Long cremationId);
 
+    @Query("SELECT d FROM Deceased d WHERE d.grave.location = :graveLocation")
+    List<Deceased> findAllDeceasedByGraveLocation(@Param("graveLocation") String graveLocation);
+
 }

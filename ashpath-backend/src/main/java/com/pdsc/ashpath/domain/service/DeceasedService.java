@@ -57,6 +57,10 @@ public class DeceasedService {
         return deceasedRepository.findAllDeceasedByQueueId(cremationId);
     }
 
+    public List<Deceased> findByGraveLocation(String graveLocation){
+        return deceasedRepository.findAllDeceasedByGraveLocation(graveLocation);
+    }
+
     public Deceased findById(Long id ){
         return deceasedRepository.findById(id).orElse(null);
     }
