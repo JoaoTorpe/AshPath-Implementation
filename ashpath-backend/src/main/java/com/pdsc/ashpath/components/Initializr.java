@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class AppRoleInitializr
+public class Initializr
 {
   private final AppRoleRepository appRoleRepository;
 
