@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.pdsc.ashpath.domain.entity.CremationEntry;
@@ -26,7 +24,7 @@ public class CremationEntryService
   private final UserRepository userRepository;
   private final DeceasedRepository deceasedRepository;
 
-  public void createCremationQueue(Long necrotomistId)
+  public void createCremationEntry(Long necrotomistId)
   {
     Optional<User> optionalNecrotomist = userRepository.findById(necrotomistId);
     CremationEntry cremationEntry = new CremationEntry();
@@ -42,14 +40,14 @@ public class CremationEntryService
     }
   }
 
-  public void addDeceasedToCremationQueue(Long cremationQueueId, Long deceasedId)
+  public void addDeceasedToCremationEntry(Long cremationEntryId, Long deceasedId)
   {
-    Optional<CremationEntry> optionalCremationQueue = cremationEntryRepository.findById(cremationQueueId);
+    Optional<CremationEntry> optionalCremationEntry = cremationEntryRepository.findById(cremationEntryId);
     Optional<Deceased> optionalDeceased = deceasedRepository.findById(deceasedId);
 
-    if (optionalCremationQueue.isPresent() && optionalDeceased.isPresent())
+    if (optionalCremationEntry.isPresent() && optionalDeceased.isPresent())
     {
-      CremationEntry cremationEntry = optionalCremationQueue.get();
+      CremationEntry cremationEntry = optionalCremationEntry.get();
       Deceased deceased = optionalDeceased.get();
 
       cremationEntry.addDeceased(deceased);
