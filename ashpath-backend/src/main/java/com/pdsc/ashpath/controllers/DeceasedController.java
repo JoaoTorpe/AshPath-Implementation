@@ -46,24 +46,33 @@ public class DeceasedController
   }
 
   @GetMapping("/findAllByCremation/{cremationEntryId}")
-  public ResponseEntity<List<Deceased>> findAllByCremationEntryId(@PathVariable Long cremationEntryId ){
+  public ResponseEntity<List<DeceasedResponse>> findAllByCremationEntryId(@PathVariable Long cremationEntryId )
+  {
     if(Objects.isNull(cremationEntryId))
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-    return ResponseEntity.status(HttpStatus.OK).body(deceasedService.findAllByCremationEntryId(cremationEntryId));
+
+    List<DeceasedResponse> response = deceasedService.findAllByCremationEntryId(cremationEntryId);
+    return ResponseEntity.status(HttpStatus.OK).body(response);
   }
 
   @GetMapping("/findByGraveLocation/{location}")
-  public ResponseEntity<List<Deceased>> findByGraveLocation(@PathVariable String location ){
+  public ResponseEntity<List<DeceasedResponse>> findByGraveLocation(@PathVariable String location )
+  {
     if(Objects.isNull(location))
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-    return ResponseEntity.status(HttpStatus.OK).body(deceasedService.findByGraveLocation(location));
+
+    List<DeceasedResponse> response = deceasedService.findByGraveLocation(location);
+    return ResponseEntity.status(HttpStatus.OK).body(response);
   }
 
   @GetMapping("/findByDeathDate/{deathDate}")
-  public ResponseEntity<List<Deceased>> findAllByDeathDate(@PathVariable LocalDate deathDate ){
+  public ResponseEntity<List<DeceasedResponse>> findAllByDeathDate(@PathVariable LocalDate deathDate )
+  {
     if(Objects.isNull(deathDate))
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-    return ResponseEntity.status(HttpStatus.OK).body(deceasedService.findAllByDeathDate(deathDate));
+    
+    List<DeceasedResponse> response = deceasedService.findAllByDeathDate(deathDate);
+    return ResponseEntity.status(HttpStatus.OK).body(response);
   }
 
   @GetMapping("/{deceasedId}")
@@ -91,5 +100,4 @@ public class DeceasedController
 
     return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
   }
-
 }

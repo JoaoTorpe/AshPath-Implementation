@@ -3,11 +3,11 @@ package com.pdsc.ashpath.domain.service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.pdsc.ashpath.domain.dto.response.CremationEntryResponse;
 import com.pdsc.ashpath.domain.entity.CremationEntry;
 import com.pdsc.ashpath.domain.entity.Deceased;
 import com.pdsc.ashpath.domain.entity.User;
@@ -26,7 +26,7 @@ public class CremationEntryService
   private final UserRepository userRepository;
   private final DeceasedRepository deceasedRepository;
 
-  public void createCremationQueue(Long necrotomistId)
+  public void createCremationEntry(Long necrotomistId)
   {
     Optional<User> optionalNecrotomist = userRepository.findById(necrotomistId);
     CremationEntry cremationEntry = new CremationEntry();
@@ -42,14 +42,14 @@ public class CremationEntryService
     }
   }
 
-  public void addDeceasedToCremationQueue(Long cremationQueueId, Long deceasedId)
+  public void addDeceasedToCremationEntry(Long cremationEntryId, Long deceasedId)
   {
-    Optional<CremationEntry> optionalCremationQueue = cremationEntryRepository.findById(cremationQueueId);
+    Optional<CremationEntry> optionalCremationEntry = cremationEntryRepository.findById(cremationEntryId);
     Optional<Deceased> optionalDeceased = deceasedRepository.findById(deceasedId);
 
-    if (optionalCremationQueue.isPresent() && optionalDeceased.isPresent())
+    if (optionalCremationEntry.isPresent() && optionalDeceased.isPresent())
     {
-      CremationEntry cremationEntry = optionalCremationQueue.get();
+      CremationEntry cremationEntry = optionalCremationEntry.get();
       Deceased deceased = optionalDeceased.get();
 
       cremationEntry.addDeceased(deceased);
@@ -76,7 +76,13 @@ public class CremationEntryService
     }
   }
 
-  public List<CremationEntry> findAll (){
-    return cremationEntryRepository.findAll();
+  public List<CremationEntryResponse> findAll()
+  {
+    List<CremationEntry> cremationEntries = cremationEntryRepository.findAll();
+    List<CremationEntryResponse> response = cremationEntries.stream()
+      .map(cremationEntry -> new CremationEntryResponse(cremationEntry))
+      .collect(Collectors.toList());
+    
+    return response;
   }
 }

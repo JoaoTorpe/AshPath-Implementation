@@ -63,7 +63,7 @@ public class Deceased
   private LocalDateTime cremationEnteredDate;
 
   @ManyToOne
-  @JoinColumn(name = "CremationQueueId")
+  @JoinColumn(name = "CremationEntryId")
   private CremationEntry cremationEntry;
 
   @OneToOne

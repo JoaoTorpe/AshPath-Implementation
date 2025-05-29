@@ -1,6 +1,7 @@
 package com.pdsc.ashpath.domain.entity;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -37,7 +38,7 @@ public class CremationEntry
   private User necrotomist;
 
   @OneToMany(mappedBy = "cremationEntry")
-  private Set<Deceased> deceasedSet;
+  private Set<Deceased> deceasedSet = new HashSet<>();
 
   public void addDeceased(Deceased deceased)
   {

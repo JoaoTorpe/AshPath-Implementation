@@ -7,10 +7,9 @@ import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
 @Setter
-public class AddDeceasedToCremationQueueRequest
+@Getter
+public class CreateGraveRequest
 {
-  private Long cremationQueueId;
-  private Long deceasedId;
+  private String location;
 }

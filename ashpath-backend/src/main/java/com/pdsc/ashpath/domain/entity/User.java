@@ -66,7 +66,7 @@ public class User
     appRole.getUsersSet().add(this);
   }
 
-  public void addCremationQueue(CremationEntry cremationEntry)
+  public void addCremationEntry(CremationEntry cremationEntry)
   {
     cremationEntrySet.add(cremationEntry);
     cremationEntry.setNecrotomist(this);

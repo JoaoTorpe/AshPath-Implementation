@@ -9,7 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class CreateCremationQueueRequest
+public class CreateCremationEntryRequest
 {
   private Long necrotomistId;
 }
