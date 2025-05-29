@@ -46,10 +46,13 @@ public class DeceasedController
   }
 
   @GetMapping("/findAllByCremation/{cremationEntryId}")
-  public ResponseEntity<List<Deceased>> findAllByCremationEntryId(@PathVariable Long cremationEntryId ){
+  public ResponseEntity<List<DeceasedResponse>> findAllByCremationEntryId(@PathVariable Long cremationEntryId )
+  {
     if(Objects.isNull(cremationEntryId))
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-    return ResponseEntity.status(HttpStatus.OK).body(deceasedService.findAllByCremationEntryId(cremationEntryId));
+
+    List<DeceasedResponse> response = deceasedService.findAllByCremationEntryId(cremationEntryId);
+    return ResponseEntity.status(HttpStatus.OK).body(response);
   }
 
   @GetMapping("/findByGraveLocation/{location}")
@@ -91,5 +94,4 @@ public class DeceasedController
 
     return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
   }
-
 }
