@@ -66,10 +66,13 @@ public class DeceasedController
   }
 
   @GetMapping("/findByDeathDate/{deathDate}")
-  public ResponseEntity<List<Deceased>> findAllByDeathDate(@PathVariable LocalDate deathDate ){
+  public ResponseEntity<List<DeceasedResponse>> findAllByDeathDate(@PathVariable LocalDate deathDate )
+  {
     if(Objects.isNull(deathDate))
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-    return ResponseEntity.status(HttpStatus.OK).body(deceasedService.findAllByDeathDate(deathDate));
+    
+    List<DeceasedResponse> response = deceasedService.findAllByDeathDate(deathDate);
+    return ResponseEntity.status(HttpStatus.OK).body(response);
   }
 
   @GetMapping("/{deceasedId}")

@@ -90,9 +90,21 @@ public class DeceasedService
     return response;
   }
 
-  public List<Deceased> findAllByDeathDate(LocalDate deathDate)
+  public List<DeceasedResponse> findAllByDeathDate(LocalDate deathDate)
   {
-    return deceasedRepository.findAllDeceasedByDeathDate(deathDate);
+    List<Deceased> deceaseds = deceasedRepository.findAllDeceasedByDeathDate(deathDate);
+    List<DeceasedResponse> response = deceaseds.stream()
+      .<DeceasedResponse>map(deceased -> {
+
+        String server = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
+        DeceasedResponse deceasedResponse = new DeceasedResponse(deceased);
+        deceasedResponse.setDeathCertificateDownloadLink(server +"/deceased/"+ deceased.getId() +"/deathCertificate");
+
+        return deceasedResponse;
+      })
+      .collect(Collectors.toList());
+    
+    return response;
   }
 
   public Deceased findById(Long id )
