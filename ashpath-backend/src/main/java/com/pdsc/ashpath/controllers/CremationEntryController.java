@@ -1,6 +1,5 @@
 package com.pdsc.ashpath.controllers;
 
-import com.pdsc.ashpath.domain.entity.CremationEntry;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+import com.pdsc.ashpath.domain.dto.response.CremationEntryResponse;
+
 @RestController
 @RequestMapping("/cremation_entry")
 @RequiredArgsConstructor
@@ -21,13 +22,14 @@ public class CremationEntryController
   private final CremationEntryService cremationEntryService;
 
   @GetMapping ("/findAll")
-  public ResponseEntity<List<CremationEntry>> findAll(){
-    List<CremationEntry> result = cremationEntryService.findAll();
+  public ResponseEntity<List<CremationEntryResponse>> findAll()
+  {
+    List<CremationEntryResponse> response = cremationEntryService.findAll();
 
-    if (result.isEmpty())
-      return ResponseEntity.status(HttpStatus.NO_CONTENT).body(result);
+    if (response.isEmpty())
+      return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
 
-    return ResponseEntity.status(HttpStatus.OK).body(result);
+    return ResponseEntity.status(HttpStatus.OK).body(response);
   }
 
   @PostMapping("/create")

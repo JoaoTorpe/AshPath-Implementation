@@ -3,9 +3,11 @@ package com.pdsc.ashpath.domain.service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.pdsc.ashpath.domain.dto.response.CremationEntryResponse;
 import com.pdsc.ashpath.domain.entity.CremationEntry;
 import com.pdsc.ashpath.domain.entity.Deceased;
 import com.pdsc.ashpath.domain.entity.User;
@@ -74,7 +76,13 @@ public class CremationEntryService
     }
   }
 
-  public List<CremationEntry> findAll (){
-    return cremationEntryRepository.findAll();
+  public List<CremationEntryResponse> findAll()
+  {
+    List<CremationEntry> cremationEntries = cremationEntryRepository.findAll();
+    List<CremationEntryResponse> response = cremationEntries.stream()
+      .map(cremationEntry -> new CremationEntryResponse(cremationEntry))
+      .collect(Collectors.toList());
+    
+    return response;
   }
 }
