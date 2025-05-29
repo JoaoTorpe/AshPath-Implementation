@@ -1,21 +1,25 @@
 package com.pdsc.ashpath.controllers;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.pdsc.ashpath.domain.dto.request.AddDeceasedToCremationEntryRequest;
 import com.pdsc.ashpath.domain.dto.request.CreateCremationEntryRequest;
+import com.pdsc.ashpath.domain.dto.response.CremationEntryResponse;
 import com.pdsc.ashpath.domain.service.CremationEntryService;
 
 import lombok.RequiredArgsConstructor;
 
-import java.util.List;
-
-import com.pdsc.ashpath.domain.dto.response.CremationEntryResponse;
-
 @RestController
-@RequestMapping("/cremation_entry")
+@RequestMapping("/cremationEntry")
 @RequiredArgsConstructor
 public class CremationEntryController
 {
