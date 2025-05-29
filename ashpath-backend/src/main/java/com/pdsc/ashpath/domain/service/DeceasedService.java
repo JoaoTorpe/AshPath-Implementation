@@ -61,7 +61,7 @@ public class DeceasedService
     List<Deceased> deceaseds = deceasedRepository.findAllDeceasedByQueueId(cremationId);
     List<DeceasedResponse> response = deceaseds.stream()
       .<DeceasedResponse>map(deceased ->{
-        
+
         String server = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
         DeceasedResponse deceasedResponse = new DeceasedResponse(deceased);
         deceasedResponse.setDeathCertificateDownloadLink(server +"/deceased/"+ deceased.getId() +"/deathCertificate");
@@ -73,9 +73,21 @@ public class DeceasedService
     return response;
   }
 
-  public List<Deceased> findByGraveLocation(String graveLocation)
+  public List<DeceasedResponse> findByGraveLocation(String graveLocation)
   {
-    return deceasedRepository.findAllDeceasedByGraveLocation(graveLocation);
+    List<Deceased> deceaseds = deceasedRepository.findAllDeceasedByGraveLocation(graveLocation);
+    List<DeceasedResponse> response = deceaseds.stream()
+      .<DeceasedResponse>map(deceased -> {
+
+        String server = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
+        DeceasedResponse deceasedResponse = new DeceasedResponse(deceased);
+        deceasedResponse.setDeathCertificateDownloadLink(server +"/deceased/"+ deceased.getId() +"/deathCertificate");
+
+        return deceasedResponse;
+      })
+      .collect(Collectors.toList());
+    
+    return response;
   }
 
   public List<Deceased> findAllByDeathDate(LocalDate deathDate)

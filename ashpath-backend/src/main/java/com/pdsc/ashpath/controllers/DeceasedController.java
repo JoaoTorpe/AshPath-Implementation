@@ -56,10 +56,13 @@ public class DeceasedController
   }
 
   @GetMapping("/findByGraveLocation/{location}")
-  public ResponseEntity<List<Deceased>> findByGraveLocation(@PathVariable String location ){
+  public ResponseEntity<List<DeceasedResponse>> findByGraveLocation(@PathVariable String location )
+  {
     if(Objects.isNull(location))
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-    return ResponseEntity.status(HttpStatus.OK).body(deceasedService.findByGraveLocation(location));
+
+    List<DeceasedResponse> response = deceasedService.findByGraveLocation(location);
+    return ResponseEntity.status(HttpStatus.OK).body(response);
   }
 
   @GetMapping("/findByDeathDate/{deathDate}")
