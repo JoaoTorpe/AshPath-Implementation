@@ -45,12 +45,7 @@ public class DeceasedService
     if (optionalDeceased.isPresent())
     {
       Deceased deceased = optionalDeceased.get();
-      String server = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
-
-      DeceasedResponse deceasedResponse = new DeceasedResponse(deceased);
-      deceasedResponse.setDeathCertificateDownloadLink(server +"/deceased/"+ deceased.getId() +"/deathCertificate");
-
-      return deceasedResponse;
+      return generateDeceasedResponse(deceased);
     }
 
     return null;
@@ -59,56 +54,40 @@ public class DeceasedService
   public List<DeceasedResponse> findAllByCremationEntryId(Long cremationId)
   {
     List<Deceased> deceaseds = deceasedRepository.findAllDeceasedByQueueId(cremationId);
-    List<DeceasedResponse> response = deceaseds.stream()
-      .<DeceasedResponse>map(deceased ->{
 
-        String server = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
-        DeceasedResponse deceasedResponse = new DeceasedResponse(deceased);
-        deceasedResponse.setDeathCertificateDownloadLink(server +"/deceased/"+ deceased.getId() +"/deathCertificate");
-
-        return deceasedResponse;
-      })
-      .collect(Collectors.toList());
-    
-    return response;
+      return deceaseds.stream()
+        .<DeceasedResponse>map(this::generateDeceasedResponse)
+        .collect(Collectors.toList());
   }
 
   public List<DeceasedResponse> findByGraveLocation(String graveLocation)
   {
     List<Deceased> deceaseds = deceasedRepository.findAllDeceasedByGraveLocation(graveLocation);
-    List<DeceasedResponse> response = deceaseds.stream()
-      .<DeceasedResponse>map(deceased -> {
 
-        String server = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
-        DeceasedResponse deceasedResponse = new DeceasedResponse(deceased);
-        deceasedResponse.setDeathCertificateDownloadLink(server +"/deceased/"+ deceased.getId() +"/deathCertificate");
-
-        return deceasedResponse;
-      })
-      .collect(Collectors.toList());
-    
-    return response;
+      return deceaseds.stream()
+        .<DeceasedResponse>map(this::generateDeceasedResponse)
+        .collect(Collectors.toList());
   }
 
   public List<DeceasedResponse> findAllByDeathDate(LocalDate deathDate)
   {
     List<Deceased> deceaseds = deceasedRepository.findAllDeceasedByDeathDate(deathDate);
-    List<DeceasedResponse> response = deceaseds.stream()
-      .<DeceasedResponse>map(deceased -> {
-
-        String server = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
-        DeceasedResponse deceasedResponse = new DeceasedResponse(deceased);
-        deceasedResponse.setDeathCertificateDownloadLink(server +"/deceased/"+ deceased.getId() +"/deathCertificate");
-
-        return deceasedResponse;
-      })
+    return deceaseds.stream()
+      .<DeceasedResponse>map(this::generateDeceasedResponse)
       .collect(Collectors.toList());
-    
-    return response;
   }
 
-  public Deceased findById(Long id )
+  public Optional <Deceased> findById(Long id )
   {
-    return deceasedRepository.findById(id).orElse(null);
+    return deceasedRepository.findById(id);
   }
+
+  private DeceasedResponse generateDeceasedResponse(Deceased deceased){
+    String server = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
+    DeceasedResponse deceasedResponse = new DeceasedResponse(deceased);
+    deceasedResponse.setDeathCertificateDownloadLink(server +"/deceased/"+ deceased.getId() +"/deathCertificate");
+    return deceasedResponse;
+  }
+
+
 }

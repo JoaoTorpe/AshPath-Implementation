@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
+import com.pdsc.ashpath.domain.enums.DeceasedStatus;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -88,10 +90,11 @@ public class DeceasedController
   @GetMapping("/{deceasedId}/deathCertificate")
   public ResponseEntity<byte[]> readDeceasedDeathCertificate(@PathVariable Long deceasedId)
   {
-    Deceased deceased = deceasedService.findById(deceasedId);
+    Optional <Deceased> opDeceased = deceasedService.findById(deceasedId);
 
-    if (!Objects.isNull(deceased))
+    if (opDeceased.isPresent())
     {
+      Deceased deceased = opDeceased.get();
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"DeathCertificate.pdf\"")
@@ -100,4 +103,7 @@ public class DeceasedController
 
     return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
   }
+
+
+
 }
