@@ -3,6 +3,7 @@ package com.pdsc.ashpath.domain.dto.response;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import com.pdsc.ashpath.domain.entity.CremationEntry;
 import com.pdsc.ashpath.domain.entity.Deceased;
 import com.pdsc.ashpath.domain.enums.DeceasedStatus;
 
@@ -27,6 +28,8 @@ public class DeceasedResponse
   private String motherName;
   private DeceasedStatus status;
   private LocalDateTime cremationEnteredDate;
+  private Long cremationEntryId;
+
 
   public DeceasedResponse(Deceased deceased)
   {
@@ -39,5 +42,6 @@ public class DeceasedResponse
     setMotherName(deceased.getMotherName());
     setStatus(deceased.getStatus());
     setCremationEnteredDate(deceased.getCremationEnteredDate());
+    setCremationEntryId(deceased.getCremationEntry().getId());
   }
 }

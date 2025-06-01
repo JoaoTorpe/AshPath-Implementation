@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.pdsc.ashpath.domain.dto.response.CremationEntryResponse;
@@ -85,4 +86,13 @@ public class CremationEntryService
     
     return response;
   }
+
+  public CremationEntryResponse findById(Long id){
+    Optional<CremationEntry> optionalCremationEntry = cremationEntryRepository.findById(id);
+    if(optionalCremationEntry.isPresent()){
+      return new CremationEntryResponse(optionalCremationEntry.get());
+    }
+    throw new EntityNotFoundException();
+  }
+
 }

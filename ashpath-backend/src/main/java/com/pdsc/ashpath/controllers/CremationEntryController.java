@@ -2,6 +2,7 @@ package com.pdsc.ashpath.controllers;
 
 import java.util.List;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +35,16 @@ public class CremationEntryController
       return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
 
     return ResponseEntity.status(HttpStatus.OK).body(response);
+  }
+
+  @GetMapping("/find/{id}")
+  public ResponseEntity<?> findById(@PathVariable("id") Long id){
+    try {
+    return ResponseEntity.status(HttpStatus.OK).body(cremationEntryService.findById(id));
+    }
+    catch (EntityNotFoundException e){
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Entity with the specified ID was not found");
+    }
   }
 
   @PostMapping("/create")
