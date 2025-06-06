@@ -15,13 +15,15 @@ import com.pdsc.ashpath.domain.dto.response.DeceasedResponse;
 import com.pdsc.ashpath.domain.entity.Deceased;
 import com.pdsc.ashpath.repository.DeceasedRepository;
 
-import lombok.RequiredArgsConstructor;
-
 @Service
-@RequiredArgsConstructor
 public class DeceasedService
 {
   private final DeceasedRepository deceasedRepository;
+
+  public DeceasedService(DeceasedRepository deceasedRepository)
+  {
+    this.deceasedRepository = deceasedRepository;
+  }
 
   public void createDeceased(CreateDeceasedRequest request, MultipartFile certificate) throws IOException
   {
@@ -88,6 +90,4 @@ public class DeceasedService
     deceasedResponse.setDeathCertificateDownloadLink(server +"/deceased/"+ deceased.getId() +"/deathCertificate");
     return deceasedResponse;
   }
-
-
 }

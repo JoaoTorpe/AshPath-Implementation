@@ -17,14 +17,17 @@ import com.pdsc.ashpath.domain.enums.UserAppRole;
 import com.pdsc.ashpath.repository.AppRoleRepository;
 import com.pdsc.ashpath.repository.UserRepository;
 
-import lombok.RequiredArgsConstructor;
-
 @Service
-@RequiredArgsConstructor
 public class UserService
 {
   private final UserRepository userRepository;
   private final AppRoleRepository appRoleRepository;
+
+  public UserService(UserRepository userRepository, AppRoleRepository appRoleRepository)
+  {
+    this.userRepository = userRepository;
+    this.appRoleRepository = appRoleRepository;
+  }
 
   public void createAdminUser(CreateAdminUserRequest adminUser)
   {

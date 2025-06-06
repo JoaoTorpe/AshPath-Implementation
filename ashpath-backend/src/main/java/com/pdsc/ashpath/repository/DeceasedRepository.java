@@ -1,14 +1,13 @@
 package com.pdsc.ashpath.repository;
 
-import com.pdsc.ashpath.domain.enums.DeceasedStatus;
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.time.LocalDate;
+import java.util.List;
 
-import com.pdsc.ashpath.domain.entity.Deceased;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.time.LocalDate;
-import java.util.List;
+import com.pdsc.ashpath.domain.entity.Deceased;
 
 public interface DeceasedRepository extends JpaRepository<Deceased, Long> {
 

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import com.pdsc.ashpath.domain.enums.DeceasedStatus;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,14 +23,16 @@ import com.pdsc.ashpath.domain.dto.response.DeceasedResponse;
 import com.pdsc.ashpath.domain.entity.Deceased;
 import com.pdsc.ashpath.domain.service.DeceasedService;
 
-import lombok.RequiredArgsConstructor;
-
 @RestController
 @RequestMapping("/deceased")
-@RequiredArgsConstructor
 public class DeceasedController
 {
   private final DeceasedService deceasedService;
+
+  public DeceasedController(DeceasedService deceasedService)
+  {
+    this.deceasedService = deceasedService;
+  }
 
   @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   public ResponseEntity<?> createDeceased(
@@ -103,7 +104,4 @@ public class DeceasedController
 
     return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
   }
-
-
-
 }

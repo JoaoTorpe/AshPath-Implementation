@@ -14,14 +14,17 @@ import com.pdsc.ashpath.domain.enums.DeceasedStatus;
 import com.pdsc.ashpath.repository.DeceasedRepository;
 import com.pdsc.ashpath.repository.GraveRepository;
 
-import lombok.RequiredArgsConstructor;
-
 @Service
-@RequiredArgsConstructor
 public class GraveService
 {
   private final GraveRepository graveRepository;
   private final DeceasedRepository deceasedRepository;
+
+  public GraveService(GraveRepository graveRepository, DeceasedRepository deceasedRepository)
+  {
+    this.graveRepository = graveRepository;
+    this.deceasedRepository = deceasedRepository;
+  }
 
   public void createGrave(CreateGraveRequest createGraveRequest)
   {

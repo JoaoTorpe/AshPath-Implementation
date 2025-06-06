@@ -15,14 +15,16 @@ import com.pdsc.ashpath.domain.dto.response.SuccessfulLoginResponse;
 import com.pdsc.ashpath.domain.entity.User;
 import com.pdsc.ashpath.domain.service.AuthService;
 
-import lombok.RequiredArgsConstructor;
-
 @RestController
 @RequestMapping("/auth")
-@RequiredArgsConstructor
 public class AuthController
 {
   private final AuthService authService;
+
+  public AuthController(AuthService authService)
+  {
+    this.authService = authService;
+  }
 
   @PostMapping("/login")
   public ResponseEntity<?> login(@RequestBody LoginRequest request)

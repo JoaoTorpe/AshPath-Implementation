@@ -18,15 +18,9 @@ import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "DECEASED")
-@NoArgsConstructor
-@Getter
-@Setter
 public class Deceased
 {
   @Id
@@ -69,6 +63,129 @@ public class Deceased
   @OneToOne
   @JoinColumn(name = "GraveId", nullable = true)
   private Grave grave;
+
+  public Deceased()
+  {}
+
+  public void setId(Long id)
+  {
+    this.id = id;
+  }
+
+  public Long getId()
+  {
+    return this.id;
+  }
+
+  public void setFullname(String fullname)
+  {
+    this.fullname = fullname;
+  }
+
+  public String getFullname()
+  {
+    return this.fullname;
+  }
+
+  public void setBirthDate(LocalDate birthDate)
+  {
+    this.birthDate = birthDate;
+  }
+
+  public LocalDate getBirthDate()
+  {
+    return this.birthDate;
+  }
+
+  public void setDeathDate(LocalDate deathDate)
+  {
+    this.deathDate = deathDate;
+  }
+
+  public LocalDate getDeathDate()
+  {
+    return this.deathDate;
+  }
+
+  public void setCauseOfDeath(String causeOfDeath)
+  {
+    this.causeOfDeath = causeOfDeath;
+  }
+
+  public String getCauseOfDeath()
+  {
+    return this.causeOfDeath;
+  }
+
+  public void setDeathCertificate(byte[] deathCertificate)
+  {
+    this.deathCertificate = deathCertificate;
+  }
+
+  public byte[] getDeathCertificate()
+  {
+    return this.deathCertificate;
+  }
+
+  public void setFatherName(String fatherName)
+  {
+    this.fatherName = fatherName;
+  }
+
+  public String getFatherName()
+  {
+    return this.fatherName;
+  }
+
+  public void setMotherName(String motherName)
+  {
+    this.motherName = motherName;
+  }
+
+  public String getMotherName()
+  {
+    return this.motherName;
+  }
+
+  public void setStatus(DeceasedStatus status)
+  {
+    this.status = status;
+  }
+
+  public DeceasedStatus getStatus()
+  {
+    return this.status;
+  }
+
+  public void setCremationEnteredDate(LocalDateTime cremationEnteredDate)
+  {
+    this.cremationEnteredDate = cremationEnteredDate;
+  }
+
+  public LocalDateTime getCremationEnteredDate()
+  {
+    return this.cremationEnteredDate;
+  }
+
+  public void setCremationEntry(CremationEntry cremationEntry)
+  {
+    this.cremationEntry = cremationEntry;
+  }
+
+  public CremationEntry getCremationEntry()
+  {
+    return this.cremationEntry;
+  }
+
+  public void setGrave(Grave grave)
+  {
+    this.grave = grave;
+  }
+
+  public Grave getGrave()
+  {
+    return this.grave;
+  }
 
   @Override
   public int hashCode()

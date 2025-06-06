@@ -26,11 +26,9 @@ import com.pdsc.ashpath.repository.DeceasedRepository;
 import com.pdsc.ashpath.repository.GraveRepository;
 import com.pdsc.ashpath.repository.UserRepository;
 
-import lombok.RequiredArgsConstructor;
 import net.datafaker.Faker;
 
 @Component
-@RequiredArgsConstructor
 @SuppressWarnings("deprecation")
 public class Initializr implements CommandLineRunner
 {
@@ -41,6 +39,18 @@ public class Initializr implements CommandLineRunner
   private final GraveRepository graveRepository;
 
   private final Faker faker = new Faker(new Locale("pt-BR"));
+
+  public Initializr(
+    AppRoleRepository appRoleRepository, UserRepository userRepository,
+    CremationEntryRepository cremationEntryRepository, DeceasedRepository deceasedRepository,
+    GraveRepository graveRepository
+  ) {
+    this.appRoleRepository = appRoleRepository;
+    this.userRepository = userRepository;
+    this.cremationEntryRepository = cremationEntryRepository;
+    this.deceasedRepository = deceasedRepository;
+    this.graveRepository = graveRepository;
+  }
 
   @Override
   public void run(String ...args)
@@ -61,6 +71,7 @@ public class Initializr implements CommandLineRunner
     appRoleRepository.save(necrotomistRoleApp);
   }
 
+  @SuppressWarnings("unused")
   private void seedDatabase()
   {
     this.addFakeUsers();

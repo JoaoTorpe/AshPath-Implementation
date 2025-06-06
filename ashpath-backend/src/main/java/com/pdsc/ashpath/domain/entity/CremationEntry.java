@@ -14,15 +14,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "CREMATION_ENTRY")
-@NoArgsConstructor
-@Getter
-@Setter
 public class CremationEntry
 {
   @Id
@@ -40,10 +34,53 @@ public class CremationEntry
   @OneToMany(mappedBy = "cremationEntry")
   private Set<Deceased> deceasedSet = new HashSet<>();
 
+  public CremationEntry()
+  {}
+
   public void addDeceased(Deceased deceased)
   {
     this.deceasedSet.add(deceased);
     deceased.setCremationEntry(this);
+  }
+
+  public void setId(Long id)
+  {
+    this.id = id;
+  }
+
+  public Long getId()
+  {
+    return this.id;
+  }
+
+  public void setCreationDate(LocalDateTime creationDate)
+  {
+    this.creationDate = creationDate;
+  }
+
+  public LocalDateTime getCreationDate()
+  {
+    return this.creationDate;
+  }
+
+  public void setNecrotomist(User necrotomist)
+  {
+    this.necrotomist = necrotomist;
+  }
+
+  public User getNecrotomist()
+  {
+    return this.necrotomist;
+  }
+
+  public void setDeceasedSet(Set<Deceased> deceasedSet)
+  {
+    this.deceasedSet = deceasedSet;
+  }
+
+  public Set<Deceased> getDeceasedSet()
+  {
+    return this.deceasedSet;
   }
 
   @Override

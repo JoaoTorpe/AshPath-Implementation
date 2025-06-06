@@ -2,15 +2,6 @@ package com.pdsc.ashpath.domain.dto.request;
 
 import java.time.LocalDate;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 public class CreateDeceasedRequest
 {
   private String fullname;
@@ -19,4 +10,77 @@ public class CreateDeceasedRequest
   private String causeOfDeath;
   private String fatherName;
   private String motherName;
+
+  public CreateDeceasedRequest()
+  {}
+
+  public CreateDeceasedRequest(String fullname, LocalDate birthDate, LocalDate deathDate, String causeOfDeath, String fatherName, String motherName)
+  {
+    this.fullname = fullname;
+    this.birthDate = birthDate;
+    this.deathDate = deathDate;
+    this.causeOfDeath = causeOfDeath;
+    this.fatherName = fatherName;
+    this.motherName = motherName;
+  }
+
+  public void setFullname(String fullname)
+  {
+    this.fullname = fullname;
+  }
+
+  public String getFullname()
+  {
+    return this.fullname;
+  }
+
+  public void setBirthDate(LocalDate birthDate)
+  {
+    this.birthDate = birthDate;
+  }
+
+  public LocalDate getBirthDate()
+  {
+    return this.birthDate;
+  }
+
+  public void setDeathDate(LocalDate deathDate)
+  {
+    this.deathDate = deathDate;
+  }
+
+  public LocalDate getDeathDate()
+  {
+    return this.deathDate;
+  }
+
+  public void setCauseOfDeath(String causeOfDeath)
+  {
+    this.causeOfDeath = causeOfDeath;
+  }
+
+  public String getCauseOfDeath()
+  {
+    return this.causeOfDeath;
+  }
+
+  public void setFatherName(String fatherName)
+  {
+    this.fatherName = fatherName;
+  }
+
+  public String getFatherName()
+  {
+    return this.fatherName;
+  }
+
+  public void setMotherName(String motherName)
+  {
+    this.motherName = motherName;
+  }
+
+  public String getMotherName()
+  {
+    return this.motherName;
+  }
 }

@@ -9,15 +9,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "GRAVE")
-@NoArgsConstructor
-@Getter
-@Setter
 public class Grave
 {
   @Id
@@ -30,6 +24,39 @@ public class Grave
 
   @OneToOne(mappedBy = "grave")
   private Deceased deceased;
+
+  public Grave()
+  {}
+
+  public void setId(Long id)
+  {
+    this.id = id;
+  }
+
+  public Long getId()
+  {
+    return this.id;
+  }
+
+  public void setLocation(String location)
+  {
+    this.location = location;
+  }
+
+  public String getLocation()
+  {
+    return this.location;
+  }
+
+  public void setDeceased(Deceased deceased)
+  {
+    this.deceased = deceased;
+  }
+
+  public Deceased getDeceased()
+  {
+    return this.deceased;
+  }
 
   @Override
   public int hashCode()
