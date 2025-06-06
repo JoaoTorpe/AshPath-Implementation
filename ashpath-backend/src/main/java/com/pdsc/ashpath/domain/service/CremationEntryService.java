@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.pdsc.ashpath.domain.dto.response.CremationEntryResponse;
@@ -17,15 +16,21 @@ import com.pdsc.ashpath.repository.CremationEntryRepository;
 import com.pdsc.ashpath.repository.DeceasedRepository;
 import com.pdsc.ashpath.repository.UserRepository;
 
-import lombok.RequiredArgsConstructor;
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
-@RequiredArgsConstructor
 public class CremationEntryService
 {
   private final CremationEntryRepository cremationEntryRepository;
   private final UserRepository userRepository;
   private final DeceasedRepository deceasedRepository;
+
+  public CremationEntryService(CremationEntryRepository cremationEntryRepository, UserRepository userRepository, DeceasedRepository deceasedRepository)
+  {
+    this.cremationEntryRepository = cremationEntryRepository;
+    this.userRepository = userRepository;
+    this.deceasedRepository = deceasedRepository;
+  }
 
   public void createCremationEntry(Long necrotomistId)
   {

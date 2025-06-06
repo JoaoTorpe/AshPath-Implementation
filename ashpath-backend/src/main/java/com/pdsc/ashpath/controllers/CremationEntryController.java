@@ -2,7 +2,6 @@ package com.pdsc.ashpath.controllers;
 
 import java.util.List;
 
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,14 +16,18 @@ import com.pdsc.ashpath.domain.dto.request.CreateCremationEntryRequest;
 import com.pdsc.ashpath.domain.dto.response.CremationEntryResponse;
 import com.pdsc.ashpath.domain.service.CremationEntryService;
 
-import lombok.RequiredArgsConstructor;
+import jakarta.persistence.EntityNotFoundException;
 
 @RestController
 @RequestMapping("/cremationEntry")
-@RequiredArgsConstructor
 public class CremationEntryController
 {
   private final CremationEntryService cremationEntryService;
+
+  public CremationEntryController(CremationEntryService cremationEntryService)
+  {
+    this.cremationEntryService = cremationEntryService;
+  }
 
   @GetMapping ("/findAll")
   public ResponseEntity<List<CremationEntryResponse>> findAll()

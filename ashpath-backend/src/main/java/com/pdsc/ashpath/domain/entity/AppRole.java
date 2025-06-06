@@ -16,13 +16,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table(name = "APP_ROLE")
-@Getter
-@Setter
 public class AppRole
 {
   @Id
@@ -41,6 +37,36 @@ public class AppRole
   {
     usersSet.add(user);
     user.getAppRoleSet().add(this);
+  }
+
+  public void setId(Long id)
+  {
+    this.id = id;
+  }
+
+  public Long getId()
+  {
+    return this.id;
+  }
+
+  public void setName(UserAppRole name)
+  {
+    this.name = name;
+  }
+
+  public UserAppRole getName()
+  {
+    return this.name;
+  }
+
+  public void setUsersSet(Set<User> usersSet)
+  {
+    this.usersSet = usersSet;
+  }
+
+  public Set<User> getUsersSet()
+  {
+    return this.usersSet;
   }
 
   @Override

@@ -2,21 +2,30 @@ package com.pdsc.ashpath.domain.dto.response;
 
 import com.pdsc.ashpath.domain.entity.User;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-public class SuccessfulLoginResponse
+public final class SuccessfulLoginResponse
 {
   private Long loggedUserId;
+
+  public SuccessfulLoginResponse()
+  {}
+
+  public SuccessfulLoginResponse(Long loggedUserId)
+  {
+    this.loggedUserId = loggedUserId;
+  }  
 
   public SuccessfulLoginResponse(User user)
   {
     setLoggedUserId(user.getId());
+  }
+
+  public void setLoggedUserId(Long loggedUserId)
+  {
+    this.loggedUserId = loggedUserId;
+  }
+
+  public Long getLoggedUserId()
+  {
+    return loggedUserId;
   }
 }

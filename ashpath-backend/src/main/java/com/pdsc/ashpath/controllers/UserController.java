@@ -20,14 +20,16 @@ import com.pdsc.ashpath.domain.dto.response.NecrotomistUserResponse;
 import com.pdsc.ashpath.domain.dto.response.UserResponse;
 import com.pdsc.ashpath.domain.service.UserService;
 
-import lombok.RequiredArgsConstructor;
-
 @RestController
 @RequestMapping("/user")
-@RequiredArgsConstructor
 public class UserController
 {
   private final UserService userService;
+
+  public UserController(UserService userService)
+  {
+    this.userService = userService;
+  }
 
   @PostMapping("/admin")
   public ResponseEntity<Void> createAdminUser(@RequestBody CreateAdminUserRequest request)

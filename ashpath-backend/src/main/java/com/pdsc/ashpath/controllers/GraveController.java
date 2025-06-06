@@ -15,14 +15,16 @@ import com.pdsc.ashpath.domain.dto.request.CreateGraveRequest;
 import com.pdsc.ashpath.domain.dto.response.GraveResponse;
 import com.pdsc.ashpath.domain.service.GraveService;
 
-import lombok.RequiredArgsConstructor;
-
 @RestController
 @RequestMapping("/grave")
-@RequiredArgsConstructor
 public class GraveController
 {
   private final GraveService graveService;
+
+  public GraveController(GraveService graveService)
+  {
+    this.graveService = graveService;
+  }
 
   @PostMapping
   public ResponseEntity<Void> createGrave(@RequestBody CreateGraveRequest request)

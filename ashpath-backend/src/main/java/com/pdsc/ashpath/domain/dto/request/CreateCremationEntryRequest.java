@@ -1,15 +1,24 @@
 package com.pdsc.ashpath.domain.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
 public class CreateCremationEntryRequest
 {
   private Long necrotomistId;
+
+  public CreateCremationEntryRequest()
+  {}
+
+  public CreateCremationEntryRequest(Long necrotomistId)
+  {
+    this.necrotomistId = necrotomistId;
+  }
+
+  public void setNecrotomistId(Long necrotomistId)
+  {
+    this.necrotomistId = necrotomistId;
+  }
+
+  public Long getNecrotomistId()
+  {
+    return this.necrotomistId;
+  }
 }
