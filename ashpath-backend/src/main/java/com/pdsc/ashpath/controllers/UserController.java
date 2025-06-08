@@ -69,8 +69,8 @@ public class UserController
     return ResponseEntity.status(HttpStatus.OK).body(necrotomistUsers);
   }
 
-  @GetMapping("/necrotomist/filter")
-  public ResponseEntity<List<NecrotomistUserResponse>> readAllNecrotomistUsersBySpecialization(@RequestParam String specialization)
+  @GetMapping("/necrotomist/{specialization}")
+  public ResponseEntity<List<NecrotomistUserResponse>> readAllNecrotomistUsersBySpecialization(@PathVariable String specialization)
   {
     List<NecrotomistUserResponse> necrotomistUsers = userService.filterNecrotomistBySpecialization(specialization);
     return ResponseEntity.status(HttpStatus.OK).body(necrotomistUsers);

@@ -25,43 +25,43 @@ public class Deceased
 {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "Id")
+  @Column(name = "ID")
   private Long id;
 
-  @Column(name = "Fullname", length = 128)
+  @Column(name = "FULL_NAME", length = 128)
   private String fullname;
 
-  @Column(name = "BirthDate", columnDefinition = "DATE")
+  @Column(name = "BIRTH_DATE", columnDefinition = "DATE")
   private LocalDate birthDate;
 
-  @Column(name = "DeathDate", columnDefinition = "DATE")
+  @Column(name = "DEATH_DATE", columnDefinition = "DATE")
   private LocalDate deathDate;
 
-  @Column(name = "CauseOfDeath", length = 128)
+  @Column(name = "CAUSE_OF_DEATH", length = 128)
   private String causeOfDeath;
 
   @Lob
   private byte[] deathCertificate;
 
-  @Column(name = "FatherName", length = 128)
+  @Column(name = "FATHER_NAME", length = 128)
   private String fatherName;
 
-  @Column(name = "MotherName", length = 128)
+  @Column(name = "MOTHER_NAME", length = 128)
   private String motherName;
 
   @Enumerated(EnumType.STRING)
-  @Column(name = "Status")
+  @Column(name = "STATUS")
   private DeceasedStatus status;
 
-  @Column(name = "CremationEnteredDate", columnDefinition = "TIMESTAMP")
+  @Column(name = "CREMATION_ENTERED_DATE", columnDefinition = "TIMESTAMP")
   private LocalDateTime cremationEnteredDate;
 
   @ManyToOne
-  @JoinColumn(name = "CremationEntryId")
+  @JoinColumn(name = "CREMATION_ENTRY_ID")
   private CremationEntry cremationEntry;
 
   @OneToOne
-  @JoinColumn(name = "GraveId", nullable = true)
+  @JoinColumn(name = "GRAVE_ID", nullable = true)
   private Grave grave;
 
   public Deceased()
