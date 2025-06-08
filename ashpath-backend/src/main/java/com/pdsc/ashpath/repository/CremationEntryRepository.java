@@ -9,7 +9,7 @@ import com.pdsc.ashpath.domain.entity.CremationEntry;
 
 public interface CremationEntryRepository extends JpaRepository<CremationEntry, Long>
 {
-  @Override
   @Query("SELECT ce FROM CremationEntry ce")
+  @Override
   List<CremationEntry> findAll();
 }

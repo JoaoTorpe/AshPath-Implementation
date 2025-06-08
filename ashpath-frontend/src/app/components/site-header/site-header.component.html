@@ -6,13 +6,13 @@
         <a routerLink="/necrotomist" routerLinkActive="active">Necrotomist</a>
     </div>
     <div class="right" *ngIf="!userSig()">
-        <a routerLink="/login" routerLinkActive="active">Login</a>
+        <a routerLink="/login" class="cta">Login</a>
         <a routerLink="/register" class="cta">Register</a>
     </div>
     <div class="right" *ngIf="userSig()">
         <div>
-            <div class="logout" *ngIf="showLogoutMenu">
-                <button (click)="logout()">Logout</button>
+            <div class="logout">
+                <a routerLink="/login" (click)="logout()" class="cta">Logout</a>
             </div>
         </div>
     </div>

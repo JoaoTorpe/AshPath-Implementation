@@ -22,8 +22,8 @@ export class LoginComponent {
     private authService: LoginService,
   ) {
     this.loginForm = this.fb.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required],
+      email: ['necrotomista1@ashpath.com', Validators.required],
+      password: ['senha123', Validators.required],
     });
   }
 
@@ -36,7 +36,7 @@ export class LoginComponent {
     this.authService.signIn(request).subscribe({
       next: (response) => {
         console.log('Login bem-sucedido', response);
-        // this.router.navigate(['/home']); 
+        this.router.navigate(['/home']); 
       },
       error: (err: HttpErrorResponse) => {
         if (err.status === 401) {
