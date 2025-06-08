@@ -1,3 +1,5 @@
+@use '../../../styles.scss' as *;
+
 .login-container {
     max-width: 400px;
     margin: 2rem auto;
@@ -35,7 +37,7 @@
 
 .form-input:focus {
     outline: none;
-    border-color: #6366f1;
+    border-color: $deep-blue;
     box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
     background-color: #ffffff;
 }
@@ -51,7 +53,7 @@
     font-size: 1rem;
     font-weight: 600;
     color: white;
-    background-color: #6366f1;
+    background-color: $deep-blue;
     border: none;
     border-radius: 8px;
     cursor: pointer;

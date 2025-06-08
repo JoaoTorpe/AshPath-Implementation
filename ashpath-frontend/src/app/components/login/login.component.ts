@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { LoginService } from './services/login.service';
-import { LoginRequest } from '../utils/models';
+import { LoginService } from '../../services/login.service';
+import { LoginRequest } from '../../utils/models';
 
 @Component({
   selector: 'app-login',
@@ -31,7 +31,7 @@ export class LoginComponent {
     if (this.loginForm.invalid) return;
     this.errorMessage = null;
 
-    const request: LoginRequest = this.loginForm.value as LoginRequest;
+    const request = this.loginForm.value as LoginRequest;
 
     this.authService.signIn(request).subscribe({
       next: (response) => {

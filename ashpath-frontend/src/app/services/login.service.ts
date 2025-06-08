@@ -1,14 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { map } from 'rxjs';
-import { IUser as IUser, LoginRequest } from '../../utils/models';
+import { IUser as IUser, LoginRequest } from '../utils/models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
-  private _user = signal<null | IUser>(null);
-  user = this._user.asReadonly();
+  private _userSig = signal<null | IUser>(null);
+  userSig = this._userSig.asReadonly();
 
   constructor(private http: HttpClient) { }
 
@@ -16,13 +16,13 @@ export class LoginService {
     return this.http.post<IUser>('/auth/login', req)
       .pipe(
         map((res) => {
-          this._user.set(res);
+          this._userSig.set(res);
           return res;
         })
       );
   }
 
-  signOut() {
-    this._user.set(null);
+  logout() {
+    this._userSig.set(null);
   }
 }
