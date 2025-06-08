@@ -16,10 +16,10 @@ public class Grave
 {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "Id")
+  @Column(name = "ID")
   private Long id;
 
-  @Column(name = "Location", length = 128)
+  @Column(name = "LOCATION", length = 128)
   private String location;
 
   @OneToOne(mappedBy = "grave")

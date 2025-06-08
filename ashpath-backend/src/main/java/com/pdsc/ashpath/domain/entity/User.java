@@ -22,32 +22,32 @@ public class User
 {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "Id")
+  @Column(name = "ID")
   private Long id;
 
-  @Column(name = "Email", length = 64)
+  @Column(name = "EMAIL", length = 64)
   private String email;
 
-  @Column(name = "Password", length = 64)
+  @Column(name = "PASSWORD", length = 64)
   private String password;
 
-  @Column(name = "Fullname", length = 128)
+  @Column(name = "FULL_NAME", length = 128)
   private String fullname;
 
-  @Column(name = "RegistrationDate", columnDefinition = "TIMESTAMP")
+  @Column(name = "REGISTRATION_DATE", columnDefinition = "TIMESTAMP")
   private LocalDateTime registrationDate;
 
-  @Column(name = "LastActivityDate", columnDefinition = "TIMESTAMP")
+  @Column(name = "LAST_ACTIVITY_DATE", columnDefinition = "TIMESTAMP")
   private LocalDateTime lastActivityDate;
 
-  @Column(name = "Specialization")
+  @Column(name = "SPECIALIZATION")
   private String specialization;
 
   @ManyToMany
   @JoinTable(
     name = "ROLE_APP_USER",
-    joinColumns = @JoinColumn(name = "App_User_Id"),
-    inverseJoinColumns = @JoinColumn(name = "Role_App_Id")
+    joinColumns = @JoinColumn(name = "APP_USER_ID"),
+    inverseJoinColumns = @JoinColumn(name = "ROLE_APP_ID")
   )
   private Set<AppRole> appRoleSet = new HashSet<>();
   

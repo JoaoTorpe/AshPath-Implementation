@@ -21,14 +21,14 @@ public class CremationEntry
 {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "Id")
+  @Column(name = "ID")
   private Long id;
 
-  @Column(name = "EnteredDate", columnDefinition = "TIMESTAMP")
+  @Column(name = "ENTERED_DATE", columnDefinition = "TIMESTAMP")
   private LocalDateTime creationDate;
 
   @ManyToOne
-  @JoinColumn(name = "Necrotomist_Id")
+  @JoinColumn(name = "NECROTOMIST_ID")
   private User necrotomist;
 
   @OneToMany(mappedBy = "cremationEntry")

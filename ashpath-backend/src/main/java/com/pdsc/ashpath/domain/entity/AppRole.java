@@ -23,11 +23,11 @@ public class AppRole
 {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "Id")
+  @Column(name = "ID")
   private Long id;
   
   @Enumerated(EnumType.STRING)
-  @Column(name = "Name", unique = true, nullable = false)
+  @Column(name = "NAME", unique = true, nullable = false)
   private UserAppRole name;
 
   @ManyToMany(fetch = FetchType.EAGER, mappedBy = "appRoleSet")
