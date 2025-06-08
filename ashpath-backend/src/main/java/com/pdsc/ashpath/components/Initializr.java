@@ -55,7 +55,7 @@ public class Initializr implements CommandLineRunner
   @Override
   public void run(String ...args)
   {
-    this.addDefaultAppRoles();
+    //this.addDefaultAppRoles();
     // this.seedDatabase();
   }
 
