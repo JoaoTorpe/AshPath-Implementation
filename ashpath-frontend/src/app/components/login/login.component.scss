@@ -1,6 +1,6 @@
 @use '../../../styles.scss' as *;
 
-.login-container {
+.container {
     max-width: 400px;
     margin: 2rem auto;
     padding: 2.5rem;
@@ -100,7 +100,7 @@
 }
 
 @media (max-width: 480px) {
-    .login-container {
+    .container {
         padding: 1.75rem;
         margin: 1rem;
     }

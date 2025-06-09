@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { map } from 'rxjs';
-import { IUser as IUser, LoginRequest } from '../utils/models';
+import { SuccessfulLoginResponse as SuccessfulLoginResponse, LoginRequest } from '../utils/models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
-  private _userSig = signal<null | IUser>(null);
+  private _userSig = signal<null | SuccessfulLoginResponse>(null);
   userSig = this._userSig.asReadonly();
 
   constructor(private http: HttpClient) {
@@ -18,7 +18,7 @@ export class LoginService {
   }
 
   signIn(req: LoginRequest) {
-    return this.http.post<IUser>('/auth/login', req)
+    return this.http.post<SuccessfulLoginResponse>('/auth/login', req)
       .pipe(
         map((res) => {
           sessionStorage.setItem('user', JSON.stringify(res));

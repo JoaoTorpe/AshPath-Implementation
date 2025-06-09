@@ -1,1 +1,34 @@
-<p>register works!</p>
+<div class="container">
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label class="form-label">E-mail</label>
+      <input type="text" class="form-input" formControlName="email" />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input type="password" class="form-input" formControlName="password" />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Repeat Password</label>
+      <input type="password" class="form-input" formControlName="repeatPassword" />
+    </div>
+
+    @if (isAdmin()) {
+    <div class="form-group">
+      <!-- TODO: register admins and necrotomists -->
+    </div>
+    }
+
+    <button type="submit" class="form-button" [disabled]="formGroup.invalid">Register</button>
+
+    @if (errorMessage) {
+    <div class="error">
+      {{ errorMessage }}
+    </div>
+    }
+
+  </form>
+</div>

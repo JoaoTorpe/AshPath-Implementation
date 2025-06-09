@@ -1,5 +1,5 @@
 import { Component, OnInit, Signal } from '@angular/core';
-import { IUser } from '../../utils/models';
+import { SuccessfulLoginResponse } from '../../utils/models';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { LoginService } from '../../services/login.service';
@@ -11,7 +11,7 @@ import { LoginService } from '../../services/login.service';
   styleUrl: './site-header.component.scss'
 })
 export class SiteHeaderComponent implements OnInit {
-  userSig!: Signal<IUser | null>;
+  userSig!: Signal<SuccessfulLoginResponse | null>;
   showLogoutMenu = false;
 
   constructor(private loginService: LoginService) { }

@@ -1,0 +1,111 @@
+@use '../../../styles.scss' as *;
+
+.container {
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 2.5rem;
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.form-group {
+    margin-bottom: 1.75rem;
+    position: relative;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #4a5568;
+    transition: all 0.2s ease;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    font-size: 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background-color: #f8fafc;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: $deep-blue;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+    background-color: #ffffff;
+}
+
+.form-input::placeholder {
+    color: #94a3b8;
+    opacity: 0.6;
+}
+
+.form-button {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    background-color: $deep-blue;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 0.5rem;
+}
+
+.form-button:hover {
+    background-color: #4f46e5;
+    transform: translateY(-1px);
+}
+
+.form-button:active {
+    transform: translateY(0);
+}
+
+.form-button:disabled {
+    background-color: #cbd5e1;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.error {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: #fee2e2;
+    color: #dc2626;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    text-align: center;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 1.75rem;
+        margin: 1rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+}
