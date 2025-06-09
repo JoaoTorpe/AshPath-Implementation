@@ -8,6 +8,38 @@
     background: #ffffff;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    margin-top: 0px;
+}
+
+.select {
+    width: 20%;
+    padding: 0.85rem 1rem;
+    font-size: 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background-color: #f8fafc;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.select:focus {
+    outline: none;
+    border-color: $deep-blue;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+    background-color: #ffffff;
+}
+
+.select::placeholder {
+    color: #94a3b8;
+    opacity: 0.6;
+}
+
+.wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem 0;
 }
 
 .form-group {

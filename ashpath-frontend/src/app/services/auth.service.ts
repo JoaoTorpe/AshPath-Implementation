@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { map } from 'rxjs';
-import { SuccessfulLoginResponse as SuccessfulLoginResponse, LoginRequest } from '../utils/models';
+import { SuccessfulLoginResponse as SuccessfulLoginResponse, LoginRequest, CreateAdminRequest, AdminUserResponse, CreateNecrotomistRequest } from '../utils/models';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class AuthService {
   private _userSig = signal<null | SuccessfulLoginResponse>(null);
   userSig = this._userSig.asReadonly();
 
@@ -31,5 +31,13 @@ export class LoginService {
   logout() {
     sessionStorage.removeItem('user');
     this._userSig.set(null);
+  }
+
+  registerAdmin(req: CreateAdminRequest) {
+    return this.http.post<AdminUserResponse>('/user/admin', req);
+  }
+
+  registerNecrotomist(req: CreateNecrotomistRequest) {
+    return this.http.post<AdminUserResponse>('/user/necrotomist', req);
   }
 }

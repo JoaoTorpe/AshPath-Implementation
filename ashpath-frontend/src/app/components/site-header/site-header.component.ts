@@ -2,7 +2,7 @@ import { Component, OnInit, Signal } from '@angular/core';
 import { SuccessfulLoginResponse } from '../../utils/models';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { LoginService } from '../../services/login.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-site-header',
@@ -14,7 +14,7 @@ export class SiteHeaderComponent implements OnInit {
   userSig!: Signal<SuccessfulLoginResponse | null>;
   showLogoutMenu = false;
 
-  constructor(private loginService: LoginService) { }
+  constructor(private loginService: AuthService) { }
 
   ngOnInit() {
     this.userSig = this.loginService.userSig;

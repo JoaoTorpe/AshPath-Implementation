@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { LoginService } from '../../services/login.service';
+import { AuthService } from '../../services/auth.service';
 import { LoginRequest } from '../../utils/models';
 
 @Component({
@@ -19,7 +19,7 @@ export class LoginComponent {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private authService: LoginService,
+    private authService: AuthService,
   ) {
     this.loginForm = this.fb.group({
       email: ['necrotomista1@ashpath.com', Validators.required],
@@ -35,7 +35,7 @@ export class LoginComponent {
 
     this.authService.signIn(request).subscribe({
       next: (response) => {
-        console.log('Login bem-sucedido', response);
+        // console.log('Login bem-sucedido', response);
         this.router.navigate(['/home']); 
       },
       error: (err: HttpErrorResponse) => {

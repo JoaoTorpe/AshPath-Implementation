@@ -5,7 +5,7 @@ export interface LoginRequest {
 
 export interface SuccessfulLoginResponse {
     loggedUserId: number;
-    appRole: AppRole[];
+    appRoleSet: AppRole[];
 }
 
 export interface CreateAdminRequest {

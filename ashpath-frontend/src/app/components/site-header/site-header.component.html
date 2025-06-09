@@ -7,13 +7,11 @@
     </div>
     <div class="right" *ngIf="!userSig()">
         <a routerLink="/login" class="cta">Login</a>
-        <a routerLink="/register" class="cta">Register</a>
     </div>
     <div class="right" *ngIf="userSig()">
-        <div>
-            <div class="logout">
-                <a routerLink="/login" (click)="logout()" class="cta">Logout</a>
-            </div>
+        <a routerLink="/register" class="cta">Register</a>
+        <div class="logout">
+            <a routerLink="/login" (click)="logout()" class="cta">Logout</a>
         </div>
     </div>
 </div>

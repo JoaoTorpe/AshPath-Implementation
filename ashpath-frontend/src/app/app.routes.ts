@@ -8,7 +8,7 @@ const guards = { canActivate: [isLogged] }
 
 export const routes: Routes = [
     { path: 'home', component: HomeComponent, ...guards },
-    { path: 'register', component: RegisterComponent, },
+    { path: 'register', component: RegisterComponent, ...guards },
     { path: "login", component: LoginComponent, },
     { path: "**", redirectTo: "/login" },
 ];

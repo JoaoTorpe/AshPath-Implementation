@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoginService } from '../../services/login.service';
-import { AppRole, CreateAdminRequest, CreateNecrotomistRequest, LoginRequest } from '../../utils/models';
+import { AuthService } from '../../services/auth.service';
+import { AppRole } from '../../utils/models';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -13,46 +13,70 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrl: './register.component.scss'
 })
 export class RegisterComponent {
-  userSig;
-  isAdmin;
   errorMessage: string | null = null;
-  formGroup: FormGroup;
+  adminFormGroup: FormGroup;
+  necrotomistFormGroup: FormGroup;
+  formType = '';
+
+  userSig;
+  allAppRoles = Object.values(AppRole);
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private authService: LoginService,
+    private authService: AuthService,
   ) {
-    this.formGroup = this.fb.group({
-      email: ['necrotomista1@ashpath.com', Validators.required],
-      password: ['senha123', Validators.required],
+    this.adminFormGroup = this.fb.group({
+      fullname: ['', Validators.required],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+      repeatPassword: ['', Validators.required],
     });
+
+    this.necrotomistFormGroup = this.fb.group({
+      fullname: ['', Validators.required],
+      specialization: ['', Validators.required],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+      repeatPassword: ['', Validators.required],
+    });
+
     this.userSig = authService.userSig;
-    this.isAdmin = computed(() => this.userSig()
-      ?.appRole
-      .some((v) => v === AppRole.ADMIN)
-    )
   }
 
-  onSubmit(): void {
-    if (this.formGroup.invalid) return;
+  onFormTypeChange(event: Event): void {
+    const selected = (event.target as HTMLSelectElement).value;
+    this.formType = selected;
+  }
+
+  onSubmitNecro(): void {
+    if (this.necrotomistFormGroup.invalid) return;
     this.errorMessage = null;
 
-    const request = this.isAdmin() 
-      ? this.formGroup.value as CreateAdminRequest
-      : this.formGroup.value as CreateNecrotomistRequest;
+    this.authService.registerNecrotomist(this.necrotomistFormGroup.value)
+      .subscribe({
+        next: (res) => {
+          this.router.navigate(['/login']);
+        },
+        error: this.error.bind(this),
+      });
+  }
 
-    this.authService.signIn(request).subscribe({
-      next: (response) => {
-        this.router.navigate(['/login']);
-      },
-      error: (err: HttpErrorResponse) => {
-        if (err.status === 401) {
-          this.errorMessage = 'Usuário ou senha inválidos.';
-        } else {
-          this.errorMessage = 'Erro ao tentar login. Tente novamente.';
-        }
-      },
-    });;
+  onSubmitAdmin(): void {
+    if (this.adminFormGroup.invalid) return;
+    this.errorMessage = null;
+
+    this.authService.registerAdmin(this.adminFormGroup.value)
+      .subscribe({
+        next: (res) => {
+          this.router.navigate(['/login']);
+        },
+        error: this.error.bind(this),
+      });
+  }
+
+  private error(err: HttpErrorResponse) {
+    console.log(err);
+    this.errorMessage = 'Erro ao registrar. Tente novamente.';
   }
 }

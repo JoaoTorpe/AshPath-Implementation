@@ -1,8 +1,8 @@
 import { inject } from "@angular/core"
-import { LoginService } from "../services/login.service"
+import { AuthService } from "../services/auth.service"
 
 export const isLogged = () => {
-    const loginSvc = inject(LoginService);
+    const loginSvc = inject(AuthService);
 
     if(loginSvc.userSig()) return true;
 
