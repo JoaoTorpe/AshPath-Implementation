@@ -4,13 +4,14 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.pdsc.ashpath.AshPathUtils;
 
-public class LoginScreen {
+public class LoginPageTest {
     String url = AshPathUtils.url + "login";
     WebDriver driver;
 
@@ -36,5 +37,7 @@ public class LoginScreen {
         email.sendKeys("necrotomista1@ashpath.com");
         pwd.sendKeys("senha123");
         btn.click();
+
+        Assert.assertTrue(driver.getCurrentUrl().contains("home"));
     }
 }

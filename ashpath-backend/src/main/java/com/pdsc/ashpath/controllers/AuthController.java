@@ -29,7 +29,7 @@ public class AuthController
   @PostMapping("/login")
   public ResponseEntity<?> login(@RequestBody LoginRequest request)
   {
-    User user =  authService.login(request);
+    User user = authService.login(request);
 
     if(Objects.isNull(user))
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Falha ao fazer login");
