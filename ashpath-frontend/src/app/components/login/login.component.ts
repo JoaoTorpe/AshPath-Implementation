@@ -40,9 +40,9 @@ export class LoginComponent {
       },
       error: (err: HttpErrorResponse) => {
         if (err.status === 401) {
-          this.errorMessage = 'Usuário ou senha inválidos.';
+          this.errorMessage = 'Invalid email/password.';
         } else {
-          this.errorMessage = 'Erro ao tentar login. Tente novamente.';
+          this.errorMessage = 'Failed to login. Please try again.';
         }
       },
     });;

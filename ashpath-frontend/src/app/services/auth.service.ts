@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { map } from 'rxjs';
-import { SuccessfulLoginResponse as SuccessfulLoginResponse, LoginRequest, CreateAdminRequest, AdminUserResponse, CreateNecrotomistRequest } from '../utils/models';
+import { SuccessfulLoginResponse as SuccessfulLoginResponse, LoginRequest, CreateAdminRequest, AdminUserResponse, CreateNecrotomistRequest, CreateViewerRequest, ViewerUserResponse } from '../utils/models';
 
 @Injectable({
   providedIn: 'root'
@@ -39,5 +39,9 @@ export class AuthService {
 
   registerNecrotomist(req: CreateNecrotomistRequest) {
     return this.http.post<AdminUserResponse>('/user/necrotomist', req);
+  }
+
+  registerViewer(req: CreateViewerRequest) {
+    return this.http.post<ViewerUserResponse>('/user/viewer', req);
   }
 }

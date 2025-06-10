@@ -1,5 +1,3 @@
-
-
 -- 1. Criação das tabelas (ajustada para consistência)
 CREATE TABLE IF NOT EXISTS APP_ROLE (
     Id BIGINT PRIMARY KEY AUTO_INCREMENT,
@@ -56,7 +54,8 @@ CREATE TABLE IF NOT EXISTS DECEASED (
 -- 2. INSERTs corrigidos para usar os nomes padronizados
 INSERT INTO APP_ROLE (Name) VALUES
 ('ADMIN'),
-('NECROTOMIST');
+('NECROTOMIST'),
+('VIEWER');
 
 INSERT INTO APP_USER (Email, Password, Full_Name, Registration_Date, Last_Activity_Date, Specialization) VALUES
 ('admin@ashpath.com', 'senha123', 'Administrador do Sistema', NOW(), NOW(), 'Administração'),

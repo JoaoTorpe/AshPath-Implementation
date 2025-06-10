@@ -1,15 +1,11 @@
-package com.pdsc.ashpath.domain.dto.request;
+package com.pdsc.ashpath.domain.dto.request.user;
 
-public class CreateAdminUserRequest
+public class CreateViewerUserRequest extends AbstractCreateUserRequest
 {
-  private String email;
-  private String password;
-  private String fullname;
-  
-  public CreateAdminUserRequest()
+  public CreateViewerUserRequest()
   {}
 
-  public CreateAdminUserRequest(String email, String password, String fullname)
+  public CreateViewerUserRequest(String email, String password, String fullname)
   {
     this.email = email;
     this.password = password;

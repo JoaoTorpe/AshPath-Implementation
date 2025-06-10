@@ -11,8 +11,42 @@
   </select>
 </div>
 
+@if (formType === "VIEWER") {
+<div class="container viewer">
+  <form [formGroup]="viewerFormGroup" (ngSubmit)="onSubmitViewer()">
+    <div class="form-group">
+      <label class="form-label">Full Name</label>
+      <input type="text" class="form-input" formControlName="fullname" />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">E-mail</label>
+      <input type="text" class="form-input" formControlName="email" />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input type="password" class="form-input" formControlName="password" />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Repeat Password</label>
+      <input type="password" class="form-input" formControlName="repeatPassword" />
+    </div>
+
+    <button type="submit" class="form-button" [disabled]="viewerFormGroup.invalid">Register</button>
+
+    @if (errorMessage) {
+    <div class="error">
+      {{ errorMessage }}
+    </div>
+    }
+  </form>
+</div>
+}
+
 @if (formType === "NECROTOMIST") {
-<div class="container">
+<div class="container necrotomist">
   <form [formGroup]="necrotomistFormGroup" (ngSubmit)="onSubmitNecro()">
 
     <div class="form-group">
@@ -52,7 +86,7 @@
 }
 
 @else if (formType === "ADMIN") {
-<div class="container">
+<div class="container admin">
   <form [formGroup]="adminFormGroup" (ngSubmit)="onSubmitAdmin()">
     <div class="form-group">
       <label class="form-label">Full Name</label>

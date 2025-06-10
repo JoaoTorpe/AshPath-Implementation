@@ -1,10 +1,7 @@
-package com.pdsc.ashpath.domain.dto.request;
+package com.pdsc.ashpath.domain.dto.request.user;
 
-public class CreateNecrotomistRequest
+public class CreateNecrotomistRequest extends AbstractCreateUserRequest
 {
-  private String email;
-  private String password;
-  private String fullname;
   private String specialization;
 
   public CreateNecrotomistRequest()

@@ -5,13 +5,11 @@
         <a routerLink="/cremation-entry" routerLinkActive="active">Cremation Entry</a>
         <a routerLink="/necrotomist" routerLinkActive="active">Necrotomist</a>
     </div>
-    <div class="right" *ngIf="!userSig()">
-        <a routerLink="/login" class="cta">Login</a>
-    </div>
-    <div class="right" *ngIf="userSig()">
-        <a routerLink="/register" class="cta">Register</a>
-        <div class="logout">
+    <div class="right">
+        <a routerLink="/login" class="cta" *ngIf="!userSig()">Login</a>
+        <div class="logout" *ngIf="userSig()">
             <a routerLink="/login" (click)="logout()" class="cta">Logout</a>
         </div>
+        <a routerLink="/register" class="cta" *ngIf="userSig()">Register</a>
     </div>
 </div>

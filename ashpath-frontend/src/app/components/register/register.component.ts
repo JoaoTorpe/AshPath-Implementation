@@ -16,6 +16,7 @@ export class RegisterComponent {
   errorMessage: string | null = null;
   adminFormGroup: FormGroup;
   necrotomistFormGroup: FormGroup;
+  viewerFormGroup: FormGroup;
   formType = '';
 
   userSig;
@@ -26,11 +27,14 @@ export class RegisterComponent {
     private fb: FormBuilder,
     private authService: AuthService,
   ) {
+    this.userSig = authService.userSig;
+
     this.adminFormGroup = this.fb.group({
       fullname: ['', Validators.required],
       email: ['', Validators.required],
       password: ['', Validators.required],
       repeatPassword: ['', Validators.required],
+      userId: [this.userSig()!!.loggedUserId],
     });
 
     this.necrotomistFormGroup = this.fb.group({
@@ -39,14 +43,34 @@ export class RegisterComponent {
       email: ['', Validators.required],
       password: ['', Validators.required],
       repeatPassword: ['', Validators.required],
+      userId: [this.userSig()!!.loggedUserId],
     });
 
-    this.userSig = authService.userSig;
+    this.viewerFormGroup = this.fb.group({
+      fullname: ['', Validators.required],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+      repeatPassword: ['', Validators.required],
+      userId: [this.userSig()!!.loggedUserId],
+    });
   }
 
   onFormTypeChange(event: Event): void {
     const selected = (event.target as HTMLSelectElement).value;
     this.formType = selected;
+  }
+
+  onSubmitViewer(): void {
+    if (this.viewerFormGroup.invalid) return;
+    this.errorMessage = null;
+
+    this.authService.registerViewer(this.viewerFormGroup.value)
+      .subscribe({
+        next: (res) => {
+          this.onSuccess();
+        },
+        error: this.onError.bind(this),
+      });
   }
 
   onSubmitNecro(): void {
@@ -56,9 +80,9 @@ export class RegisterComponent {
     this.authService.registerNecrotomist(this.necrotomistFormGroup.value)
       .subscribe({
         next: (res) => {
-          this.router.navigate(['/login']);
+          this.onSuccess();
         },
-        error: this.error.bind(this),
+        error: this.onError.bind(this),
       });
   }
 
@@ -69,14 +93,23 @@ export class RegisterComponent {
     this.authService.registerAdmin(this.adminFormGroup.value)
       .subscribe({
         next: (res) => {
-          this.router.navigate(['/login']);
+          this.onSuccess();
         },
-        error: this.error.bind(this),
+        error: this.onError.bind(this),
       });
   }
 
-  private error(err: HttpErrorResponse) {
+  private onSuccess() {
+    this.router.navigate(['/home']);
+  }
+
+  private onError(err: HttpErrorResponse) {
     console.log(err);
-    this.errorMessage = 'Erro ao registrar. Tente novamente.';
+    if (err.status === 403) {
+      this.errorMessage = `You don't have permission to create user of type ${this.formType}.`;
+    }
+    else {
+      this.errorMessage = 'Failed to register. Please try again.';
+    }
   }
 }

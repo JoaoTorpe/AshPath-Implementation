@@ -1,43 +1,37 @@
 package com.pdsc.ashpath.selenium;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import com.pdsc.ashpath.AshPathUtils;
+public class LoginPageTest extends BaseTest {
+    @Test
+    public void loginNecrotomist_Success() {
+        var homePage = loginPage
+                .logIntoApp("necrotomista1@ashpath.com", "senha123");
 
-public class LoginPageTest {
-    String url = AshPathUtils.url + "login";
-    WebDriver driver;
-
-    @BeforeClass
-    public void setUp() {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get(url);
-    }
-
-    @AfterClass
-    public void tearDown() {
-        // driver.quit(); // closes the window and the webdriver
-        // driver.close(); // only closes the window
+        Assert.assertTrue(homePage.isDisplayed());
     }
 
     @Test
-    public void TestLogin() {
-        WebElement btn = driver.findElement(By.cssSelector("button[type='submit']"));
-        var email = driver.findElement(By.cssSelector("input[type='text']"));
-        var pwd = driver.findElement(By.cssSelector("input[type='password']"));
+    public void loginNecrotomist_Error() {
+        loginPage.logIntoApp("necrotomista1@ashpath.com", "11111");
 
-        email.sendKeys("necrotomista1@ashpath.com");
-        pwd.sendKeys("senha123");
-        btn.click();
+        Assert.assertTrue(loginPage.isErrorMsgPresent("Invalid email/password."));
+    }
 
-        Assert.assertTrue(driver.getCurrentUrl().contains("home"));
+    @Test
+    public void loginAdmin_Success() {
+        var homePage = loginPage
+                .logIntoApp("admin@ashpath.com", "senha123");
+
+        Assert.assertTrue(homePage.isDisplayed());
+    }
+
+    @Test
+    public void loginAdmin_Error() {
+        loginPage
+                .logIntoApp("admin@ashpath.com", "sssssssss");
+
+        Assert.assertTrue(loginPage.isErrorMsgPresent("Invalid email/password."));
     }
 }
