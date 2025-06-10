@@ -1,0 +1,40 @@
+<div class="container">
+  <h1>Entradas de Cremação</h1>
+
+  @if (!entries || entries.length === 0) {
+  <div class="no-entries">
+    <p>Nenhuma entrada encontrada ou carregando dados...</p>
+  </div>
+  } @else {
+  <div class="card-grid">
+    @for (entry of entries; track entry.id) {
+    <div class="card">
+      <div class="card-header">
+        <h2>Entrada #{{ entry.id }}</h2>
+        <span class="date">{{
+          entry.creationDate | date : "dd/MM/yyyy HH:mm"
+        }}</span>
+      </div>
+      <div class="card-body">
+        <div class="info-item">
+          <strong>Necrotomista:</strong>
+          <span>{{ entry.necrotomist?.fullname }}</span>
+        </div>
+        <div class="info-item">
+          <strong>Falecidos ({{ entry.deceaseds?.length || 0 }}):</strong>
+          @if (entry.deceaseds && entry.deceaseds.length > 0) {
+          <ul class="deceased-list">
+            @for (deceased of entry.deceaseds; track deceased.id) {
+            <li>{{ deceased.fullname }} - (Status: {{ deceased.status }})</li>
+            }
+          </ul>
+          } @else {
+          <p class="no-deceased">Nenhum falecido registrado nesta entrada.</p>
+          }
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+  }
+</div>
