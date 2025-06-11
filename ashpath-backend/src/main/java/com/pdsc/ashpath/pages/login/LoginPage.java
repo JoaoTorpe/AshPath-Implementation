@@ -34,6 +34,12 @@ public class LoginPage extends BasePage {
         return clickLoginBtn();
     }
 
+    public HomePage logInAsViewer() {
+        set(this.emailEl, "viewer1@ashpath.com");
+        set(this.passwordEl, "senha123");
+        return clickLoginBtn();
+    }
+
     public HomePage logIntoApp(String email, String pwd) {
         set(this.emailEl, email);
         set(this.passwordEl, pwd);
@@ -45,6 +51,8 @@ public class LoginPage extends BasePage {
     }
 
     public boolean isErrorMsgPresent(String errorMsg) {
+        // wait for the error element to be visible
+        wait.until(ExpectedConditions.visibilityOfElementLocated(errorMessageEl));
         return wait.until(ExpectedConditions.textToBePresentInElement(find(errorMessageEl), errorMsg));
     }
 }

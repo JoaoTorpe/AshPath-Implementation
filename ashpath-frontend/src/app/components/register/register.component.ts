@@ -106,7 +106,7 @@ export class RegisterComponent {
   private onError(err: HttpErrorResponse) {
     console.log(err);
     if (err.status === 403) {
-      this.errorMessage = `You don't have permission to create user of type ${this.formType}.`;
+      this.errorMessage = `You don't have permission to create this type of user.`;
     }
     else {
       this.errorMessage = 'Failed to register. Please try again.';

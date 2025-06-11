@@ -34,10 +34,10 @@ public class UserService {
     boolean hasRole = user.getAppRoleSet().stream()
         .anyMatch(appRole -> {
           var name = appRole.getName();
-          return name.equals(UserAppRole.ADMIN) || name.equals(appRoleToCreate);
+          return name.equals(UserAppRole.ADMIN);
         });
 
-    return hasRole && appRoleToCreate != UserAppRole.VIEWER;
+    return hasRole;
   }
 
   public void createAdminUser(CreateAdminUserRequest adminUser) {

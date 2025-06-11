@@ -8,7 +8,6 @@ export interface SuccessfulLoginResponse {
   appRoleSet: AppRole[];
 }
 
-<<<<<<< HEAD
 export interface AbstractCreateUserRequest {
     userId: number;
     fullname: string;

@@ -59,13 +59,17 @@ INSERT INTO APP_ROLE (Name) VALUES
 
 INSERT INTO APP_USER (Email, Password, Full_Name, Registration_Date, Last_Activity_Date, Specialization) VALUES
 ('admin@ashpath.com', 'senha123', 'Administrador do Sistema', NOW(), NOW(), 'Administração'),
-('necrotomista1@ashpath.com', 'senha123', 'Joao Silva', NOW(), NOW(), 'Necrotomia'),
-('necrotomista2@ashpath.com', 'senha123', 'Maria Souza', NOW(), NOW(), 'Necrotomia');
+('necrotomista1@ashpath.com', 'senha123', 'Joao Silva', NOW(), NOW(), 'Forensic Pathology Support'),
+('necrotomista2@ashpath.com', 'senha123', 'Maria Souza', NOW(), NOW(), 'Anatomical Pathology'),
+('viewer1@ashpath.com', 'senha123', 'Jakub Farobek', NOW(), NOW(), null)
+;
 
 INSERT INTO ROLE_APP_USER (App_User_Id, Role_App_Id) VALUES
 (1, 1),
 (2, 2),
-(3, 2);
+(3, 2),
+(4, 3)
+;
 
 INSERT INTO CREMATION_ENTRY (Entered_Date, Necrotomist_Id) VALUES
 (NOW(), 2),

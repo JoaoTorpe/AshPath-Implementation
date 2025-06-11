@@ -3,7 +3,6 @@ package com.pdsc.ashpath.pages.register;
 import org.openqa.selenium.By;
 
 import com.pdsc.ashpath.pages.home.HomePage;
-import com.pdsc.ashpath.pages.login.LoginPage;
 
 public class AdminRegisterSection extends RegisterPage {
     private By fullNameEl = By.cssSelector(".admin input[formcontrolname='fullname']");
