@@ -1,13 +1,49 @@
 <div class="container">
   <h1>Entradas de Cremação</h1>
 
-  @if (!entries || entries.length === 0) {
+  <div class="filter-section">
+    <div class="filter-controls">
+      <button
+        [class.active]="selectedStatus === 'ALL'"
+        (click)="applyFilter('ALL')"
+      >
+        Todos
+      </button>
+      <button
+        [class.active]="selectedStatus === DeceasedStatusEnum.WAITING_CREMATION"
+        (click)="applyFilter(DeceasedStatusEnum.WAITING_CREMATION)"
+      >
+        Aguardando Cremação
+      </button>
+      <button
+        [class.active]="selectedStatus === DeceasedStatusEnum.CREMATED"
+        (click)="applyFilter(DeceasedStatusEnum.CREMATED)"
+      >
+        Cremados
+      </button>
+      <button
+        [class.active]="selectedStatus === DeceasedStatusEnum.GRAVED"
+        (click)="applyFilter(DeceasedStatusEnum.GRAVED)"
+      >
+        Em Sepultura
+      </button>
+    </div>
+    <div class="date-filter-group">
+      <label for="startDate">De:</label>
+      <input type="date" id="startDate" [(ngModel)]="startDate" />
+
+      <label for="endDate">Até:</label>
+      <input type="date" id="endDate" [(ngModel)]="endDate" />
+    </div>
+  </div>
+
+  @if (!filteredEntries || filteredEntries.length === 0) {
   <div class="no-entries">
-    <p>Nenhuma entrada encontrada ou carregando dados...</p>
+    <p>Nenhuma entrada corresponde aos filtros selecionados.</p>
   </div>
   } @else {
   <div class="card-grid">
-    @for (entry of entries; track entry.id) {
+    @for (entry of filteredEntries; track entry.id) {
     <div class="card">
       <div class="card-header">
         <h2>Entrada #{{ entry.id }}</h2>
@@ -18,10 +54,11 @@
       <div class="card-body">
         <div class="info-item">
           <strong>Necrotomista:</strong>
-          <span>{{ entry.necrotomist?.fullname }}</span>
+          <span>{{ entry.necrotomist.fullname }}</span>
         </div>
         <div class="info-item">
           <strong>Falecidos ({{ entry.deceaseds?.length || 0 }}):</strong>
+
           @if (entry.deceaseds && entry.deceaseds.length > 0) {
           <ul class="deceased-list">
             @for (deceased of entry.deceaseds; track deceased.id) {
@@ -29,7 +66,9 @@
             }
           </ul>
           } @else {
-          <p class="no-deceased">Nenhum falecido registrado nesta entrada.</p>
+          <p class="no-deceased">
+            Nenhum falecido corresponde ao filtro selecionado.
+          </p>
           }
         </div>
       </div>
