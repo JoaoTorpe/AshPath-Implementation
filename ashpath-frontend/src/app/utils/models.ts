@@ -9,45 +9,41 @@ export interface SuccessfulLoginResponse {
 }
 
 export interface AbstractCreateUserRequest {
-    userId: number;
-    fullname: string;
-    email: string;
-    password: string;
-    repeatPassword: string;
+  userId: number;
+  fullname: string;
+  email: string;
+  password: string;
+  repeatPassword: string;
 }
 
-export interface CreateAdminRequest extends AbstractCreateUserRequest {
-}
+export interface CreateAdminRequest extends AbstractCreateUserRequest {}
 
-export interface CreateViewerRequest extends AbstractCreateUserRequest {
-}
+export interface CreateViewerRequest extends AbstractCreateUserRequest {}
 
 export interface CreateNecrotomistRequest extends AbstractCreateUserRequest {
-    specialization: string;
+  specialization: string;
 }
 
 export interface AbstractUserResponse {
-    id: number;
-    email: string;
-    fullname: string;
-    registrationDate: string;
-    lastActivityDate: string;
+  id: number;
+  email: string;
+  fullname: string;
+  registrationDate: string;
+  lastActivityDate: string;
 }
 
-export interface AdminUserResponse extends AbstractUserResponse {
-}
+export interface AdminUserResponse extends AbstractUserResponse {}
 
-export interface ViewerUserResponse extends AbstractUserResponse {
-}
+export interface ViewerUserResponse extends AbstractUserResponse {}
 
 export interface NecrotomistUserResponse extends AbstractUserResponse {
-    specialization: string;
+  specialization: string;
 }
 
 export enum AppRole {
-    ADMIN = "ADMIN",
-    VIEWER = "VIEWER",
-    NECROTOMIST = "NECROTOMIST",
+  ADMIN = 'ADMIN',
+  VIEWER = 'VIEWER',
+  NECROTOMIST = 'NECROTOMIST',
 }
 
 export interface DeceasedDetailResponse {
@@ -66,11 +62,11 @@ export interface CremationEntryResponse {
   id: number;
   creationDate: string;
   necrotomist: NecrotomistUserResponse;
-  deceaseds: DeceasedDetailResponse[];
+  deceaseds?: DeceasedDetailResponse[];
 }
 
 export enum DeceasedStatus {
-  AWAITING_CREMATION = 'AWAITING_CREMATION',
+  WAITING_CREMATION = 'WAITING_CREMATION',
   CREMATED = 'CREMATED',
-  IN_GRAVE = 'IN_GRAVE',
+  GRAVED = 'GRAVED',
 }
