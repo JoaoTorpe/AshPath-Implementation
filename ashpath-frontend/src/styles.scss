@@ -5,3 +5,37 @@ $orange-wheel-dark: rgb(190, 89, 0);
 $dark-slate-gray: #2A5759ff;
 $brunswick-green: #2B473Cff;
 $deep-blue: #6366f1;
+
+html {
+  overflow-y: scroll;
+}
+
+body {
+    // margin: 0;
+    height: 100%;
+    display: block;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-image: url('assets/forest_red.jpg');
+}
+
+// /* Example: Global scrollbar style */
+// ::-webkit-scrollbar {
+//   width: 12px;
+// }
+
+// ::-webkit-scrollbar-track {
+//   background: $brunswick-green2;  /* Track background */
+// }
+
+// ::-webkit-scrollbar-thumb {
+//   background-color: $orange-wheel;   /* Scroll handle */
+//   border-radius: 6px;
+//   border: 3px solid $brunswick-green2; /* Adds padding around thumb */
+// }
+
+// ::-webkit-scrollbar-thumb:hover {
+//   background-color: #555;
+// }

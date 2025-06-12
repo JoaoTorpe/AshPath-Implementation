@@ -19,8 +19,7 @@ public class RegisterPage extends BasePage {
     }
 
     public boolean isErrorMsgPresent(String errorMsg) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(errorMessageEl));
-        return wait.until(ExpectedConditions.textToBePresentInElement(find(errorMessageEl), errorMsg));
+        return isMsgPresent(errorMessageEl, errorMsg);
     }
 
     public Select getSelectElement(By locator) {

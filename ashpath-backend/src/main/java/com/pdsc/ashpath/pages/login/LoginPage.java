@@ -51,8 +51,6 @@ public class LoginPage extends BasePage {
     }
 
     public boolean isErrorMsgPresent(String errorMsg) {
-        // wait for the error element to be visible
-        wait.until(ExpectedConditions.visibilityOfElementLocated(errorMessageEl));
-        return wait.until(ExpectedConditions.textToBePresentInElement(find(errorMessageEl), errorMsg));
+        return isMsgPresent(errorMessageEl, errorMsg);
     }
 }
