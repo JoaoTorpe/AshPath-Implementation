@@ -73,7 +73,7 @@ public class DeceasedController
   {
     if(Objects.isNull(deathDate))
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-    
+
     List<DeceasedResponse> response = deceasedService.findAllByDeathDate(deathDate);
     return ResponseEntity.status(HttpStatus.OK).body(response);
   }
@@ -104,4 +104,10 @@ public class DeceasedController
 
     return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
   }
+
+  @GetMapping("/findAll") // Mapeia para /api/deceased/findAll
+  public ResponseEntity<List<DeceasedResponse>> findAll() {
+    return ResponseEntity.ok(deceasedService.findAll());
+  }
+
 }

@@ -1,0 +1,155 @@
+<div class="container">
+  <h2>Consulta de Falecidos</h2>
+
+  <!-- Filtros - Atualizado para ngModel -->
+  <div class="filter-section card mb-4">
+    <div class="card-body">
+      <h5 class="card-title">Filtros</h5>
+      <div class="row">
+        <div class="col-md-3">
+          <label for="startDate" class="form-label">Data de Falecimento (Início)</label>
+          <input type="date" class="form-control" id="startDate"
+                 [(ngModel)]="startDate" name="startDate">
+        </div>
+        <div class="col-md-3">
+          <label for="endDate" class="form-label">Data de Falecimento (Fim)</label>
+          <input type="date" class="form-control" id="endDate"
+                 [(ngModel)]="endDate" name="endDate">
+        </div>
+        <div class="col-md-4">
+          <label for="graveLocation" class="form-label">Localização da Cova</label>
+          <input type="text" class="form-control" id="graveLocation"
+                 [(ngModel)]="graveLocation" name="graveLocation"
+                 placeholder="Digite a localização da cova">
+        </div>
+        <div class="col-md-2 d-flex align-items-end">
+          <button type="button" class="btn btn-primary me-2" (click)="applyFilters()">Filtrar</button>
+          <button type="button" class="btn btn-secondary" (click)="resetFilters()">Limpar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Resultados -->
+  <div class="card">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Data Nasc.</th>
+            <th>Data Falec.</th>
+            <th>Causa da Morte</th>
+            <th>Status</th>
+            <th>Localização</th>
+            <th>Ações</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let deceased of filteredDeceaseds">
+            <td>{{ deceased.fullname }}</td>
+            <td>{{ deceased.birthDate | date:'dd/MM/yyyy' }}</td>
+            <td>{{ deceased.deathDate | date:'dd/MM/yyyy' }}</td>
+            <td>{{ deceased.causeOfDeath }}</td>
+            <td>
+              <!-- Para: -->
+              <span class="badge" [ngClass]="{
+  'bg-success': deceased.status === DeceasedStatus.CREMATED,
+  'bg-primary': deceased.status === DeceasedStatus.GRAVED,
+  'bg-warning': deceased.status === DeceasedStatus.WAITING_CREMATION
+}">
+  {{ deceased.status }}
+</span>
+            </td>
+            <td>
+  <span *ngIf="deceased.status === DeceasedStatus.GRAVED && deceased.graveLocation">
+    {{ deceased.graveLocation }}
+  </span>
+              <span *ngIf="deceased.status !== DeceasedStatus.GRAVED || !deceased.graveLocation">-</span>
+            </td>
+            <td>
+              <button class="btn btn-sm btn-info me-2" (click)="viewDetails(deceased)">
+                Detalhes
+              </button>
+              <button class="btn btn-sm btn-primary" (click)="openCertificate(deceased.id)"
+                      [disabled]="!deceased.deathCertificateDownloadLink">
+                Certificado
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="filteredDeceaseds.length === 0">
+            <td colspan="7" class="text-center">Nenhum falecido encontrado</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Detalhes -->
+<div class="modal-backdrop" *ngIf="showDetailsModal || showPdfModal"></div>
+
+<div class="modal" *ngIf="showDetailsModal" [ngStyle]="{'display': 'block'}">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Detalhes do Falecido</h5>
+        <button type="button" class="btn-close" (click)="closeModal()"></button>
+      </div>
+      <div class="modal-body" *ngIf="selectedDeceased">
+        <div class="row">
+          <div class="col-md-6">
+            <p><strong>Nome Completo:</strong> {{ selectedDeceased.fullname }}</p>
+            <p><strong>Data de Nascimento:</strong> {{ selectedDeceased.birthDate | date:'dd/MM/yyyy' }}</p>
+            <p><strong>Data de Falecimento:</strong> {{ selectedDeceased.deathDate | date:'dd/MM/yyyy' }}</p>
+            <p><strong>Causa da Morte:</strong> {{ selectedDeceased.causeOfDeath }}</p>
+          </div>
+          <div class="col-md-6">
+            <p><strong>Nome do Pai:</strong> {{ selectedDeceased.fatherName }}</p>
+            <p><strong>Nome da Mãe:</strong> {{ selectedDeceased.motherName }}</p>
+            <p><strong>Status:</strong>
+              <span class="badge" [ngClass]="{
+                'bg-success': selectedDeceased.status === 'CREMATED',
+                'bg-primary': selectedDeceased.status === 'GRAVED',
+                'bg-warning': selectedDeceased.status === 'WAITING_CREMATION'
+              }">
+                {{ selectedDeceased.status }}
+              </span>
+            </p>
+            <p *ngIf="selectedDeceased.cremationEntryId">
+              <strong>Entrada de Crematório:</strong> #{{ selectedDeceased.cremationEntryId }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Visualizador de PDF -->
+<div class="modal" *ngIf="showPdfModal" [ngStyle]="{'display': 'block'}">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Certificado de Óbito</h5>
+        <button type="button" class="btn-close" (click)="closeModal()"></button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="pdfUrl" class="pdf-container">
+          <iframe [src]="pdfUrl" width="100%" height="600px"></iframe>
+        </div>
+        <div *ngIf="!pdfUrl" class="alert alert-danger">
+          Não foi possível carregar o certificado de óbito.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
