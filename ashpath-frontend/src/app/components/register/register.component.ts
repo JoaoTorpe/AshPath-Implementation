@@ -14,9 +14,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class RegisterComponent {
   errorMessage: string | null = null;
-  adminFormGroup: FormGroup;
-  necrotomistFormGroup: FormGroup;
-  viewerFormGroup: FormGroup;
+  registerForm: FormGroup;
   formType = AppRole.VIEWER.toString();
 
   allAppRoles = Object.values(AppRole);
@@ -26,84 +24,58 @@ export class RegisterComponent {
     private fb: FormBuilder,
     private authService: AuthService,
   ) {
-    this.adminFormGroup = this.fb.group({
+    this.registerForm = this.fb.group({
       fullname: ['', Validators.required],
       email: ['', Validators.required],
       password: ['', Validators.required],
       repeatPassword: ['', Validators.required],
-    });
-
-    this.necrotomistFormGroup = this.fb.group({
-      fullname: ['', Validators.required],
-      specialization: ['', Validators.required],
-      email: ['', Validators.required],
-      password: ['', Validators.required],
-      repeatPassword: ['', Validators.required],
-    });
-
-    this.viewerFormGroup = this.fb.group({
-      fullname: ['', Validators.required],
-      email: ['', Validators.required],
-      password: ['', Validators.required],
-      repeatPassword: ['', Validators.required],
+      specialization: [''] // conditionally required
     });
   }
 
   onFormTypeChange(event: Event): void {
     const selected = (event.target as HTMLSelectElement).value;
     this.formType = selected;
+    if(this.formType === 'NECROTOMIST') {
+      this.registerForm.get('specialization')?.setValidators([Validators.required]);
+    } else {
+      this.registerForm.get('specialization')?.clearValidators();
+    }
+    this.registerForm.get('specialization')?.updateValueAndValidity();
   }
 
-  onSubmitViewer(): void {
-    if (this.viewerFormGroup.invalid) return;
+  onSubmit(): void {
+    if (this.registerForm.invalid) return;
     this.errorMessage = null;
+    let request;
 
-    this.authService.registerViewer(this.viewerFormGroup.value)
-      .subscribe({
-        next: (res) => {
-          this.onSuccess();
-        },
-        error: this.onError.bind(this),
-      });
-  }
+    switch(this.formType) {
+      case "ADMIN":
+        request = this.authService.registerAdmin(this.registerForm.value);
+        break;
+      case "NECROTOMIST":
+        request = this.authService.registerNecrotomist(this.registerForm.value);
+        break;
+      default:
+        request = this.authService.registerViewer(this.registerForm.value);
+    }
 
-  onSubmitNecro(): void {
-    if (this.necrotomistFormGroup.invalid) return;
-    this.errorMessage = null;
-
-    this.authService.registerNecrotomist(this.necrotomistFormGroup.value)
-      .subscribe({
-        next: (res) => {
-          this.onSuccess();
-        },
-        error: this.onError.bind(this),
-      });
-  }
-
-  onSubmitAdmin(): void {
-    if (this.adminFormGroup.invalid) return;
-    this.errorMessage = null;
-
-    this.authService.registerAdmin(this.adminFormGroup.value)
-      .subscribe({
-        next: (res) => {
-          this.onSuccess();
-        },
-        error: this.onError.bind(this),
-      });
+    request.subscribe({
+      next: (res) => this.onSuccess(),
+      error: this.onError.bind(this)
+    });
   }
 
   private onSuccess() {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/login']);
   }
 
   private onError(err: HttpErrorResponse) {
     console.log(err);
-    if (err.status === 403) {
-      this.errorMessage = `You don't have permission to create this type of user.`;
-    }
-    else {
-      this.errorMessage = 'Failed to register. Please try again.';
-    }
+    this.errorMessage = 'Failed to register. Please try again.';
+  }
+
+  navigateToLogin(): void {
+    this.router.navigate(['/login']);
   }
 }

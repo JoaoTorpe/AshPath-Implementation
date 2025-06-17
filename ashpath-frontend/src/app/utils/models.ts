@@ -9,7 +9,6 @@ export interface SuccessfulLoginResponse {
 }
 
 export interface AbstractCreateUserRequest {
-  userId: number;
   fullname: string;
   email: string;
   password: string;

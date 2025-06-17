@@ -1,19 +1,16 @@
-<div class="wrapper">
-  <select (change)="onFormTypeChange($event)" class="select">
-    <!-- <option [value]="">
-      --------- USER TYPE ---------
-    </option> -->
-    <ng-content *ngFor="let role of allAppRoles">
-      <option [value]="role">
-        {{ role }}
-      </option>
-    </ng-content>
-  </select>
-</div>
+<div class="container" [ngClass]="formType.toLowerCase()">
+  <div class="wrapper">
+    <h1 class="title">Register</h1>
+    <select (change)="onFormTypeChange($event)" class="select">
+      <ng-content *ngFor="let role of allAppRoles">
+        <option [value]="role">
+          {{ role }}
+        </option>
+      </ng-content>
+    </select>
+  </div>
 
-@if (formType === "VIEWER") {
-<div class="container viewer">
-  <form [formGroup]="viewerFormGroup" (ngSubmit)="onSubmitViewer()">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label class="form-label">Full Name</label>
       <input type="text" class="form-input" formControlName="fullname" />
@@ -24,47 +21,12 @@
       <input type="text" class="form-input" formControlName="email" />
     </div>
 
-    <div class="form-group">
-      <label class="form-label">Password</label>
-      <input type="password" class="form-input" formControlName="password" />
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">Repeat Password</label>
-      <input type="password" class="form-input" formControlName="repeatPassword" />
-    </div>
-
-    <button type="submit" class="form-button" [disabled]="viewerFormGroup.invalid">Register</button>
-
-    @if (errorMessage) {
-    <div class="error">
-      {{ errorMessage }}
-    </div>
-    }
-  </form>
-</div>
-}
-
-@if (formType === "NECROTOMIST") {
-<div class="container necrotomist">
-  <form [formGroup]="necrotomistFormGroup" (ngSubmit)="onSubmitNecro()">
-
-    <div class="form-group">
-      <label class="form-label">Full Name</label>
-      <input type="text" class="form-input" formControlName="fullname" />
-    </div>
-
-    <div class="form-group">
+    <div *ngIf="formType === 'NECROTOMIST'" class="form-group">
       <label class="form-label">Specialization</label>
       <input type="text" class="form-input" formControlName="specialization" />
     </div>
 
     <div class="form-group">
-      <label class="form-label">E-mail</label>
-      <input type="text" class="form-input" formControlName="email" />
-    </div>
-
-    <div class="form-group">
       <label class="form-label">Password</label>
       <input type="password" class="form-input" formControlName="password" />
     </div>
@@ -74,47 +36,13 @@
       <input type="password" class="form-input" formControlName="repeatPassword" />
     </div>
 
-    <button type="submit" class="form-button" [disabled]="necrotomistFormGroup.invalid">Register</button>
+    <div class="buttons">
+      <button type="button" class="form-button" (click)="navigateToLogin()">Cancel</button>
+      <button type="submit" class="form-button" [disabled]="registerForm.invalid">Register</button>
+    </div>
 
-    @if (errorMessage) {
-    <div class="error">
+    <div *ngIf="errorMessage" class="error">
       {{ errorMessage }}
     </div>
-    }
   </form>
 </div>
-}
-
-@else if (formType === "ADMIN") {
-<div class="container admin">
-  <form [formGroup]="adminFormGroup" (ngSubmit)="onSubmitAdmin()">
-    <div class="form-group">
-      <label class="form-label">Full Name</label>
-      <input type="text" class="form-input" formControlName="fullname" />
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">E-mail</label>
-      <input type="text" class="form-input" formControlName="email" />
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">Password</label>
-      <input type="password" class="form-input" formControlName="password" />
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">Repeat Password</label>
-      <input type="password" class="form-input" formControlName="repeatPassword" />
-    </div>
-
-    <button type="submit" class="form-button" [disabled]="adminFormGroup.invalid">Register</button>
-
-    @if (errorMessage) {
-    <div class="error">
-      {{ errorMessage }}
-    </div>
-    }
-  </form>
-</div>
-}
