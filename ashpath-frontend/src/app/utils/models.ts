@@ -56,7 +56,24 @@ export interface DeceasedDetailResponse {
   motherName: string;
   status: DeceasedStatus;
   cremationEnteredDate: string;
+  graveLocation?: string;
 }
+
+export interface DeceasedResponse {
+  id: number;
+  fullname: string;
+  birthDate: string; // ISO date string (LocalDate no backend)
+  deathDate: string; // ISO date string (LocalDate no backend)
+  causeOfDeath: string;
+  deathCertificateDownloadLink?: string;
+  fatherName: string;
+  motherName: string;
+  status: DeceasedStatus;
+  cremationEnteredDate?: string; // ISO datetime string (LocalDateTime no backend)
+  cremationEntryId?: number;
+  graveLocation?: string;
+}
+
 
 export interface CremationEntryResponse {
   id: number;

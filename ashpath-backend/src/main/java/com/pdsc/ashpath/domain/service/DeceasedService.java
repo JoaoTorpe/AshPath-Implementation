@@ -2,10 +2,13 @@ package com.pdsc.ashpath.domain.service;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -84,10 +87,55 @@ public class DeceasedService
     return deceasedRepository.findById(id);
   }
 
-  private DeceasedResponse generateDeceasedResponse(Deceased deceased){
-    String server = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
-    DeceasedResponse deceasedResponse = new DeceasedResponse(deceased);
-    deceasedResponse.setDeathCertificateDownloadLink(server +"/deceased/"+ deceased.getId() +"/deathCertificate");
-    return deceasedResponse;
+  private DeceasedResponse generateDeceasedResponse(Deceased deceased) {
+    if (deceased == null) {
+      return null;
+    }
+
+    DeceasedResponse response = new DeceasedResponse();
+    response.setId(deceased.getId());
+    response.setFullname(deceased.getFullname());
+    response.setBirthDate(deceased.getBirthDate());
+    response.setDeathDate(deceased.getDeathDate());
+    response.setCauseOfDeath(deceased.getCauseOfDeath());
+    response.setFatherName(deceased.getFatherName());
+    response.setMotherName(deceased.getMotherName());
+    response.setStatus(deceased.getStatus());
+    response.setCremationEnteredDate(deceased.getCremationEnteredDate());
+
+    // Tratamento de relacionamentos
+    if (deceased.getCremationEntry() != null) {
+      response.setCremationEntryId(deceased.getCremationEntry().getId());
+    }
+
+    if (deceased.getGrave() != null) {
+      response.setGraveLocation(deceased.getGrave().getLocation());
+    }
+
+    // URL do certificado
+    String serverUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
+    response.setDeathCertificateDownloadLink(serverUrl + "/deceased/" + deceased.getId() + "/deathCertificate");
+
+    return response;
   }
+
+  public List<DeceasedResponse> findAll() {
+    try {
+      List<Deceased> deceasedEntities = deceasedRepository.findAll();
+      List<DeceasedResponse> responseList = new ArrayList<>(deceasedEntities.size());
+
+      for (Deceased deceased : deceasedEntities) {
+        DeceasedResponse response = generateDeceasedResponse(deceased);
+        if (response != null) {
+          responseList.add(response);
+        }
+      }
+
+      return responseList;
+    } catch (Exception e) {
+      throw new ServiceException("Não foi possível listar os falecidos", e);
+    }
+  }
+
+
 }

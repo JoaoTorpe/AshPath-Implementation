@@ -3,6 +3,7 @@ package com.pdsc.ashpath.repository;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.pdsc.ashpath.domain.entity.CremationEntry;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,4 +20,8 @@ public interface DeceasedRepository extends JpaRepository<Deceased, Long> {
 
     @Query("SELECT d FROM Deceased d WHERE d.deathDate = :deathDate")
     List<Deceased> findAllDeceasedByDeathDate(@Param("deathDate") LocalDate deathDate);
+
+    @Query("SELECT d FROM Deceased d")
+    @Override
+    List<Deceased> findAll();
 }
