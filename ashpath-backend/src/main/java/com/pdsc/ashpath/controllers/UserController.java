@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Objects;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +18,6 @@ import com.pdsc.ashpath.domain.dto.request.user.CreateViewerUserRequest;
 import com.pdsc.ashpath.domain.dto.response.AdminUserResponse;
 import com.pdsc.ashpath.domain.dto.response.NecrotomistUserResponse;
 import com.pdsc.ashpath.domain.dto.response.UserResponse;
-import com.pdsc.ashpath.domain.enums.UserAppRole;
 import com.pdsc.ashpath.domain.service.UserService;
 
 @RestController
@@ -36,9 +34,6 @@ public class UserController
   @PostMapping("/admin")
   public ResponseEntity<Void> createAdminUser(@RequestBody CreateAdminUserRequest request)
   {
-    if (!userService.hasPermission(UserAppRole.ADMIN, request.getUserId())) {
-      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-    }
     userService.createAdminUser(request);
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
@@ -46,9 +41,6 @@ public class UserController
   @PostMapping("/viewer")
   public ResponseEntity<Void> createViewerUser(@RequestBody CreateViewerUserRequest request)
   {
-    if (!userService.hasPermission(UserAppRole.VIEWER, request.getUserId())) {
-      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-    }
     userService.createViewerUser(request);
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
@@ -56,9 +48,6 @@ public class UserController
   @PostMapping("/necrotomist")
   public ResponseEntity<Void> createNecrotomistUser(@RequestBody CreateNecrotomistRequest request)
   {
-    if (!userService.hasPermission(UserAppRole.NECROTOMIST, request.getUserId())) {
-      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-    }
     userService.createNecrotomistUser(request);
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }

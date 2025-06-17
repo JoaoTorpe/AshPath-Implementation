@@ -17,9 +17,8 @@ export class RegisterComponent {
   adminFormGroup: FormGroup;
   necrotomistFormGroup: FormGroup;
   viewerFormGroup: FormGroup;
-  formType = '';
+  formType = AppRole.VIEWER.toString();
 
-  userSig;
   allAppRoles = Object.values(AppRole);
 
   constructor(
@@ -27,14 +26,11 @@ export class RegisterComponent {
     private fb: FormBuilder,
     private authService: AuthService,
   ) {
-    this.userSig = authService.userSig;
-
     this.adminFormGroup = this.fb.group({
       fullname: ['', Validators.required],
       email: ['', Validators.required],
       password: ['', Validators.required],
       repeatPassword: ['', Validators.required],
-      userId: [this.userSig()!!.loggedUserId],
     });
 
     this.necrotomistFormGroup = this.fb.group({
@@ -43,7 +39,6 @@ export class RegisterComponent {
       email: ['', Validators.required],
       password: ['', Validators.required],
       repeatPassword: ['', Validators.required],
-      userId: [this.userSig()!!.loggedUserId],
     });
 
     this.viewerFormGroup = this.fb.group({
@@ -51,7 +46,6 @@ export class RegisterComponent {
       email: ['', Validators.required],
       password: ['', Validators.required],
       repeatPassword: ['', Validators.required],
-      userId: [this.userSig()!!.loggedUserId],
     });
   }
 

@@ -47,8 +47,13 @@
     opacity: 0.6;
 }
 
-.form-button {
-    width: 100%;
+.buttons {
+    display: flex;
+    justify-content: space-around;
+}
+
+.form-button, a {
+    width: 40%;
     padding: 1rem;
     font-size: 1rem;
     font-weight: 600;

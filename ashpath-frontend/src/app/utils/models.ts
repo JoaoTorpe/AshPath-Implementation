@@ -41,9 +41,9 @@ export interface NecrotomistUserResponse extends AbstractUserResponse {
 }
 
 export enum AppRole {
-  ADMIN = 'ADMIN',
   VIEWER = 'VIEWER',
   NECROTOMIST = 'NECROTOMIST',
+  ADMIN = 'ADMIN',
 }
 
 export interface DeceasedDetailResponse {

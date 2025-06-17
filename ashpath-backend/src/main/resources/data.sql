@@ -1,4 +1,3 @@
--- 1. Criação das tabelas (ajustada para consistência)
 CREATE TABLE IF NOT EXISTS APP_ROLE (
     Id BIGINT PRIMARY KEY AUTO_INCREMENT,
     Name VARCHAR(50) UNIQUE NOT NULL
@@ -8,10 +7,11 @@ CREATE TABLE IF NOT EXISTS APP_USER (
     Id BIGINT PRIMARY KEY AUTO_INCREMENT,
     Email VARCHAR(64),
     Password VARCHAR(64),
-    Full_Name VARCHAR(128),  -- Padronizado
-    Registration_Date TIMESTAMP,  -- Padronizado
-    Last_Activity_Date TIMESTAMP,  -- Padronizado
-    Specialization VARCHAR(255)
+    Full_Name VARCHAR(128),  
+    Registration_Date TIMESTAMP, 
+    Last_Activity_Date TIMESTAMP, 
+    Specialization VARCHAR(255),
+    approved BOOLEAN
 );
 
 CREATE TABLE IF NOT EXISTS ROLE_APP_USER (
@@ -58,11 +58,11 @@ INSERT INTO APP_ROLE (Name) VALUES
 ('NECROTOMIST'),
 ('VIEWER');
 
-INSERT INTO APP_USER (Email, Password, Full_Name, Registration_Date, Last_Activity_Date, Specialization) VALUES
-('admin@ashpath.com', 'senha123', 'Administrador do Sistema', NOW(), NOW(), 'Administração'),
-('necrotomista1@ashpath.com', 'senha123', 'Joao Silva', NOW(), NOW(), 'Forensic Pathology Support'),
-('necrotomista2@ashpath.com', 'senha123', 'Maria Souza', NOW(), NOW(), 'Anatomical Pathology'),
-('viewer1@ashpath.com', 'senha123', 'Jakub Farobek', NOW(), NOW(), null)
+INSERT INTO APP_USER (Email, Password, Full_Name, Registration_Date, Last_Activity_Date, Specialization, approved) VALUES
+('admin@ashpath.com', 'senha123', 'Administrador do Sistema', NOW(), NOW(), null, true),
+('necrotomista1@ashpath.com', 'senha123', 'Joao Silva', NOW(), NOW(), 'Forensic Pathology Support', true),
+('necrotomista2@ashpath.com', 'senha123', 'Maria Souza', NOW(), NOW(), 'Anatomical Pathology', true),
+('viewer1@ashpath.com', 'senha123', 'Jakub Farobek', NOW(), NOW(), null, true)
 ;
 
 INSERT INTO ROLE_APP_USER (App_User_Id, Role_App_Id) VALUES

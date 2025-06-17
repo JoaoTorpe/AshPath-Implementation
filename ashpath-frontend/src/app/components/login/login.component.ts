@@ -1,16 +1,17 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { LoginRequest } from '../../utils/models';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['login.component.scss'],
   standalone: true,
-  imports: [ReactiveFormsModule]
+  imports: [ReactiveFormsModule, RouterModule]
 })
 export class LoginComponent {
   errorMessage: string | null = null;
@@ -25,6 +26,10 @@ export class LoginComponent {
       email: ['necrotomista1@ashpath.com', Validators.required],
       password: ['senha123', Validators.required],
     });
+  }
+
+  navigateToRegister(): void {
+    this.router.navigate(['/register']);
   }
 
   onSubmit(): void {
@@ -45,6 +50,6 @@ export class LoginComponent {
           this.errorMessage = 'Failed to login. Please try again.';
         }
       },
-    });;
+    });
   }
 }

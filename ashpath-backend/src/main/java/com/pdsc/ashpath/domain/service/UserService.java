@@ -40,6 +40,22 @@ public class UserService {
     return hasRole;
   }
 
+  public List<UserResponse> findAllPendingApproval() {
+    return this.userRepository.findAllPendingApproval()
+        .stream()
+        .map((u) -> {
+          var ur = new UserResponse();
+          ur.setEmail(u.getEmail());
+          ur.setFullname(u.getFullname());
+          ur.setId(u.getId());
+          ur.setRegistrationDate(u.getRegistrationDate());
+          ur.setLastActivityDate(u.getLastActivityDate());
+          ur.setSpecialization(u.getSpecialization());
+          return ur;
+        })
+        .toList();
+  }
+
   public void createAdminUser(CreateAdminUserRequest adminUser) {
     User user = new User();
 
@@ -48,6 +64,7 @@ public class UserService {
     user.setFullname(adminUser.getFullname());
     user.setRegistrationDate(LocalDateTime.now());
     user.setLastActivityDate(LocalDateTime.now());
+    user.setApproved(false);
 
     user.addAppRole(appRoleRepository.findByName(UserAppRole.ADMIN).get());
 
@@ -62,6 +79,7 @@ public class UserService {
     user.setFullname(viewerUser.getFullname());
     user.setRegistrationDate(LocalDateTime.now());
     user.setLastActivityDate(LocalDateTime.now());
+    user.setApproved(false);
 
     user.addAppRole(appRoleRepository.findByName(UserAppRole.VIEWER).get());
 
@@ -77,6 +95,7 @@ public class UserService {
     user.setRegistrationDate(LocalDateTime.now());
     user.setLastActivityDate(LocalDateTime.now());
     user.setSpecialization(necrotomistUser.getSpecialization());
+    user.setApproved(false);
 
     user.addAppRole(appRoleRepository.findByName(UserAppRole.NECROTOMIST).get());
 

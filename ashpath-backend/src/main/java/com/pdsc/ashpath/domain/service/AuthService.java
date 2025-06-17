@@ -1,7 +1,5 @@
 package com.pdsc.ashpath.domain.service;
 
-import java.util.Optional;
-
 import org.springframework.stereotype.Service;
 
 import com.pdsc.ashpath.domain.dto.request.LoginRequest;
@@ -20,7 +18,8 @@ public class AuthService
 
   public User login(LoginRequest request)
   {
-    Optional<User> optionalUser = userRepository.authenticate(request.getEmail(), request.getPassword());
+    // var optionalUser = userRepository.authenticate(request.getEmail(), request.getPassword());
+    var optionalUser = userRepository.authenticateApproved(request.getEmail(), request.getPassword());
     return optionalUser.orElse(null);
   }
 }

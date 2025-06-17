@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SiteHeaderComponent } from "./components/site-header/site-header.component";
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -10,4 +11,9 @@ import { SiteHeaderComponent } from "./components/site-header/site-header.compon
 })
 export class AppComponent {
   title = 'ashpath-frontend';
+  userSig;
+
+  constructor(private authService: AuthService) {
+    this.userSig = this.authService.userSig;
+  }
 }

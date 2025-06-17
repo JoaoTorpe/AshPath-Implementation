@@ -1,8 +1,8 @@
 <div class="wrapper">
   <select (change)="onFormTypeChange($event)" class="select">
-    <option [value]="">
+    <!-- <option [value]="">
       --------- USER TYPE ---------
-    </option>
+    </option> -->
     <ng-content *ngFor="let role of allAppRoles">
       <option [value]="role">
         {{ role }}
