@@ -18,8 +18,8 @@ public class AuthService
 
   public User login(LoginRequest request)
   {
-    // var optionalUser = userRepository.authenticate(request.getEmail(), request.getPassword());
-    var optionalUser = userRepository.authenticateApproved(request.getEmail(), request.getPassword());
+    var optionalUser = userRepository.authenticate(request.getEmail(), request.getPassword());
+    // var optionalUser = userRepository.authenticateApproved(request.getEmail(), request.getPassword());
     return optionalUser.orElse(null);
   }
 }

@@ -59,10 +59,10 @@ INSERT INTO APP_ROLE (Name) VALUES
 ('VIEWER');
 
 INSERT INTO APP_USER (Email, Password, Full_Name, Registration_Date, Last_Activity_Date, Specialization, approved) VALUES
-('admin@ashpath.com', 'senha123', 'Administrador do Sistema', NOW(), NOW(), null, true),
-('necrotomista1@ashpath.com', 'senha123', 'Joao Silva', NOW(), NOW(), 'Forensic Pathology Support', true),
-('necrotomista2@ashpath.com', 'senha123', 'Maria Souza', NOW(), NOW(), 'Anatomical Pathology', true),
-('viewer1@ashpath.com', 'senha123', 'Jakub Farobek', NOW(), NOW(), null, true)
+('admin@ashpath.com', 's3nh4@S', 'Administrador do Sistema', NOW(), NOW(), null, true),
+('necrotomista1@ashpath.com', 's3nh4@S', 'Joao Silva', NOW(), NOW(), 'Forensic Pathology Support', true),
+('necrotomista2@ashpath.com', 's3nh4@S', 'Maria Souza', NOW(), NOW(), 'Anatomical Pathology', true),
+('viewer1@ashpath.com', 's3nh4@S', 'Jakub Farobek', NOW(), NOW(), null, true)
 ;
 
 INSERT INTO ROLE_APP_USER (App_User_Id, Role_App_Id) VALUES

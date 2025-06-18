@@ -1,1 +1,29 @@
 @use '../../../styles.scss' as *;
+
+.app-home {
+  text-align: center;
+  padding: 20px;
+  min-height: calc(100vh - $header-height);
+
+  h1 {
+    color: $color-3;
+  }
+  
+  p {
+    font-size: 1.2rem;
+    margin: 10px 0;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: $color-3;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    
+    &:hover {
+      background-color: #005fa3;
+    }
+  }
+}
+

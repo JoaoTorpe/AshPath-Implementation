@@ -5,6 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { LoginRequest } from '../../utils/models';
 import { CommonModule } from '@angular/common';
+import { CustomValidators } from '../../validators/custom-validators';
 
 @Component({
   selector: 'app-login',
@@ -23,8 +24,8 @@ export class LoginComponent {
     private authService: AuthService,
   ) {
     this.loginForm = this.fb.group({
-      email: ['necrotomista1@ashpath.com', Validators.required],
-      password: ['senha123', Validators.required],
+      email: ['necrotomista1@ashpath.com', [...CustomValidators.emailValidators]],
+      password: ['s3nh4@S', [...CustomValidators.passwordValidators]],
     });
   }
 
@@ -45,8 +46,12 @@ export class LoginComponent {
       },
       error: (err: HttpErrorResponse) => {
         if (err.status === 401) {
-          this.errorMessage = 'Invalid email/password.';
-        } else {
+          this.errorMessage = 'Invalid email/password';
+        } 
+        else if(err.status === 403) {
+          this.errorMessage = 'Your account is pending approval.';
+        }
+        else {
           this.errorMessage = 'Failed to login. Please try again.';
         }
       },

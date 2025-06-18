@@ -4,7 +4,6 @@ public abstract class AbstractCreateUserRequest {
     protected String email;
     protected String password;
     protected String fullname;
-    protected Long userId;
 
     public String getEmail() {
         return email;
@@ -28,13 +27,5 @@ public abstract class AbstractCreateUserRequest {
 
     public void setFullname(String fullname) {
         this.fullname = fullname;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 }

@@ -14,26 +14,95 @@
     <div class="form-group">
       <label class="form-label">Full Name</label>
       <input type="text" class="form-input" formControlName="fullname" />
+      @if (registerForm.get('fullname')?.touched || registerForm.get('fullname')?.dirty) {
+        @if (registerForm.get('fullname')?.errors?.['required']) {
+          <div class="error-message">Full Name is required.</div>
+        }
+        @else if (registerForm.get('fullname')?.errors?.['maxlength']) {
+          <div class="error-message">Full Name must be less than 64 characters.</div>
+        }
+        @else if (registerForm.get('fullname')?.errors?.['minlength']) {
+          <div class="error-message">Full Name must have at least 3 characters.</div>
+        }
+      }
     </div>
 
     <div class="form-group">
       <label class="form-label">E-mail</label>
       <input type="text" class="form-input" formControlName="email" />
+      @if (registerForm.get('email')?.touched || registerForm.get('email')?.dirty) {
+        @if (registerForm.get('email')?.errors?.['required']) {
+          <div class="error-message">E-mail is required.</div>
+        }
+        @else if (registerForm.get('email')?.errors?.['maxlength']) {
+          <div class="error-message">E-mail must be less than 64 characters.</div>
+        }
+        @else if (registerForm.get('email')?.errors?.['email']) {
+          <div class="error-message">Enter a valid e-mail address.</div>
+        }
+      }
     </div>
 
-    <div *ngIf="formType === 'NECROTOMIST'" class="form-group">
-      <label class="form-label">Specialization</label>
-      <input type="text" class="form-input" formControlName="specialization" />
-    </div>
+    @if (formType === 'NECROTOMIST') {
+      <div class="form-group">
+        <label class="form-label">Specialization</label>
+        <input type="text" class="form-input" formControlName="specialization" />
+        @if (registerForm.get('specialization')?.touched || registerForm.get('specialization')?.dirty) {
+          @if (registerForm.get('specialization')?.errors?.['required']) {
+            <div class="error-message">Specialization is required.</div>
+          }
+          @else if (registerForm.get('specialization')?.errors?.['maxlength']) {
+            <div class="error-message">Specialization must be less than 64 characters.</div>
+          }
+          @else if (registerForm.get('specialization')?.errors?.['minlength']) {
+            <div class="error-message">Specialization must have at least 3 characters.</div>
+          }
+        }
+      </div>
+    }
 
     <div class="form-group">
       <label class="form-label">Password</label>
       <input type="password" class="form-input" formControlName="password" />
+      @if (registerForm.get('password')?.touched || registerForm.get('password')?.dirty) {
+        @if (registerForm.get('password')?.errors?.['required']) {
+          <div class="error-message">Password is required.</div>
+        }
+        @else if (registerForm.get('password')?.errors?.['minlength']) {
+          <div class="error-message">Password must be at least 6 characters.</div>
+        }
+        @else if (registerForm.get('password')?.errors?.['maxlength']) {
+          <div class="error-message">Password must be at most 12 characters.</div>
+        }
+        @else if (registerForm.get('password')?.errors?.['pattern']) {
+          <div class="error-message">
+            Password must include at least one number, one uppercase letter, and one special character.
+          </div>
+        }
+      }
     </div>
 
     <div class="form-group">
       <label class="form-label">Repeat Password</label>
       <input type="password" class="form-input" formControlName="repeatPassword" />
+      @if (registerForm.get('repeatPassword')?.touched || registerForm.get('repeatPassword')?.dirty) {
+        @if (registerForm.get('repeatPassword')?.errors?.['required']) {
+          <div class="error-message">Repeat Password is required.</div>
+        }
+        @else if (registerForm.get('repeatPassword')?.errors?.['minlength']) {
+          <div class="error-message">Repeat Password must be at least 6 characters.</div>
+        }
+        @else if (registerForm.get('repeatPassword')?.errors?.['maxlength']) {
+          <div class="error-message">Repeat Password must be at most 12 characters.</div>
+        }
+        @else if (registerForm.get('repeatPassword')?.errors?.['mismatch']) {
+          <div class="error-message">Repeat Password must match the password.</div>
+        }
+        @else if (registerForm.errors?.['mismatch'])
+        {
+        <div class="error-message">This field must match the password field.</div>
+        }
+      }
     </div>
 
     <div class="buttons">
@@ -41,8 +110,8 @@
       <button type="submit" class="form-button" [disabled]="registerForm.invalid">Register</button>
     </div>
 
-    <div *ngIf="errorMessage" class="error">
-      {{ errorMessage }}
-    </div>
+    @if (errorMessage) {
+      <div class="error">{{ errorMessage }}</div>
+    }
   </form>
 </div>

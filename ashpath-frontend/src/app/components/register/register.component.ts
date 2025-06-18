@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { AppRole } from '../../utils/models';
 import { HttpErrorResponse } from '@angular/common/http';
+import { CustomValidators } from '../../validators/custom-validators';
 
 @Component({
   selector: 'app-register',
@@ -25,22 +26,26 @@ export class RegisterComponent {
     private authService: AuthService,
   ) {
     this.registerForm = this.fb.group({
-      fullname: ['', Validators.required],
-      email: ['', Validators.required],
-      password: ['', Validators.required],
-      repeatPassword: ['', Validators.required],
-      specialization: [''] // conditionally required
+      fullname: ['', [...CustomValidators.fullnameValidators]],
+      email: ['', [...CustomValidators.emailValidators]],
+      password: ['', [...CustomValidators.passwordValidators]],
+      repeatPassword: ['', [...CustomValidators.passwordValidators]],
+      specialization: ['', []],
+    }, {
+      validators: [CustomValidators.passwordMatchValidator]
     });
   }
 
   onFormTypeChange(event: Event): void {
     const selected = (event.target as HTMLSelectElement).value;
     this.formType = selected;
-    if(this.formType === 'NECROTOMIST') {
-      this.registerForm.get('specialization')?.setValidators([Validators.required]);
+    
+    if (this.formType === 'NECROTOMIST') {
+      this.registerForm.get('specialization')?.setValidators([Validators.required, Validators.maxLength(64), Validators.minLength(3)]);
     } else {
       this.registerForm.get('specialization')?.clearValidators();
     }
+
     this.registerForm.get('specialization')?.updateValueAndValidity();
   }
 
@@ -49,7 +54,7 @@ export class RegisterComponent {
     this.errorMessage = null;
     let request;
 
-    switch(this.formType) {
+    switch (this.formType) {
       case "ADMIN":
         request = this.authService.registerAdmin(this.registerForm.value);
         break;

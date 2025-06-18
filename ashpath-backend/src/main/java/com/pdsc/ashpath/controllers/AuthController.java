@@ -31,8 +31,12 @@ public class AuthController
   {
     User user = authService.login(request);
 
-    if(Objects.isNull(user))
+    if(Objects.isNull(user)){
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Falha ao fazer login");
+    } 
+    else if(!user.getApproved()) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Usuário inativo");
+    }
 
     SuccessfulLoginResponse response = new SuccessfulLoginResponse(user);
     return ResponseEntity.status(HttpStatus.OK).body(response);
