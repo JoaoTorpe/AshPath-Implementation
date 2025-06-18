@@ -46,7 +46,7 @@ export class LoginComponent {
       },
       error: (err: HttpErrorResponse) => {
         if (err.status === 401) {
-          this.errorMessage = 'Invalid email/password';
+          this.errorMessage = 'Invalid email/password.';
         } 
         else if(err.status === 403) {
           this.errorMessage = 'Your account is pending approval.';

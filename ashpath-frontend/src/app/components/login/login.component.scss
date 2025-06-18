@@ -1,7 +1,14 @@
 @use '../../../styles.scss' as *;
 
+.outer-container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .container {
-    max-width: 400px;
+    width: 400px;
     margin: 2rem auto;
     padding: 2.5rem;
     border-radius: 12px;
@@ -49,11 +56,11 @@
 
 .buttons {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 .form-button, a {
-    width: 40%;
+    width: 45%;
     padding: 1rem;
     font-size: 1rem;
     font-weight: 600;
@@ -67,7 +74,7 @@
 }
 
 .form-button:hover {
-    background-color: #4f46e5;
+    background-color: $color-4;
     transform: translateY(-1px);
 }
 

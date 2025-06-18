@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { SiteHeaderComponent } from "./components/site-header/site-header.component";
 import { AuthService } from './services/auth.service';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -12,8 +13,19 @@ import { AuthService } from './services/auth.service';
 export class AppComponent {
   title = 'ashpath-frontend';
   userSig;
+  isVisible: boolean = false;
 
-  constructor(private authService: AuthService) {
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+  ) {
     this.userSig = this.authService.userSig;
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        // Routes where header should be hidden
+        const hiddenRoutes = ['/login', '/register', '/not-found',]; 
+        this.isVisible = !hiddenRoutes.some(path => event.urlAfterRedirects.startsWith(path));
+      });
   }
 }

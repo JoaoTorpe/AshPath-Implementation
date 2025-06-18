@@ -1,10 +1,15 @@
-import { inject } from "@angular/core"
-import { AuthService } from "../services/auth.service"
+import { inject } from "@angular/core";
+import { Router } from "@angular/router";
+import { AuthService } from "../services/auth.service";
 
-export const isLogged = () => {
-    const loginSvc = inject(AuthService);
+export const isLogged = (): boolean => {
+  const authSvc = inject(AuthService);
+  const router = inject(Router);
 
-    if(loginSvc.userSig()) return true;
+  if (authSvc.userSig()) {
+    return true;
+  }
 
-    return false;
-}
+  router.navigate(['/login']);
+  return false;
+};

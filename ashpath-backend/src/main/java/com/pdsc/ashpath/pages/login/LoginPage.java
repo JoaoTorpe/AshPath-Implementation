@@ -5,15 +5,25 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.pdsc.ashpath.pages.base.BasePage;
 import com.pdsc.ashpath.pages.home.HomePage;
+import com.pdsc.ashpath.pages.register.RegisterPage;
 
 public class LoginPage extends BasePage {
     private By emailEl = By.cssSelector("input[type='text']");
+    private By emailMsgEl = By.cssSelector("input[type='text'] + .error-message");
     private By passwordEl = By.cssSelector("input[type='password']");
+    private By passwordMsgEl = By.cssSelector("input[type='password'] + .error-message");
     private By loginBtnEl = By.cssSelector("button[type='submit']");
     private By errorMessageEl = By.className("error");
+    public By registerBtnEl = 
+        By.xpath("//button[@type='button'][text()='Register']");
 
     public boolean isDisplayed() {
         return wait.until(ExpectedConditions.urlContains("login"));
+    }
+
+    public RegisterPage clickRegisterBtn() {
+        wait.until(ExpectedConditions.elementToBeClickable(registerBtnEl)).click();
+        return new RegisterPage();
     }
 
     public HomePage clickLoginBtn() {
@@ -40,6 +50,14 @@ public class LoginPage extends BasePage {
         return clickLoginBtn();
     }
 
+    public void setEmail(String email) {
+        set(this.emailEl, email);
+    }
+
+    public void setPassword(String password) {
+        set(this.passwordEl, password);
+    }
+
     public HomePage logIntoApp(String email, String pwd) {
         set(this.emailEl, email);
         set(this.passwordEl, pwd);
@@ -50,7 +68,15 @@ public class LoginPage extends BasePage {
         return find(errorMessageEl).getText();
     }
 
-    public boolean isErrorMsgPresent(String errorMsg) {
-        return isMsgPresent(errorMessageEl, errorMsg);
+    public boolean isEmailMsgPresent(String msg) {
+        return isMsgPresent(emailMsgEl, msg);
+    }
+
+    public boolean isPasswordMsgPresent(String msg) {
+        return isMsgPresent(passwordMsgEl, msg);
+    }
+
+    public boolean isErrorMsgPresent(String msg) {
+        return isMsgPresent(errorMessageEl, msg);
     }
 }

@@ -7,6 +7,7 @@ $dark-slate-gray: #2A5759ff;
 $brunswick-green: #2B473Cff;
 $color-2: #FB7D0Bff;
 $color-3: #17a2b8;
+$color-4: rgb(192, 97, 14);
 $header-height: 120px;
 
 html {
@@ -18,10 +19,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 body {
-    // margin: 0;
-    height: 100%;
+    margin: 0;
+    height: 100vh;
     display: block;
     background-color: $color-1;
+    padding: 0;
     // background-size: cover;
     // background-position: center;
     // background-repeat: no-repeat;

@@ -1,12 +1,17 @@
 @use '../../../styles.scss' as *;
 
+* {
+  box-sizing: border-box;
+}
+
 .not-found-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - $header-height);
-  background-color: #f8f9fa;
+  // min-height: calc(100vh - $header-height);
+  min-height: 100%;
+  // background-color: #f8f9fa;
   text-align: center;
   padding: 1rem;
 }
