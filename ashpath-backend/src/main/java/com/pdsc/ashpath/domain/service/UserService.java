@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 import com.pdsc.ashpath.domain.dto.request.user.CreateAdminUserRequest;
 import com.pdsc.ashpath.domain.dto.request.user.CreateNecrotomistRequest;
 import com.pdsc.ashpath.domain.dto.request.user.CreateViewerUserRequest;
-import com.pdsc.ashpath.domain.dto.response.AdminUserResponse;
-import com.pdsc.ashpath.domain.dto.response.NecrotomistUserResponse;
-import com.pdsc.ashpath.domain.dto.response.UserResponse;
+import com.pdsc.ashpath.domain.dto.response.user.AdminUserResponse;
+import com.pdsc.ashpath.domain.dto.response.user.NecrotomistUserResponse;
+import com.pdsc.ashpath.domain.dto.response.user.UserResponse;
 import com.pdsc.ashpath.domain.entity.User;
 import com.pdsc.ashpath.domain.enums.UserAppRole;
 import com.pdsc.ashpath.repository.AppRoleRepository;
@@ -51,6 +51,8 @@ public class UserService {
           ur.setRegistrationDate(u.getRegistrationDate());
           ur.setLastActivityDate(u.getLastActivityDate());
           ur.setSpecialization(u.getSpecialization());
+          ur.setAppRoleSet(u.getAppRoleSet());
+          ur.setApproved(u.getApproved());
           return ur;
         })
         .toList();

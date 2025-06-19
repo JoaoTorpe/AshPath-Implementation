@@ -12,19 +12,16 @@ import { AuthService } from '../../services/auth.service';
 })
 export class SiteHeaderComponent implements OnInit {
   userSig!: Signal<SuccessfulLoginResponse | null>;
-  showLogoutMenu = false;
+  isAdmin!: Signal<boolean>;
 
-  constructor(private loginService: AuthService) { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
-    this.userSig = this.loginService.userSig;
-  }
-
-  toggleSignOutMenu() {
-    this.showLogoutMenu = !this.showLogoutMenu;
+    this.userSig = this.authService.userSig;
+    this.isAdmin = this.authService.isAdmin;
   }
 
   logout() {
-    this.loginService.logout();
+    this.authService.logout();
   }
 }

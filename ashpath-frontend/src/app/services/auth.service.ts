@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, signal } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 import { map } from 'rxjs';
-import { SuccessfulLoginResponse as SuccessfulLoginResponse, LoginRequest, CreateAdminRequest, AdminUserResponse, CreateNecrotomistRequest, CreateViewerRequest, ViewerUserResponse } from '../utils/models';
+import { SuccessfulLoginResponse as SuccessfulLoginResponse, LoginRequest, CreateAdminRequest, AdminUserResponse, CreateNecrotomistRequest, CreateViewerRequest, ViewerUserResponse, AppRole } from '../utils/models';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +9,7 @@ import { SuccessfulLoginResponse as SuccessfulLoginResponse, LoginRequest, Creat
 export class AuthService {
   private _userSig = signal<null | SuccessfulLoginResponse>(null);
   userSig = this._userSig.asReadonly();
+  isAdmin = computed(() => { return this._userSig()?.appRoleSet?.includes(AppRole.ADMIN) || false; });
 
   constructor(private http: HttpClient) {
     const storedUser = sessionStorage.getItem('user');

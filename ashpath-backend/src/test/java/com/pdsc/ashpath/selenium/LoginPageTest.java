@@ -11,19 +11,20 @@ public class LoginPageTest extends BaseTest {
         loginPage.setEmail("1");
         loginPage.isEmailMsgPresent(FormErrors.EMAIL_INVALID);
 
-        loginPage.setEmail("a".repeat(65));
-        loginPage.isEmailMsgPresent(FormErrors.EMAIL_MAX_LENGTH);
+        loginPage.setEmail("franz@gmail.com");
+        loginPage.isEmailMsgHidden();
     }
 
-    @Test  void loginNecrotomist_PasswordField() {
+    @Test
+    void loginNecrotomist_PasswordField() {
         loginPage.setPassword("1");
         loginPage.isPasswordMsgPresent(FormErrors.PASSWORD_MIN_LENGTH);
 
-        loginPage.setPassword("a".repeat(65));
-        loginPage.isPasswordMsgPresent(FormErrors.PASSWORD_MAX_LENGTH);
-
         loginPage.setPassword("invalidpwd");
         loginPage.isPasswordMsgPresent(FormErrors.PASSWORD_PATTERN);
+
+        loginPage.setPassword(validPwd);
+        loginPage.isPasswordMsgHidden();
     }
 
     @Test

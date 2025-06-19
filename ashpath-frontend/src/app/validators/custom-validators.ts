@@ -22,7 +22,7 @@ export class CustomValidators {
         const repeatPassword = control.get('repeatPassword');
 
         if (password && repeatPassword && password.value !== repeatPassword.value) {
-            repeatPassword.setErrors({ mismatch: true });
+            repeatPassword.setErrors({ ...repeatPassword.errors, mismatch: true });
             return { mismatch: true };
         }
 

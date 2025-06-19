@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pdsc.ashpath.domain.dto.request.user.CreateAdminUserRequest;
 import com.pdsc.ashpath.domain.dto.request.user.CreateNecrotomistRequest;
 import com.pdsc.ashpath.domain.dto.request.user.CreateViewerUserRequest;
-import com.pdsc.ashpath.domain.dto.response.AdminUserResponse;
-import com.pdsc.ashpath.domain.dto.response.NecrotomistUserResponse;
-import com.pdsc.ashpath.domain.dto.response.UserResponse;
+import com.pdsc.ashpath.domain.dto.response.user.AdminUserResponse;
+import com.pdsc.ashpath.domain.dto.response.user.NecrotomistUserResponse;
+import com.pdsc.ashpath.domain.dto.response.user.UserResponse;
 import com.pdsc.ashpath.domain.service.UserService;
 
 @RestController

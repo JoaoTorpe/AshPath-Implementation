@@ -1,6 +1,7 @@
 package com.pdsc.ashpath.pages.base;
 
 import java.time.Duration;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -52,5 +53,10 @@ public abstract class BasePage {
     protected boolean isMsgPresent(By locator, String msg) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
         return wait.until(ExpectedConditions.textToBePresentInElement(find(locator), msg));
+    }
+
+    public boolean isMsgHidden(By locator) {
+        List<WebElement> elements = driver.findElements(locator);
+        return elements.isEmpty() || !elements.get(0).isDisplayed();
     }
 }

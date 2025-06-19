@@ -13,7 +13,7 @@ import { filter } from 'rxjs';
 export class AppComponent {
   title = 'ashpath-frontend';
   userSig;
-  isVisible: boolean = false;
+  showHeader: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -25,7 +25,7 @@ export class AppComponent {
       .subscribe((event: NavigationEnd) => {
         // Routes where header should be hidden
         const hiddenRoutes = ['/login', '/register', '/not-found',]; 
-        this.isVisible = !hiddenRoutes.some(path => event.urlAfterRedirects.startsWith(path));
+        this.showHeader = !hiddenRoutes.some(path => event.urlAfterRedirects.startsWith(path));
       });
   }
 }

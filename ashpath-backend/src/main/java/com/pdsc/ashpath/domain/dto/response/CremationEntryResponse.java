@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.pdsc.ashpath.domain.dto.response.user.NecrotomistUserResponse;
 import com.pdsc.ashpath.domain.entity.CremationEntry;
 import com.pdsc.ashpath.domain.entity.Deceased;
 

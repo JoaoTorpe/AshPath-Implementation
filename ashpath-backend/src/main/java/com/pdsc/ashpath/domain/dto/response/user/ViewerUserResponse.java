@@ -1,10 +1,10 @@
-package com.pdsc.ashpath.domain.dto.response;
+package com.pdsc.ashpath.domain.dto.response.user;
 
 import java.time.LocalDateTime;
 
 import com.pdsc.ashpath.domain.entity.User;
 
-public final class AdminUserResponse
+public final class ViewerUserResponse
 {
   private Long id;
   private String email;
@@ -12,10 +12,10 @@ public final class AdminUserResponse
   private LocalDateTime registrationDate;
   private LocalDateTime lastActivityDate;
 
-  public AdminUserResponse()
+  public ViewerUserResponse()
   {}
 
-  public AdminUserResponse(Long id, String email, String fullname, LocalDateTime registrationDate, LocalDateTime lastActivityDate)
+  public ViewerUserResponse(Long id, String email, String fullname, LocalDateTime registrationDate, LocalDateTime lastActivityDate)
   {
     this.id = id;
     this.email = email;
@@ -24,7 +24,7 @@ public final class AdminUserResponse
     this.lastActivityDate = lastActivityDate;
   }
 
-  public AdminUserResponse(User user)
+  public ViewerUserResponse(User user)
   {
     setId(user.getId());
     setEmail(user.getEmail());
