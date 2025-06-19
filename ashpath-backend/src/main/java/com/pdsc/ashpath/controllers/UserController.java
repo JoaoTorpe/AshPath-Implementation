@@ -31,6 +31,13 @@ public class UserController
     this.userService = userService;
   }
 
+  @GetMapping("/pending-approval")
+  public ResponseEntity<List<UserResponse>> findAllPendingApproval()
+  {
+    List<UserResponse> pendingUsers = userService.findAllPendingApproval();
+    return ResponseEntity.status(HttpStatus.OK).body(pendingUsers);
+  }
+
   @PostMapping("/admin")
   public ResponseEntity<Void> createAdminUser(@RequestBody CreateAdminUserRequest request)
   {

@@ -5,7 +5,12 @@ export interface LoginRequest {
 
 export interface SuccessfulLoginResponse {
   loggedUserId: number;
-  appRoleSet: AppRole[];
+  appRoleSet: AppRoleResponse[];
+}
+
+export interface AppRoleResponse {
+  id: number;
+  name: AppRole;
 }
 
 export interface AbstractCreateUserRequest {
@@ -29,6 +34,7 @@ export interface AbstractUserResponse {
   fullname: string;
   registrationDate: string;
   lastActivityDate: string;
+  appRoleSet: AppRoleResponse[];
 }
 
 export interface AdminUserResponse extends AbstractUserResponse {}
@@ -38,6 +44,8 @@ export interface ViewerUserResponse extends AbstractUserResponse {}
 export interface NecrotomistUserResponse extends AbstractUserResponse {
   specialization: string;
 }
+
+export type UserResponse = AdminUserResponse & ViewerUserResponse & NecrotomistUserResponse;
 
 export enum AppRole {
   VIEWER = 'VIEWER',

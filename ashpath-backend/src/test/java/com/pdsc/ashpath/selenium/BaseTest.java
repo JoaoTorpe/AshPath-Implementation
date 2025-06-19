@@ -11,10 +11,10 @@ import com.pdsc.ashpath.pages.login.LoginPage;
 
 public abstract class BaseTest {
     /*
-     * WARNING: Don't remove '/login' from the baseUrl.
+     * WARNING: Don't remove '#/login' from the baseUrl.
      * It is used to ensure that the LoginPage is loaded before each test.
      */
-    protected String baseUrl = "http://localhost:4200/login";
+    protected String baseUrl = "http://localhost:4200/#/login";
     protected WebDriver driver;
     protected LoginPage loginPage;
     protected String validPwd = "s3nh4@S";

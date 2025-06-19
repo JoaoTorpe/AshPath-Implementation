@@ -15,7 +15,7 @@ public class RegisterPageTest extends BaseTest {
         registerPage.selectNecrotomist();
 
         registerPage.setEmail("1");
-        registerPage.isEmailMsgPresent(FormErrors.EMAIL_INVALID);
+        registerPage.isEmailMsgPresent(FormErrors.EMAIL_INVALID_MSG);
 
         registerPage.setEmail("franz@gmail.com");
         registerPage.isEmailMsgHidden();
@@ -30,7 +30,7 @@ public class RegisterPageTest extends BaseTest {
         registerPage.selectNecrotomist();
 
         registerPage.setFullName("1");
-        registerPage.isFullNameMsgPresent(FormErrors.FULL_NAME_MIN_LENGTH);
+        registerPage.isFullNameMsgPresent(FormErrors.FULL_NAME_MIN_LENGTH_MSG);
 
         registerPage.setFullName("Franz Bonaparta");
         registerPage.isFullNameMsgHidden();
@@ -45,10 +45,10 @@ public class RegisterPageTest extends BaseTest {
         registerPage.selectNecrotomist();
 
         registerPage.setPassword("1");
-        registerPage.isPasswordMsgPresent(FormErrors.PASSWORD_MIN_LENGTH);
+        registerPage.isPasswordMsgPresent(FormErrors.PASSWORD_MIN_LENGTH_MSG);
 
         registerPage.setPassword("invalidpwd");
-        registerPage.isPasswordMsgPresent(FormErrors.PASSWORD_PATTERN);
+        registerPage.isPasswordMsgPresent(FormErrors.PASSWORD_PATTERN_MSG);
 
         registerPage.setPassword(validPwd);
         registerPage.isPasswordMsgHidden();
@@ -65,10 +65,10 @@ public class RegisterPageTest extends BaseTest {
         registerPage.setPassword(validPwd);
 
         registerPage.setRepeatPassword("1");
-        registerPage.isRepeatPasswordMsgPresent(FormErrors.REPEAT_PASSWORD_MIN_LENGTH);
+        registerPage.isRepeatPasswordMsgPresent(FormErrors.REPEAT_PASSWORD_MIN_LENGTH_MSG);
 
         registerPage.setRepeatPassword("invalidpwd");
-        registerPage.isRepeatPasswordMsgPresent(FormErrors.REPEAT_PASSWORD_MISMATCH);
+        registerPage.isRepeatPasswordMsgPresent(FormErrors.REPEAT_PASSWORD_MISMATCH_MSG);
 
         registerPage.setRepeatPassword(validPwd);
         registerPage.isRepeatPasswordMsgHidden();
@@ -83,7 +83,7 @@ public class RegisterPageTest extends BaseTest {
         registerPage.selectNecrotomist();
 
         registerPage.setSpecialization("1");
-        registerPage.isSpecializationMsgPresent(FormErrors.SPECIALIZATION_MIN_LENGTH);
+        registerPage.isSpecializationMsgPresent(FormErrors.SPECIALIZATION_MIN_LENGTH_MSG);
 
         registerPage.setSpecialization("Autopsy Specialist");
         registerPage.isSpecializationMsgHidden();

@@ -59,17 +59,19 @@ INSERT INTO APP_ROLE (Name) VALUES
 ('VIEWER');
 
 INSERT INTO APP_USER (Email, Password, Full_Name, Registration_Date, Last_Activity_Date, Specialization, approved) VALUES
-('admin@ashpath.com', 's3nh4@S', 'Administrador do Sistema', NOW(), NOW(), null, true),
-('necrotomista1@ashpath.com', 's3nh4@S', 'Joao Silva', NOW(), NOW(), 'Forensic Pathology Support', true),
-('necrotomista2@ashpath.com', 's3nh4@S', 'Maria Souza', NOW(), NOW(), 'Anatomical Pathology', true),
-('viewer1@ashpath.com', 's3nh4@S', 'Jakub Farobek', NOW(), NOW(), null, true)
+('mohg.silva@gmail.com', 's3nh4@S', 'Mohg Silva', NOW(), NOW(), null, true),
+('helmuth@yahoo.com', 's3nh4@S', 'Helmuth Voss', NOW(), NOW(), 'Forensic Pathology Support', true),
+('emil@yahoo.com', 's3nh4@S', 'Emil Sebe', NOW(), NOW(), 'Anatomical Pathology', false),
+('jakubfarobek@yahoo.com', 's3nh4@S', 'Jakub Farobek', NOW(), NOW(), null, true),
+('bayle@yahoo.com', 's3nh4@S', 'Bayle The Dread', NOW(), NOW(), null, false)
 ;
 
 INSERT INTO ROLE_APP_USER (App_User_Id, Role_App_Id) VALUES
 (1, 1),
 (2, 2),
 (3, 2),
-(4, 3)
+(4, 3),
+(5, 3)
 ;
 
 INSERT INTO CREMATION_ENTRY (Entered_Date, Necrotomist_Id) VALUES

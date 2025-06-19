@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pdsc.ashpath.domain.enums.UserAppRole;
 
 import jakarta.persistence.Column;
@@ -30,6 +31,7 @@ public class AppRole
   @Column(name = "NAME", unique = true, nullable = false)
   private UserAppRole name;
 
+  @JsonIgnore
   @ManyToMany(fetch = FetchType.EAGER, mappedBy = "appRoleSet")
   private Set<User> usersSet = new HashSet<>();
 

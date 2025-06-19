@@ -13,3 +13,14 @@ export const isLogged = (): boolean => {
   router.navigate(['/login']);
   return false;
 };
+
+export const isAdmin = (): boolean => {
+  const authSvc = inject(AuthService);
+  // const router = inject(Router);
+
+  // if (authSvc.isAdmin()) {
+  //   return true;
+  // }
+
+  return authSvc.isAdmin();
+}

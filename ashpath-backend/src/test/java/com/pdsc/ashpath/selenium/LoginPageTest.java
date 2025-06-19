@@ -9,7 +9,7 @@ public class LoginPageTest extends BaseTest {
     @Test
     public void loginNecrotomist_EmailField() {
         loginPage.setEmail("1");
-        loginPage.isEmailMsgPresent(FormErrors.EMAIL_INVALID);
+        loginPage.isEmailMsgPresent(FormErrors.EMAIL_INVALID_MSG);
 
         loginPage.setEmail("franz@gmail.com");
         loginPage.isEmailMsgHidden();
@@ -18,10 +18,10 @@ public class LoginPageTest extends BaseTest {
     @Test
     void loginNecrotomist_PasswordField() {
         loginPage.setPassword("1");
-        loginPage.isPasswordMsgPresent(FormErrors.PASSWORD_MIN_LENGTH);
+        loginPage.isPasswordMsgPresent(FormErrors.PASSWORD_MIN_LENGTH_MSG);
 
         loginPage.setPassword("invalidpwd");
-        loginPage.isPasswordMsgPresent(FormErrors.PASSWORD_PATTERN);
+        loginPage.isPasswordMsgPresent(FormErrors.PASSWORD_PATTERN_MSG);
 
         loginPage.setPassword(validPwd);
         loginPage.isPasswordMsgHidden();
@@ -30,14 +30,14 @@ public class LoginPageTest extends BaseTest {
     @Test
     public void loginNecrotomist_Success() {
         var homePage = loginPage
-                .logIntoApp("necrotomista1@ashpath.com", validPwd);
+                .logIntoApp("helmuth@yahoo.com", validPwd);
 
         Assert.assertTrue(homePage.isDisplayed());
     }
 
     @Test
     public void loginNecrotomist_Error() {
-        loginPage.logIntoApp("necrotomista1@ashpath.com", invalidPwd);
+        loginPage.logIntoApp("helmuth@yahoo.com", invalidPwd);
 
         Assert.assertTrue(loginPage.isErrorMsgPresent(FormErrors.UNAUTHORIZED_MSG));
     }
@@ -45,7 +45,7 @@ public class LoginPageTest extends BaseTest {
     @Test
     public void loginAdmin_Success() {
         var homePage = loginPage
-                .logIntoApp("admin@ashpath.com", validPwd);
+                .logIntoApp("mohg.silva@gmail.com", validPwd);
 
         Assert.assertTrue(homePage.isDisplayed());
     }
@@ -53,7 +53,7 @@ public class LoginPageTest extends BaseTest {
     @Test
     public void loginAdmin_Error() {
         loginPage
-                .logIntoApp("admin@ashpath.com", invalidPwd);
+                .logIntoApp("mohg.silva@gmail.com", invalidPwd);
 
         Assert.assertTrue(loginPage.isErrorMsgPresent(FormErrors.UNAUTHORIZED_MSG));
     }
@@ -61,7 +61,7 @@ public class LoginPageTest extends BaseTest {
     @Test
     public void loginViewer_Success() {
         var homePage = loginPage
-                .logIntoApp("viewer1@ashpath.com", validPwd);
+                .logIntoApp("jakubfarobek@yahoo.com", validPwd);
 
         Assert.assertTrue(homePage.isDisplayed());
     }
@@ -69,8 +69,16 @@ public class LoginPageTest extends BaseTest {
     @Test
     public void loginViewer_Error() {
         loginPage
-                .logIntoApp("viewer1@ashpath.com", invalidPwd);
+                .logIntoApp("jakubfarobek@yahoo.com", invalidPwd);
 
         Assert.assertTrue(loginPage.isErrorMsgPresent(FormErrors.UNAUTHORIZED_MSG));
+    }
+
+    @Test
+    public void loginPendingAccount_Error() {
+        loginPage
+                .logIntoApp("bayle@yahoo.com", validPwd);
+
+        Assert.assertTrue(loginPage.isErrorMsgPresent(FormErrors.PENDING_APPROVAL_MSG));
     }
 }
