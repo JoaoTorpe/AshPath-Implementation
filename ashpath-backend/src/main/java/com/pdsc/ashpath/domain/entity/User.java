@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,13 +24,13 @@ public class User {
   @Column(name = "ID")
   private Long id;
 
-  @Column(name = "EMAIL", length = 64)
+  @Column(name = "EMAIL", length = 254)
   private String email;
 
-  @Column(name = "PASSWORD", length = 64)
+  @Column(name = "PASSWORD", length = 12)
   private String password;
 
-  @Column(name = "FULL_NAME", length = 128)
+  @Column(name = "FULL_NAME", length = 64)
   private String fullname;
 
   @Column(name = "REGISTRATION_DATE", columnDefinition = "TIMESTAMP")
@@ -40,7 +39,7 @@ public class User {
   @Column(name = "LAST_ACTIVITY_DATE", columnDefinition = "TIMESTAMP")
   private LocalDateTime lastActivityDate;
 
-  @Column(name = "SPECIALIZATION")
+  @Column(name = "SPECIALIZATION", length = 64)
   private String specialization;
 
   @Column(name = "approved")
