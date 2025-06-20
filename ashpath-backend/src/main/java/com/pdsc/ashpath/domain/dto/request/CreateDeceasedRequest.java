@@ -15,6 +15,16 @@ public class CreateDeceasedRequest
   public CreateDeceasedRequest()
   {}
 
+  public CreateDeceasedRequest(String fullname, LocalDate birthDate, LocalDate deathDate, String causeOfDeath, String fatherName, String motherName)
+  {
+    this.fullname = fullname;
+    this.birthDate = birthDate;
+    this.deathDate = deathDate;
+    this.causeOfDeath = causeOfDeath;
+    this.fatherName = fatherName;
+    this.motherName = motherName;
+  }
+
   public CreateDeceasedRequest(String fullname, LocalDate birthDate, LocalDate deathDate, String causeOfDeath, String fatherName, String motherName, Long graveID)
   {
     this.fullname = fullname;
@@ -25,15 +35,7 @@ public class CreateDeceasedRequest
     this.motherName = motherName;
     this.graveID = graveID;
   }
-  {
-    this.fullname = fullname;
-    this.birthDate = birthDate;
-    this.deathDate = deathDate;
-    this.causeOfDeath = causeOfDeath;
-    this.fatherName = fatherName;
-    this.motherName = motherName;
-  }
-
+  
   public void setFullname(String fullname)
   {
     this.fullname = fullname;
@@ -94,14 +96,13 @@ public class CreateDeceasedRequest
     return this.motherName;
   }
 
-    public Long getGraveID()
-    {
-        return graveID;
-    }
-    public void setGraveID(Long graveID)
-    {
-        this.graveID = graveID;
-        }
+  public Long getGraveID()
+  {
+    return graveID;
+  }
 
-
+  public void setGraveID(Long graveID)
+  {
+    this.graveID = graveID;
+  }
 }
