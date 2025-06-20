@@ -47,7 +47,7 @@ public class DeceasedController
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
     }
 
-    return ResponseEntity.status(HttpStatus.OK).build();
+    return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 
   @GetMapping("/findAllByCremation/{cremationEntryId}")
