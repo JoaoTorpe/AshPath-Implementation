@@ -32,7 +32,7 @@ public class AuthServiceTest {
         user = new User();
 
         user.setEmail("test@example.com");
-        user.setPassword("password");
+        user.setPassword("$2a$12$UeqET5NXiGIvHU3OkuHGTO.YsgvGwteii01Fs0YnYsDgrvlnndBXS");
         user.setFullname("Test User");
         user.setRegistrationDate(LocalDateTime.now());
         user.setLastActivityDate(LocalDateTime.now());
@@ -46,7 +46,7 @@ public class AuthServiceTest {
     @Test
     public void loginSuccess(){
         String email = "test@example.com";
-        String password = "password";
+        String password = "s3nh4@S";
 
         User u =  authService.login(new LoginRequest(email,password));
 
@@ -59,7 +59,7 @@ public class AuthServiceTest {
     @Test
     public void loginFailWrongPassword(){
         String email = "test@example.com";
-        String password = "wrongpassword";
+        String password = "senha";
         User u =  authService.login(new LoginRequest(email,password));
         assertNull(u);
     }
@@ -67,7 +67,7 @@ public class AuthServiceTest {
     @Test
     public void loginFailWrongEmail(){
         String email = "wrong@example.com";
-        String password = "password";
+        String password = "s3nh4@S";
         User u =  authService.login(new LoginRequest(email,password));
         assertNull(u);
     }
