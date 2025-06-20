@@ -20,6 +20,8 @@ import com.pdsc.ashpath.domain.dto.response.user.NecrotomistUserResponse;
 import com.pdsc.ashpath.domain.dto.response.user.UserResponse;
 import com.pdsc.ashpath.domain.service.UserService;
 
+import jakarta.validation.Valid;
+
 record UserCredentials(Long id) {
 }
 
@@ -59,19 +61,19 @@ public class UserController {
   }
 
   @PostMapping("/admin")
-  public ResponseEntity<Void> createAdminUser(@RequestBody CreateAdminUserRequest request) {
+  public ResponseEntity<Void> createAdminUser(@Valid @RequestBody CreateAdminUserRequest request) {
     userService.createAdminUser(request);
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 
   @PostMapping("/viewer")
-  public ResponseEntity<Void> createViewerUser(@RequestBody CreateViewerUserRequest request) {
+  public ResponseEntity<Void> createViewerUser(@Valid @RequestBody CreateViewerUserRequest request) {
     userService.createViewerUser(request);
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 
   @PostMapping("/necrotomist")
-  public ResponseEntity<Void> createNecrotomistUser(@RequestBody CreateNecrotomistRequest request) {
+  public ResponseEntity<Void> createNecrotomistUser(@Valid @RequestBody CreateNecrotomistRequest request) {
     userService.createNecrotomistUser(request);
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }

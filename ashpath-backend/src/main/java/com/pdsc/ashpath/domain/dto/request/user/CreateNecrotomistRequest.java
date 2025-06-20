@@ -1,7 +1,10 @@
 package com.pdsc.ashpath.domain.dto.request.user;
 
+import jakarta.validation.constraints.Size;
+
 public class CreateNecrotomistRequest extends AbstractCreateUserRequest
 {
+  @Size(min = 3, max = 255, message = "'specialization' field must have a minimum of 3 characters and a maximum of 255 characters.")
   private String specialization;
 
   public CreateNecrotomistRequest()
