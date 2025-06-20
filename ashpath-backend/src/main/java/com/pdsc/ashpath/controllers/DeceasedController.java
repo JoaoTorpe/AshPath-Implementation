@@ -23,6 +23,8 @@ import com.pdsc.ashpath.domain.dto.response.DeceasedResponse;
 import com.pdsc.ashpath.domain.entity.Deceased;
 import com.pdsc.ashpath.domain.service.DeceasedService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/deceased")
 public class DeceasedController
@@ -36,7 +38,7 @@ public class DeceasedController
 
   @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   public ResponseEntity<?> createDeceased(
-    @RequestPart(name = "deceasedData") CreateDeceasedRequest request,
+    @Valid @RequestPart(name = "deceasedData") CreateDeceasedRequest request,
     @RequestPart(name = "deceasedDeathCertificate") MultipartFile deathCertificateFile
   ){
     try {
