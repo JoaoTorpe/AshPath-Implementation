@@ -28,4 +28,6 @@ public interface UserRepository extends JpaRepository<User, Long>
 
   @Query("SELECT u FROM User u JOIN u.appRoleSet ap WHERE u.approved = false")
   List<User> findAllPendingApproval();
+
+  Optional<User> findByEmail(String email);
 }

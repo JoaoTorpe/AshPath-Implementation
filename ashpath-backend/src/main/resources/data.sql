@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS APP_ROLE (
 CREATE TABLE IF NOT EXISTS APP_USER (
     Id BIGINT PRIMARY KEY AUTO_INCREMENT,
     Email VARCHAR(254),
-    Password VARCHAR(12),
+    Password VARCHAR(64),
     Full_Name VARCHAR(64),  
     Registration_Date TIMESTAMP, 
     Last_Activity_Date TIMESTAMP, 
@@ -58,18 +58,19 @@ INSERT INTO APP_ROLE (Name) VALUES
 ('NECROTOMIST'),
 ('VIEWER');
 
+-- Todos tem a mesma senha: 's3nh4@S' --
 INSERT INTO APP_USER (Email, Password, Full_Name, Registration_Date, Last_Activity_Date, Specialization, approved) VALUES
-('mohg.silva@gmail.com', 's3nh4@S', 'Mohg Silva', NOW(), NOW(), null, true),
-('helmuth@yahoo.com', 's3nh4@S', 'Helmuth Voss', NOW(), NOW(), 'Forensic Pathology Support', true),
-('emil@yahoo.com', 's3nh4@S', 'Emil Sebe', NOW(), NOW(), 'Anatomical Pathology', true),
-('jakubfarobek@yahoo.com', 's3nh4@S', 'Jakub Farobek', NOW(), NOW(), null, true),
-('bayle@yahoo.com', 's3nh4@S', 'Bayle The Dread', NOW(), NOW(), null, false),
-('cantarella@gmail.com', 's3nh4@S', 'Cantarella', NOW(), NOW(), null, false),
-('itsuki@yahoo.com', 's3nh4@S', 'Nakano Itsuki', NOW(), NOW(), null, false),
-('rafal@yahoo.com', 's3nh4@S', 'Rafal', NOW(), NOW(), null, false),
-('nosramus@gmail.com', 's3nh4@S', 'Nosramus', NOW(), NOW(), null, false),
-('Valteil@yahoo.com', 's3nh4@S', 'Valteil, The Enlightened One', NOW(), NOW(), null, false),
-('wuwa@yahoo.com', 's3nh4@S', 'Wuwa of Astora', NOW(), NOW(), null, false)
+('mohg.silva@gmail.com', '$2a$12$UeqET5NXiGIvHU3OkuHGTO.YsgvGwteii01Fs0YnYsDgrvlnndBXS', 'Mohg Silva', NOW(), NOW(), null, true),
+('helmuth@yahoo.com', '$2a$12$UeqET5NXiGIvHU3OkuHGTO.YsgvGwteii01Fs0YnYsDgrvlnndBXS', 'Helmuth Voss', NOW(), NOW(), 'Forensic Pathology Support', true),
+('emil@yahoo.com', '$2a$12$UeqET5NXiGIvHU3OkuHGTO.YsgvGwteii01Fs0YnYsDgrvlnndBXS', 'Emil Sebe', NOW(), NOW(), 'Anatomical Pathology', true),
+('jakubfarobek@yahoo.com', '$2a$12$UeqET5NXiGIvHU3OkuHGTO.YsgvGwteii01Fs0YnYsDgrvlnndBXS', 'Jakub Farobek', NOW(), NOW(), null, true),
+('bayle@yahoo.com', '$2a$12$UeqET5NXiGIvHU3OkuHGTO.YsgvGwteii01Fs0YnYsDgrvlnndBXS', 'Bayle The Dread', NOW(), NOW(), null, false),
+('cantarella@gmail.com', '$2a$12$UeqET5NXiGIvHU3OkuHGTO.YsgvGwteii01Fs0YnYsDgrvlnndBXS', 'Cantarella', NOW(), NOW(), null, false),
+('itsuki@yahoo.com', '$2a$12$UeqET5NXiGIvHU3OkuHGTO.YsgvGwteii01Fs0YnYsDgrvlnndBXS', 'Nakano Itsuki', NOW(), NOW(), null, false),
+('rafal@yahoo.com', '$2a$12$UeqET5NXiGIvHU3OkuHGTO.YsgvGwteii01Fs0YnYsDgrvlnndBXS', 'Rafal', NOW(), NOW(), null, false),
+('nosramus@gmail.com', '$2a$12$UeqET5NXiGIvHU3OkuHGTO.YsgvGwteii01Fs0YnYsDgrvlnndBXS', 'Nosramus', NOW(), NOW(), null, false),
+('Valteil@yahoo.com', '$2a$12$UeqET5NXiGIvHU3OkuHGTO.YsgvGwteii01Fs0YnYsDgrvlnndBXS', 'Valteil, The Enlightened One', NOW(), NOW(), null, false),
+('wuwa@yahoo.com', '$2a$12$UeqET5NXiGIvHU3OkuHGTO.YsgvGwteii01Fs0YnYsDgrvlnndBXS', 'Wuwa of Astora', NOW(), NOW(), null, false)
 ;
 
 INSERT INTO ROLE_APP_USER (App_User_Id, Role_App_Id) VALUES

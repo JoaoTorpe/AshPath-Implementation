@@ -1,5 +1,6 @@
 package com.pdsc.ashpath.domain.service;
 
+import com.pdsc.ashpath.util.PasswordUtils;
 import org.springframework.stereotype.Service;
 
 import com.pdsc.ashpath.domain.dto.request.LoginRequest;
@@ -10,16 +11,21 @@ import com.pdsc.ashpath.repository.UserRepository;
 public class AuthService
 {
   private final UserRepository userRepository;
-
-  public AuthService(UserRepository userRepository)
+  private final PasswordUtils passwordUtils;
+  public AuthService(UserRepository userRepository, PasswordUtils passwordUtils)
   {
     this.userRepository = userRepository;
+      this.passwordUtils = passwordUtils;
   }
 
   public User login(LoginRequest request)
   {
-    var optionalUser = userRepository.authenticate(request.getEmail(), request.getPassword());
-    // var optionalUser = userRepository.authenticateApproved(request.getEmail(), request.getPassword());
-    return optionalUser.orElse(null);
+    var optionalUser = userRepository.findByEmail(request.getEmail());
+    if(optionalUser.isEmpty())
+      return null;
+
+    boolean isValidPassword = passwordUtils.checkPassword(request.getPassword(),optionalUser.get().getPassword());
+
+    return isValidPassword ? optionalUser.get() : null;
   }
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.pdsc.ashpath.util.PasswordUtils;
 import org.springframework.stereotype.Service;
 
 import com.pdsc.ashpath.domain.dto.request.user.CreateAdminUserRequest;
@@ -20,12 +21,15 @@ import com.pdsc.ashpath.repository.UserRepository;
 
 @Service
 public class UserService {
+
   private final UserRepository userRepository;
   private final AppRoleRepository appRoleRepository;
+  private final PasswordUtils passwordUtils;
 
-  public UserService(UserRepository userRepository, AppRoleRepository appRoleRepository) {
+  public UserService(UserRepository userRepository, AppRoleRepository appRoleRepository, PasswordUtils passwordUtils) {
     this.userRepository = userRepository;
     this.appRoleRepository = appRoleRepository;
+      this.passwordUtils = passwordUtils;
   }
 
   public boolean isAdmin(Long userId) {
@@ -95,7 +99,7 @@ public class UserService {
     User user = new User();
 
     user.setEmail(adminUser.getEmail());
-    user.setPassword(adminUser.getPassword());
+    user.setPassword(passwordUtils.hashPassword(adminUser.getPassword()));
     user.setFullname(adminUser.getFullname());
     user.setRegistrationDate(LocalDateTime.now());
     user.setLastActivityDate(LocalDateTime.now());
@@ -110,7 +114,7 @@ public class UserService {
     User user = new User();
 
     user.setEmail(viewerUser.getEmail());
-    user.setPassword(viewerUser.getPassword());
+    user.setPassword(passwordUtils.hashPassword(viewerUser.getPassword()));
     user.setFullname(viewerUser.getFullname());
     user.setRegistrationDate(LocalDateTime.now());
     user.setLastActivityDate(LocalDateTime.now());
@@ -125,7 +129,7 @@ public class UserService {
     User user = new User();
 
     user.setEmail(necrotomistUser.getEmail());
-    user.setPassword(necrotomistUser.getPassword());
+    user.setPassword(passwordUtils.hashPassword(necrotomistUser.getPassword()));
     user.setFullname(necrotomistUser.getFullname());
     user.setRegistrationDate(LocalDateTime.now());
     user.setLastActivityDate(LocalDateTime.now());
