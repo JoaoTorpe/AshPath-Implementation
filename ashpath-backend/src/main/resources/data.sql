@@ -61,9 +61,15 @@ INSERT INTO APP_ROLE (Name) VALUES
 INSERT INTO APP_USER (Email, Password, Full_Name, Registration_Date, Last_Activity_Date, Specialization, approved) VALUES
 ('mohg.silva@gmail.com', 's3nh4@S', 'Mohg Silva', NOW(), NOW(), null, true),
 ('helmuth@yahoo.com', 's3nh4@S', 'Helmuth Voss', NOW(), NOW(), 'Forensic Pathology Support', true),
-('emil@yahoo.com', 's3nh4@S', 'Emil Sebe', NOW(), NOW(), 'Anatomical Pathology', false),
+('emil@yahoo.com', 's3nh4@S', 'Emil Sebe', NOW(), NOW(), 'Anatomical Pathology', true),
 ('jakubfarobek@yahoo.com', 's3nh4@S', 'Jakub Farobek', NOW(), NOW(), null, true),
-('bayle@yahoo.com', 's3nh4@S', 'Bayle The Dread', NOW(), NOW(), null, false)
+('bayle@yahoo.com', 's3nh4@S', 'Bayle The Dread', NOW(), NOW(), null, false),
+('cantarella@gmail.com', 's3nh4@S', 'Cantarella', NOW(), NOW(), null, false),
+('itsuki@yahoo.com', 's3nh4@S', 'Nakano Itsuki', NOW(), NOW(), null, false),
+('rafal@yahoo.com', 's3nh4@S', 'Rafal', NOW(), NOW(), null, false),
+('nosramus@gmail.com', 's3nh4@S', 'Nosramus', NOW(), NOW(), null, false),
+('Valteil@yahoo.com', 's3nh4@S', 'Valteil, The Enlightened One', NOW(), NOW(), null, false),
+('wuwa@yahoo.com', 's3nh4@S', 'Wuwa of Astora', NOW(), NOW(), null, false)
 ;
 
 INSERT INTO ROLE_APP_USER (App_User_Id, Role_App_Id) VALUES
@@ -71,7 +77,13 @@ INSERT INTO ROLE_APP_USER (App_User_Id, Role_App_Id) VALUES
 (2, 2),
 (3, 2),
 (4, 3),
-(5, 3)
+(5, 3),
+(6, 2),
+(7, 3),
+(8, 2),
+(9, 3),
+(10, 2),
+(11, 1)
 ;
 
 INSERT INTO CREMATION_ENTRY (Entered_Date, Necrotomist_Id) VALUES

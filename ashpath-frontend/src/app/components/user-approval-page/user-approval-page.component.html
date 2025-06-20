@@ -1,6 +1,6 @@
 <div class="container">
     <h1 class="title">User Approval Dashboard</h1>
-    
+
     @for(user of usersPendingApproval; track user.id) {
     <div class="user-card">
         <div class="user-info">
@@ -12,13 +12,22 @@
         </div>
         <div class="action-buttons">
             <button class="approve-button" (click)="approve(user)">Approve</button>
-            <button class="unapprove-button" (click)="unapprove(user)">Reject</button>
+            <button class="unapprove-button" (click)="reject(user)">Reject</button>
         </div>
     </div>
     }@empty {
     <div class="empty-state">
         <h1>No Users Pending Approval</h1>
         <p>All user approval requests have been processed. Check back later for new requests.</p>
+    </div>
+    }
+
+    @if(showSnackbar) {
+    <div class="snackbar-container">
+        <div class="custom-snackbar" [ngClass]="[snackbarType, hideAnimation ? 'hide' : '']">
+            {{ snackbarMessage }}
+            <button class="close-btn" (click)="hideSnackbar()">Close</button>
+        </div>
     </div>
     }
 </div>

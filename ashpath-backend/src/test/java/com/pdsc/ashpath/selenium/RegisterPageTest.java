@@ -18,7 +18,7 @@ public class RegisterPageTest extends BaseTest {
         registerPage.isEmailMsgPresent(FormErrors.EMAIL_INVALID_MSG);
 
         registerPage.setEmail("franz@gmail.com");
-        registerPage.isEmailMsgHidden();
+        Assert.assertTrue(registerPage.isEmailMsgHidden());
     }
 
     @Test
@@ -33,7 +33,7 @@ public class RegisterPageTest extends BaseTest {
         registerPage.isFullNameMsgPresent(FormErrors.FULL_NAME_MIN_LENGTH_MSG);
 
         registerPage.setFullName("Franz Bonaparta");
-        registerPage.isFullNameMsgHidden();
+        Assert.assertTrue(registerPage.isFullNameMsgHidden());
     }
 
     @Test
@@ -51,7 +51,7 @@ public class RegisterPageTest extends BaseTest {
         registerPage.isPasswordMsgPresent(FormErrors.PASSWORD_PATTERN_MSG);
 
         registerPage.setPassword(validPwd);
-        registerPage.isPasswordMsgHidden();
+        Assert.assertTrue(registerPage.isPasswordMsgHidden());
     }
 
     @Test
@@ -71,7 +71,7 @@ public class RegisterPageTest extends BaseTest {
         registerPage.isRepeatPasswordMsgPresent(FormErrors.REPEAT_PASSWORD_MISMATCH_MSG);
 
         registerPage.setRepeatPassword(validPwd);
-        registerPage.isRepeatPasswordMsgHidden();
+        Assert.assertTrue(registerPage.isRepeatPasswordMsgHidden());
     }
 
     @Test
@@ -86,7 +86,7 @@ public class RegisterPageTest extends BaseTest {
         registerPage.isSpecializationMsgPresent(FormErrors.SPECIALIZATION_MIN_LENGTH_MSG);
 
         registerPage.setSpecialization("Autopsy Specialist");
-        registerPage.isSpecializationMsgHidden();
+        Assert.assertTrue(registerPage.isSpecializationMsgHidden());
     }
 
     @Test

@@ -28,16 +28,49 @@ public class UserService {
     this.appRoleRepository = appRoleRepository;
   }
 
-  public boolean hasPermission(UserAppRole appRoleToCreate, Long id) {
-    User user = userRepository.getReferenceById(id);
+  public boolean isAdmin(Long userId) {
+    Optional<User> optionalUser = userRepository.findById(userId);
 
-    boolean hasRole = user.getAppRoleSet().stream()
-        .anyMatch(appRole -> {
-          var name = appRole.getName();
-          return name.equals(UserAppRole.ADMIN);
-        });
+    if (optionalUser.isPresent()) {
+      User user = optionalUser.get();
+      return user.getAppRoleSet().stream()
+          .anyMatch(appRole -> appRole.getName().equals(UserAppRole.ADMIN));
+    }
 
-    return hasRole;
+    return false;
+  }
+
+  // public boolean hasPermission(UserAppRole appRoleToCreate, Long id) {
+  //   User user = userRepository.getReferenceById(id);
+
+  //   boolean hasRole = user.getAppRoleSet().stream()
+  //       .anyMatch(appRole -> {
+  //         var name = appRole.getName();
+  //         return name.equals(UserAppRole.ADMIN);
+  //       });
+
+  //   return hasRole;
+  // }
+
+  public void approveUser(Long userId) {
+    Optional<User> optionalUser = userRepository.findById(userId);
+
+    if (optionalUser.isPresent()) {
+      User user = optionalUser.get();
+      user.setApproved(true);
+      user.setLastActivityDate(LocalDateTime.now());
+      userRepository.save(user);
+    }
+  }
+
+  public void rejectUser(Long userId) {
+    Optional<User> optionalUser = userRepository.findById(userId);
+
+    if (optionalUser.isPresent()) {
+      User user = optionalUser.get();
+      user.getAppRoleSet().clear();
+      userRepository.delete(user);
+    }
   }
 
   public List<UserResponse> findAllPendingApproval() {

@@ -53,6 +53,10 @@ export enum AppRole {
   ADMIN = 'ADMIN',
 }
 
+export interface UserCredentials {
+  id: number;
+}
+
 export interface DeceasedDetailResponse {
   id: number;
   fullname: string;
@@ -80,7 +84,6 @@ export interface DeceasedResponse {
   cremationEntryId?: number;
   graveLocation?: string;
 }
-
 
 export interface CremationEntryResponse {
   id: number;

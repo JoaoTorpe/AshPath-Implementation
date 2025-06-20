@@ -20,72 +20,85 @@ import com.pdsc.ashpath.domain.dto.response.user.NecrotomistUserResponse;
 import com.pdsc.ashpath.domain.dto.response.user.UserResponse;
 import com.pdsc.ashpath.domain.service.UserService;
 
+record UserCredentials(Long id) {
+}
+
 @RestController
 @RequestMapping("/user")
-public class UserController
-{
+public class UserController {
   private final UserService userService;
 
-  public UserController(UserService userService)
-  {
+  public UserController(UserService userService) {
     this.userService = userService;
   }
 
+  @PostMapping("/approve/{userId}")
+  public ResponseEntity<Void> approveUser(@PathVariable Long userId, @RequestBody UserCredentials credentials) {
+    if (!userService.isAdmin(credentials.id())) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
+    userService.approveUser(userId);
+    return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+  }
+
+  @PostMapping("/reject/{userId}")
+  public ResponseEntity<Void> rejectUser(@PathVariable Long userId, @RequestBody UserCredentials credentials) {
+    if (!userService.isAdmin(credentials.id())) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+    
+    userService.rejectUser(userId);
+    return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+  }
+
   @GetMapping("/pending-approval")
-  public ResponseEntity<List<UserResponse>> findAllPendingApproval()
-  {
+  public ResponseEntity<List<UserResponse>> findAllPendingApproval() {
     List<UserResponse> pendingUsers = userService.findAllPendingApproval();
     return ResponseEntity.status(HttpStatus.OK).body(pendingUsers);
   }
 
   @PostMapping("/admin")
-  public ResponseEntity<Void> createAdminUser(@RequestBody CreateAdminUserRequest request)
-  {
+  public ResponseEntity<Void> createAdminUser(@RequestBody CreateAdminUserRequest request) {
     userService.createAdminUser(request);
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 
   @PostMapping("/viewer")
-  public ResponseEntity<Void> createViewerUser(@RequestBody CreateViewerUserRequest request)
-  {
+  public ResponseEntity<Void> createViewerUser(@RequestBody CreateViewerUserRequest request) {
     userService.createViewerUser(request);
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 
   @PostMapping("/necrotomist")
-  public ResponseEntity<Void> createNecrotomistUser(@RequestBody CreateNecrotomistRequest request)
-  {
+  public ResponseEntity<Void> createNecrotomistUser(@RequestBody CreateNecrotomistRequest request) {
     userService.createNecrotomistUser(request);
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 
   @GetMapping("/{userId}")
-  public ResponseEntity<UserResponse> readUserById(@PathVariable Long userId)
-  {
+  public ResponseEntity<UserResponse> readUserById(@PathVariable Long userId) {
     UserResponse response = userService.readUserById(userId);
 
-    return Objects.isNull(response) ?
-      ResponseEntity.status(HttpStatus.NOT_FOUND).build() :
-      ResponseEntity.status(HttpStatus.OK).body(response);
+    return Objects.isNull(response) ? ResponseEntity.status(HttpStatus.NOT_FOUND).build()
+        : ResponseEntity.status(HttpStatus.OK).body(response);
   }
 
   @GetMapping("/admin")
-  public ResponseEntity<List<AdminUserResponse>> readAllAdminUsers()
-  {
+  public ResponseEntity<List<AdminUserResponse>> readAllAdminUsers() {
     List<AdminUserResponse> adminUsers = userService.readAllAdminUsers();
     return ResponseEntity.status(HttpStatus.OK).body(adminUsers);
   }
 
   @GetMapping("/necrotomist")
-  public ResponseEntity<List<NecrotomistUserResponse>> readAllNecrotomistUsers()
-  {
+  public ResponseEntity<List<NecrotomistUserResponse>> readAllNecrotomistUsers() {
     List<NecrotomistUserResponse> necrotomistUsers = userService.readAllNecrotomistUsers();
     return ResponseEntity.status(HttpStatus.OK).body(necrotomistUsers);
   }
 
   @GetMapping("/necrotomist/{specialization}")
-  public ResponseEntity<List<NecrotomistUserResponse>> readAllNecrotomistUsersBySpecialization(@PathVariable String specialization)
-  {
+  public ResponseEntity<List<NecrotomistUserResponse>> readAllNecrotomistUsersBySpecialization(
+      @PathVariable String specialization) {
     List<NecrotomistUserResponse> necrotomistUsers = userService.filterNecrotomistBySpecialization(specialization);
     return ResponseEntity.status(HttpStatus.OK).body(necrotomistUsers);
   }

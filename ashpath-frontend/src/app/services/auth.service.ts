@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, Injectable, signal } from '@angular/core';
 import { map } from 'rxjs';
-import { SuccessfulLoginResponse as SuccessfulLoginResponse, LoginRequest, CreateAdminRequest, AdminUserResponse, CreateNecrotomistRequest, CreateViewerRequest, ViewerUserResponse, AppRole, UserResponse } from '../utils/models';
+import { SuccessfulLoginResponse as SuccessfulLoginResponse, LoginRequest, CreateAdminRequest, AdminUserResponse, CreateNecrotomistRequest, CreateViewerRequest, ViewerUserResponse, AppRole, UserResponse, UserCredentials } from '../utils/models';
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +39,14 @@ export class AuthService {
   logout() {
     sessionStorage.removeItem('user');
     this._userSig.set(null);
+  }
+
+  approveUser(userId: number) {
+    return this.http.post<UserCredentials>(`/user/approve/${userId}`, { id: this.userSig()?.loggedUserId });
+  }
+
+  rejectUser(userId: number) {
+    return this.http.post<UserCredentials>(`/user/reject/${userId}`, { id: this.userSig()?.loggedUserId });
   }
 
   registerAdmin(req: CreateAdminRequest) {
