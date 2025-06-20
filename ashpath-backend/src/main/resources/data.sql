@@ -5,12 +5,12 @@ CREATE TABLE IF NOT EXISTS APP_ROLE (
 
 CREATE TABLE IF NOT EXISTS APP_USER (
     Id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    Email VARCHAR(64),
-    Password VARCHAR(64),
-    Full_Name VARCHAR(128),  
+    Email VARCHAR(254),
+    Password VARCHAR(12),
+    Full_Name VARCHAR(64),  
     Registration_Date TIMESTAMP, 
     Last_Activity_Date TIMESTAMP, 
-    Specialization VARCHAR(255),
+    Specialization VARCHAR(64),
     approved BOOLEAN
 );
 
