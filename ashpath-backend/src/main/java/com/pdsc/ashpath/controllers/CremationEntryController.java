@@ -17,6 +17,7 @@ import com.pdsc.ashpath.domain.dto.response.CremationEntryResponse;
 import com.pdsc.ashpath.domain.service.CremationEntryService;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/cremationEntry")
@@ -58,7 +59,7 @@ public class CremationEntryController
   }
 
   @PostMapping("/add_deceased")
-  public ResponseEntity<Void> addDeceasedToCremationEntry(@RequestBody AddDeceasedToCremationEntryRequest request)
+  public ResponseEntity<Void> addDeceasedToCremationEntry(@Valid @RequestBody AddDeceasedToCremationEntryRequest request)
   {
     cremationEntryService.addDeceasedToCremationEntry(request.getCremationEntryId(), request.getDeceasedId());
     return ResponseEntity.status(HttpStatus.OK).build();
