@@ -52,7 +52,7 @@ public class CremationEntryController
   }
 
   @PostMapping("/create")
-  public ResponseEntity<Void> createCremationEntry(@RequestBody CreateCremationEntryRequest request)
+  public ResponseEntity<Void> createCremationEntry(@Valid @RequestBody CreateCremationEntryRequest request)
   {
     cremationEntryService.createCremationEntry(request.getNecrotomistId());
     return ResponseEntity.status(HttpStatus.CREATED).build();
