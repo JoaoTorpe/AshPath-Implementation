@@ -1,21 +1,26 @@
 package com.pdsc.ashpath.domain.dto.response;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import com.pdsc.ashpath.domain.entity.Deceased;
 import com.pdsc.ashpath.domain.entity.Grave;
 
 public final class GraveResponse
 {
   private Long id;
   private String location;
-  private DeceasedResponse deceased;
+  private List<DeceasedResponse> deceaseds = new ArrayList<>();
 
   public GraveResponse()
   {}
 
-  public GraveResponse(Long id, String location, DeceasedResponse deceased)
+  public GraveResponse(Long id, String location, List<DeceasedResponse> deceaseds)
   {
     this.id = id;
     this.location = location;
-    this.deceased = deceased;
+    this.deceaseds = deceaseds;
   }
 
   public GraveResponse(Grave grave)
@@ -23,8 +28,12 @@ public final class GraveResponse
     this.setId(grave.getId());
     this.setLocation(grave.getLocation());
 
-    if (grave.getDeceased() != null)
-      this.setDeceased(new DeceasedResponse(grave.getDeceased()));
+    Iterator<Deceased> iterator = grave.getDeceasedSet().iterator();
+    while (iterator.hasNext())
+    {
+      DeceasedResponse deceased = new DeceasedResponse(iterator.next());
+      this.deceaseds.add(deceased);
+    }
   }
 
   public void setId(Long id)
@@ -47,13 +56,13 @@ public final class GraveResponse
     return this.location;
   }
 
-  public void setDeceased(DeceasedResponse deceased)
+  public void setDeceaseds(List<DeceasedResponse> deceaseds)
   {
-    this.deceased = deceased;
+    this.deceaseds = deceaseds;
   }
 
-  public DeceasedResponse getDeceased()
+  public List<DeceasedResponse> getDeceaseds()
   {
-    return this.deceased;
+    return this.deceaseds;
   }
 }

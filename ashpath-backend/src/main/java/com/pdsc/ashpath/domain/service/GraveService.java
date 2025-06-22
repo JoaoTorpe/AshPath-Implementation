@@ -29,9 +29,7 @@ public class GraveService
   public void createGrave(CreateGraveRequest createGraveRequest)
   {
     Grave grave = new Grave();
-
     grave.setLocation(createGraveRequest.getLocation());
-    grave.setDeceased(null);
 
     this.graveRepository.save(grave);
   }
@@ -69,8 +67,7 @@ public class GraveService
       Grave grave       = optionalGrave.get();
       Deceased deceased = optionalDeceased.get();
 
-      grave.setDeceased(deceased);
-      deceased.setGrave(grave);
+      grave.addDeceased(deceased);
       deceased.setStatus(DeceasedStatus.GRAVED);
 
       this.graveRepository.save(grave);

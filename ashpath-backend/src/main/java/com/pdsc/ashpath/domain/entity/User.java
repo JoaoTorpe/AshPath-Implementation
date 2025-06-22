@@ -15,33 +15,53 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "APP_USER")
-public class User {
+public class User
+{
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "ID")
   private Long id;
 
+  @NotNull(message = "'email' field on 'User' entity cannot be null.")
+  @Size(min = 3, max = 254, message = "'email' field on 'User' entity must have a minimum of 3 characters and a maximum of 254 characters.")
+  @Email(message = "'email' field on 'User' entity must have a valid email.")
   @Column(name = "EMAIL", length = 254)
   private String email;
 
+  @NotNull(message = "'password' field on 'User' entity cannot be null.")
+  @Size(min = 3, max = 64, message = "'password' field on 'User' entity must have a minimum of 3 characters and a maximum of 64 characters.")
+  @Pattern(
+    regexp = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*()\\-+_={}\\[\\]|:;\"'<>,.?/~`]).+$",
+    message = "'password' field on 'User' entity must include 1 number, 1 uppercase letter, and 1 special character."
+  )
   @Column(name = "PASSWORD", length = 12)
   private String password;
 
+  @NotNull(message = "'fullname' field on 'User' entity cannot be null.")
+  @Size(min = 3, max = 64, message = "'fullname' field on 'User' entity must have a minimum of 3 characters and maximum of 64 characters.")
   @Column(name = "FULL_NAME", length = 64)
   private String fullname;
 
+  @PastOrPresent(message = "'registrationDate' field on 'User' entity must be earlier or equals than current date.")
   @Column(name = "REGISTRATION_DATE", columnDefinition = "TIMESTAMP")
   private LocalDateTime registrationDate;
 
+  @PastOrPresent(message = "'lastActivityDate' field on 'User' entity must be earlier or equals than current date.")
   @Column(name = "LAST_ACTIVITY_DATE", columnDefinition = "TIMESTAMP")
   private LocalDateTime lastActivityDate;
 
   @Column(name = "SPECIALIZATION", length = 64)
   private String specialization;
 
+  @NotNull(message = "'approved' field on 'User' entity cannot be null.")
   @Column(name = "approved")
   private Boolean approved;
 
@@ -52,119 +72,140 @@ public class User {
   @OneToMany(mappedBy = "necrotomist")
   private Set<CremationEntry> cremationEntrySet = new HashSet<>();
 
-  public User() {
-  }
+  public User()
+  {}
 
-  public void setId(Long id) {
+  public void setId(Long id)
+  {
     this.id = id;
   }
 
-  public Long getId() {
+  public Long getId()
+  {
     return this.id;
   }
 
-  public void setEmail(String email) {
+  public void setEmail(String email)
+  {
     this.email = email;
   }
 
-  public String getEmail() {
+  public String getEmail()
+  {
     return this.email;
   }
 
-  public void setPassword(String password) {
+  public void setPassword(String password)
+  {
     this.password = password;
   }
 
-  public String getPassword() {
+  public String getPassword()
+  {
     return this.password;
   }
 
-  public void setFullname(String fullname) {
+  public void setFullname(String fullname)
+  {
     this.fullname = fullname;
   }
 
-  public String getFullname() {
+  public String getFullname()
+  {
     return this.fullname;
   }
 
-  public void setRegistrationDate(LocalDateTime registrationDate) {
+  public void setRegistrationDate(LocalDateTime registrationDate)
+  {
     this.registrationDate = registrationDate;
   }
 
-  public LocalDateTime getRegistrationDate() {
+  public LocalDateTime getRegistrationDate()
+  {
     return this.registrationDate;
   }
 
-  public void setLastActivityDate(LocalDateTime lastActivityDate) {
+  public void setLastActivityDate(LocalDateTime lastActivityDate)
+  {
     this.lastActivityDate = lastActivityDate;
   }
 
-  public LocalDateTime getLastActivityDate() {
+  public LocalDateTime getLastActivityDate()
+  {
     return this.lastActivityDate;
   }
 
-  public void setSpecialization(String specialization) {
+  public void setSpecialization(String specialization)
+  {
     this.specialization = specialization;
   }
 
-  public String getSpecialization() {
+  public String getSpecialization()
+  {
     return this.specialization;
   }
 
-  public void setAppRoleSet(Set<AppRole> appRoleSet) {
+  public void setAppRoleSet(Set<AppRole> appRoleSet)
+  {
     this.appRoleSet = appRoleSet;
   }
 
-  public Set<AppRole> getAppRoleSet() {
+  public Set<AppRole> getAppRoleSet()
+  {
     return this.appRoleSet;
   }
 
-  public void setCremationEntrySet(Set<CremationEntry> cremationEntrySet) {
+  public void setCremationEntrySet(Set<CremationEntry> cremationEntrySet)
+  {
     this.cremationEntrySet = cremationEntrySet;
   }
 
-  public Set<CremationEntry> getCremationEntrySet() {
+  public Set<CremationEntry> getCremationEntrySet()
+  {
     return this.cremationEntrySet;
   }
 
-  public void addAppRole(AppRole appRole) {
+  public void addAppRole(AppRole appRole)
+  {
     appRoleSet.add(appRole);
     appRole.getUsersSet().add(this);
   }
 
-  public void addCremationEntry(CremationEntry cremationEntry) {
+  public void addCremationEntry(CremationEntry cremationEntry)
+  {
     cremationEntrySet.add(cremationEntry);
     cremationEntry.setNecrotomist(this);
   }
 
   @Override
-  public int hashCode() {
+  public int hashCode()
+  {
     int hash = 5;
     hash = 41 * hash + Objects.hashCode(this.id);
     return hash;
   }
 
   @Override
-  public boolean equals(Object obj) {
-    if (this == obj) {
+  public boolean equals(Object obj)
+  {
+    if (this == obj)
       return true;
-    }
-    if (obj == null) {
+    if (obj == null)
       return false;
-    }
-    if (getClass() != obj.getClass()) {
+    if (getClass() != obj.getClass())
       return false;
-    }
 
     final User other = (User) obj;
     return Objects.equals(this.id, other.id);
   }
 
-  public Boolean getApproved() {
+  public Boolean getApproved()
+  {
     return approved;
   }
 
-  public void setApproved(Boolean approved) {
+  public void setApproved(Boolean approved)
+  {
     this.approved = approved;
   }
 }

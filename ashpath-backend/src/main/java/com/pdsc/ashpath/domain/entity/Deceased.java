@@ -16,8 +16,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "DECEASED")
@@ -28,24 +31,36 @@ public class Deceased
   @Column(name = "ID")
   private Long id;
 
+  @NotNull(message = "'fullname' field on 'Deceased' entity cannot be null.")
+  @Size(min = 3, max = 128, message = "'fullname' field on 'Deceased' entity must have a minimum of 3 characters and a maximum of 128 characters.")
   @Column(name = "FULL_NAME", length = 128)
   private String fullname;
 
+  @NotNull(message = "'birthDate' field on 'Deceased' entity cannot be null.")
+  @Past(message = "'birthDate' field on 'Deceased' entity must be earlier than current date.")
   @Column(name = "BIRTH_DATE", columnDefinition = "DATE")
   private LocalDate birthDate;
 
+  @NotNull(message = "'deathDate' field on 'Deceased' entity cannot be null.")
+  @PastOrPresent(message = "'deathDate' field on 'Deceased' entity must be earlier or equals than current date.")
   @Column(name = "DEATH_DATE", columnDefinition = "DATE")
   private LocalDate deathDate;
 
+  @NotNull(message = "'causeOfDeath' field on 'Deceased' entity cannot be null.")
+  @Size(min = 3, max = 128, message = "'causeOfDeath' field on 'Deceased' entity must have a minimum of 3 characters and a maximum of 128 characters.")
   @Column(name = "CAUSE_OF_DEATH", length = 128)
   private String causeOfDeath;
 
   @Lob
   private byte[] deathCertificate;
 
+  @NotNull(message = "'fatherName' field on 'Deceased' entity cannot be null.")
+  @Size(min = 3, max = 128, message = "'fatherName' field on 'Deceased' entity must have a minimum of 3 characters and a maximum of 128 characters.")
   @Column(name = "FATHER_NAME", length = 128)
   private String fatherName;
 
+  @NotNull(message = "'motherName' field on 'Deceased' entity cannot be null.")
+  @Size(min = 3, max = 128, message = "'motherName' field on 'Deceased' entity must have a minimum of 3 characters and a maximum of 128 characters.")
   @Column(name = "MOTHER_NAME", length = 128)
   private String motherName;
 
@@ -53,6 +68,7 @@ public class Deceased
   @Column(name = "STATUS")
   private DeceasedStatus status;
 
+  @PastOrPresent(message = "'cremationEnteredDate' field on 'Deceased' entity must be earlier or equals than current date.")
   @Column(name = "CREMATION_ENTERED_DATE", columnDefinition = "TIMESTAMP")
   private LocalDateTime cremationEnteredDate;
 
@@ -60,7 +76,7 @@ public class Deceased
   @JoinColumn(name = "CREMATION_ENTRY_ID")
   private CremationEntry cremationEntry;
 
-  @OneToOne
+  @ManyToOne
   @JoinColumn(name = "GRAVE_ID", nullable = true)
   private Grave grave;
 
