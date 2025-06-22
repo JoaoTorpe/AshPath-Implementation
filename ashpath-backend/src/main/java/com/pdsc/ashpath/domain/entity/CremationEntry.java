@@ -14,6 +14,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 
 @Entity
 @Table(name = "CREMATION_ENTRY")
@@ -24,6 +26,8 @@ public class CremationEntry
   @Column(name = "ID")
   private Long id;
 
+  @NotNull(message = "'creationDate' field on 'CremationEntry' entity cannot be null.")
+  @PastOrPresent(message = "'creationDate' field on 'CremationEntry' entity must be earlier or equals than current date.")
   @Column(name = "ENTERED_DATE", columnDefinition = "TIMESTAMP")
   private LocalDateTime creationDate;
 

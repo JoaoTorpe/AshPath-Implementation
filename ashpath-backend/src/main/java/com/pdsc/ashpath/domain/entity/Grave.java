@@ -11,6 +11,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "GRAVE")
@@ -21,6 +23,8 @@ public class Grave
   @Column(name = "ID")
   private Long id;
 
+  @NotNull(message = "'location' field on 'Grave' entity cannot be null.")
+  @Size(min = 3, max = 128, message = "'location' field on 'Grave' entity must have a minimum of 3 characters and a maximum of 128 characters.")
   @Column(name = "LOCATION", length = 128)
   private String location;
 
