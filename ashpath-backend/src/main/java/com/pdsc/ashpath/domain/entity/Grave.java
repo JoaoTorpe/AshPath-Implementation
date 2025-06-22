@@ -1,13 +1,15 @@
 package com.pdsc.ashpath.domain.entity;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,8 +24,8 @@ public class Grave
   @Column(name = "LOCATION", length = 128)
   private String location;
 
-  @OneToOne(mappedBy = "grave")
-  private Deceased deceased;
+  @OneToMany(mappedBy = "grave")
+  private Set<Deceased> deceasedSet = new HashSet<>();
 
   public Grave()
   {}
@@ -48,14 +50,20 @@ public class Grave
     return this.location;
   }
 
-  public void setDeceased(Deceased deceased)
+  public void setDeceasedSet(Set<Deceased> deceasedSet)
   {
-    this.deceased = deceased;
+    this.deceasedSet = deceasedSet;
   }
 
-  public Deceased getDeceased()
+  public Set<Deceased> getDeceasedSet()
   {
-    return this.deceased;
+    return this.deceasedSet;
+  }
+
+  public void addDeceased(Deceased deceased)
+  {
+    this.deceasedSet.add(deceased);
+    deceased.setGrave(this);
   }
 
   @Override

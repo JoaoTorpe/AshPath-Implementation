@@ -16,7 +16,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -60,7 +59,7 @@ public class Deceased
   @JoinColumn(name = "CREMATION_ENTRY_ID")
   private CremationEntry cremationEntry;
 
-  @OneToOne
+  @ManyToOne
   @JoinColumn(name = "GRAVE_ID", nullable = true)
   private Grave grave;
 

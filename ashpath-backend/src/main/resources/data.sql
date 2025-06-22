@@ -108,15 +108,14 @@ INSERT INTO CREMATION_ENTRY (Entered_Date, Necrotomist_Id) VALUES
 (NOW(), 2);
 ;
 
--- 3. Inserir túmulos com IDs explícitos
-INSERT INTO GRAVE (Id, Location) VALUES
-(1, 'Maceio'),
-(2, 'Ibura'),
-(3, 'Loja renner'),
-(4, 'Cemitério São João'),
-(5, 'Memorial Paz Eterna'),
-(6, 'Jardim da Saudade')
-;
+-- 3. Inserir túmulos
+INSERT INTO GRAVE (Location) VALUES
+('Maceio'),
+('Ibura'),
+('Loja renner'),
+('Cemitério São João'),
+('Memorial Paz Eterna'),
+('Jardim da Saudade');
 
 -- 4. Inserir falecidos com certificado de óbito em PDF (BLOB)
 INSERT INTO DECEASED (
