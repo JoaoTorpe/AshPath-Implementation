@@ -1,8 +1,13 @@
 package com.pdsc.ashpath.domain.dto.request;
 
+import jakarta.validation.constraints.NotNull;
+
 public class LoginRequest
 {
+  @NotNull(message = "'email' field is required.")
   private String email;
+
+  @NotNull(message = "'password' field is required.")
   private String password;
 
   public LoginRequest()

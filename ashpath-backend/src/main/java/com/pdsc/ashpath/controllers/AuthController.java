@@ -15,6 +15,8 @@ import com.pdsc.ashpath.domain.dto.response.SuccessfulLoginResponse;
 import com.pdsc.ashpath.domain.entity.User;
 import com.pdsc.ashpath.domain.service.AuthService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController
@@ -27,7 +29,7 @@ public class AuthController
   }
 
   @PostMapping("/login")
-  public ResponseEntity<?> login(@RequestBody LoginRequest request)
+  public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request)
   {
     User user = authService.login(request);
 
