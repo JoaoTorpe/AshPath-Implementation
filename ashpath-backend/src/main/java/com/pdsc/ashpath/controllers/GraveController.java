@@ -15,6 +15,8 @@ import com.pdsc.ashpath.domain.dto.request.CreateGraveRequest;
 import com.pdsc.ashpath.domain.dto.response.GraveResponse;
 import com.pdsc.ashpath.domain.service.GraveService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/grave")
 public class GraveController
@@ -27,7 +29,7 @@ public class GraveController
   }
 
   @PostMapping
-  public ResponseEntity<Void> createGrave(@RequestBody CreateGraveRequest request)
+  public ResponseEntity<Void> createGrave(@Valid @RequestBody CreateGraveRequest request)
   {
     this.graveService.createGrave(request);
     return ResponseEntity.status(HttpStatus.CREATED).build();
