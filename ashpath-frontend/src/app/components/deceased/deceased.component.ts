@@ -119,8 +119,8 @@ export class DeceasedComponent implements OnInit {
       const deathDate = this.parseDate(deceased.deathDate);
 
       const matchesDate =
-        (!filterStartDate || deathDate >= filterStartDate) &&
-        (!filterEndDate || deathDate <= filterEndDate);
+        (!filterStartDate || deathDate!! >= filterStartDate) &&
+        (!filterEndDate || deathDate!! <= filterEndDate);
 
       const matchesLocation = this.graveLocation
         ? deceased.graveLocation?.toLowerCase().includes(this.graveLocation.toLowerCase())
