@@ -4,13 +4,15 @@ import { FormsModule } from '@angular/forms';
 import { DeceasedService } from '../../services/deceased.service';
 import {DeceasedResponse, DeceasedStatus} from '../../utils/models';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 @Component({
   selector: 'app-deceased',
   standalone: true,
-  imports: [CommonModule, FormsModule], // Removi ReactiveFormsModule
+  imports: [CommonModule, FormsModule, NgxMaskDirective, NgxMaskPipe],
   templateUrl: './deceased.component.html',
   styleUrls: ['./deceased.component.scss'],
+  providers: [provideNgxMask()]
 })
 export class DeceasedComponent implements OnInit {
   private deceasedService = inject(DeceasedService);
@@ -50,9 +52,20 @@ export class DeceasedComponent implements OnInit {
       motherName: 'Mãe Teste',    // Adicionado
     },
       {
-        id: 1,
+        id: 2,
         fullname: 'Teste',
-        birthDate: '2000-01-01',
+        birthDate: '1978-01-01',
+        deathDate: '2005-01-01',
+        causeOfDeath: 'Teste',
+        status: DeceasedStatus.GRAVED,
+        graveLocation: 'Teste',
+        fatherName: 'Pai Teste',    // Adicionado
+        motherName: 'Mãe Teste',    // Adicionado
+      },
+      {
+        id: 3,
+        fullname: 'Teste',
+        birthDate: '1998-01-01',
         deathDate: '2023-01-01',
         causeOfDeath: 'Teste',
         status: DeceasedStatus.GRAVED,
@@ -61,21 +74,10 @@ export class DeceasedComponent implements OnInit {
         motherName: 'Mãe Teste',    // Adicionado
       },
       {
-        id: 1,
+        id: 4,
         fullname: 'Teste',
         birthDate: '2000-01-01',
-        deathDate: '2023-01-01',
-        causeOfDeath: 'Teste',
-        status: DeceasedStatus.GRAVED,
-        graveLocation: 'Teste',
-        fatherName: 'Pai Teste',    // Adicionado
-        motherName: 'Mãe Teste',    // Adicionado
-      },
-      {
-        id: 1,
-        fullname: 'Teste',
-        birthDate: '2000-01-01',
-        deathDate: '2023-01-01',
+        deathDate: '2025-01-01',
         causeOfDeath: 'Teste',
         status: DeceasedStatus.GRAVED,
         graveLocation: 'Teste',
@@ -109,12 +111,16 @@ export class DeceasedComponent implements OnInit {
       return;
     }
 
-    // Lógica de filtro atual...
+    // Converte as datas de filtro para objetos Date
+    const filterStartDate = this.startDate ? this.parseDate(this.startDate) : null;
+    const filterEndDate = this.endDate ? this.parseDate(this.endDate) : null;
+
     this.filteredDeceaseds = this.allDeceaseds.filter(deceased => {
-      const deathDate = new Date(deceased.deathDate);
+      const deathDate = this.parseDate(deceased.deathDate);
+
       const matchesDate =
-        (!this.startDate || deathDate >= new Date(this.startDate)) &&
-        (!this.endDate || deathDate <= new Date(this.endDate));
+        (!filterStartDate || deathDate >= filterStartDate) &&
+        (!filterEndDate || deathDate <= filterEndDate);
 
       const matchesLocation = this.graveLocation
         ? deceased.graveLocation?.toLowerCase().includes(this.graveLocation.toLowerCase())
@@ -124,13 +130,38 @@ export class DeceasedComponent implements OnInit {
     });
   }
 
+// Novo método para parse de datas
+  private parseDate(dateString: string | null): Date | null {
+    if (!dateString) return null;
+
+    // Se a data está no formato dd/mm/aaaa (do input com máscara)
+    if (dateString.includes('/')) {
+      const [day, month, year] = dateString.split('/');
+      return new Date(`${year}-${month}-${day}`);
+    }
+
+    // Se a data já está no formato aaaa-mm-dd (dos dados mockados)
+    return new Date(dateString);
+  }
+
+  /*private convertToIsoDate(dateString: string): string {
+    if (!dateString) return '';
+
+    // Converte de dd/mm/aaaa para aaaa-mm-dd
+    const parts = dateString.split('/');
+    if (parts.length === 3) {
+      return `${parts[2]}-${parts[1]}-${parts[0]}`;
+    }
+    return dateString; // Retorna original se não estiver no formato esperado
+  }
+  */
+
   public resetFilters(): void {
     this.startDate = '';
     this.endDate = '';
     this.graveLocation = '';
     this.filteredDeceaseds = [...this.allDeceaseds];
   }
-
   public viewDetails(deceased: DeceasedResponse): void {
     this.selectedDeceased = deceased;
     this.showDetailsModal = true;
