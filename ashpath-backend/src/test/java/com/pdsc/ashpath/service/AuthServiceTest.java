@@ -73,4 +73,16 @@ public class AuthServiceTest {
         assertNull(u);
     }
 
+    @Test
+    public void loginFailCabaNotApproved(){
+        String email = "test@example.com";
+        String password = "s3nh4@S";
+        User user1 = userRepository.findByEmail("test@example.com").orElse(null);
+        assert user1 != null;
+        user1.setApproved(false);
+        userRepository.saveAndFlush(user1);
+        User u =  authService.login(new LoginRequest(email,password));
+        assertNull(u);
+    }
+
 }
