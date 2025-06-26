@@ -37,6 +37,7 @@ public class AuthServiceTest {
         user.setRegistrationDate(LocalDateTime.now());
         user.setLastActivityDate(LocalDateTime.now());
         user.setSpecialization("Specialist");
+        user.setApproved(true);
         user.setAppRoleSet(new HashSet<>());
         user.setCremationEntrySet(new HashSet<>());
 
