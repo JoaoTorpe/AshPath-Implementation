@@ -42,7 +42,7 @@ public class User
     regexp = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*()\\-+_={}\\[\\]|:;\"'<>,.?/~`]).+$",
     message = "'password' field on 'User' entity must include 1 number, 1 uppercase letter, and 1 special character."
   )
-  @Column(name = "PASSWORD", length = 12)
+  @Column(name = "PASSWORD", length = 64)
   private String password;
 
   @NotNull(message = "'fullname' field on 'User' entity cannot be null.")
