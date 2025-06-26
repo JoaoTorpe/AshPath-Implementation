@@ -21,7 +21,7 @@ public class AuthService
   public User login(LoginRequest request)
   {
     var optionalUser = userRepository.findByEmail(request.getEmail());
-    if(optionalUser.isEmpty())
+    if(optionalUser.isEmpty() || !optionalUser.get().getApproved())
       return null;
 
     boolean isValidPassword = passwordUtils.checkPassword(request.getPassword(),optionalUser.get().getPassword());
