@@ -43,7 +43,8 @@
   </div>
   } @else {
   <div class="card-grid">
-    @for (entry of filteredEntries; track entry.id) {
+    @for (entry of filteredEntries; track entry.id) { @if (entry.deceaseds &&
+    entry.deceaseds.length > 0) {
     <div class="card">
       <div class="card-header">
         <h2>Entrada #{{ entry.id }}</h2>
@@ -57,23 +58,16 @@
           <span>{{ entry.necrotomist.fullname }}</span>
         </div>
         <div class="info-item">
-          <strong>Falecidos ({{ entry.deceaseds?.length || 0 }}):</strong>
-
-          @if (entry.deceaseds && entry.deceaseds.length > 0) {
+          <strong>Falecidos ({{ entry.deceaseds.length }}):</strong>
           <ul class="deceased-list">
             @for (deceased of entry.deceaseds; track deceased.id) {
             <li>{{ deceased.fullname }} - (Status: {{ deceased.status }})</li>
             }
           </ul>
-          } @else {
-          <p class="no-deceased">
-            Nenhum falecido corresponde ao filtro selecionado.
-          </p>
-          }
         </div>
       </div>
     </div>
-    }
+    } }
   </div>
   }
 </div>
