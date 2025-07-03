@@ -1,4 +1,4 @@
-@use '../../../styles.scss' as *;
+@use "../../../styles.scss" as *;
 
 :host {
   padding: 2rem;
@@ -122,13 +122,14 @@
     color: #495057;
   }
 
-  input[type="date"] {
+  input {
     padding: 0.5rem;
     border: 1px solid #ced4da;
     border-radius: 4px;
     font-family: inherit;
     font-size: 18px;
     color: #495057;
+    width: 150px;
   }
 }
 

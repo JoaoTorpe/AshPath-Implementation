@@ -30,10 +30,23 @@
     </div>
     <div class="date-filter-group">
       <label for="startDate">De:</label>
-      <input type="date" id="startDate" [(ngModel)]="startDate" />
-
+      <input
+        type="text"
+        id="startDate"
+        [(ngModel)]="startDate"
+        mask="00/00/0000"
+        [dropSpecialCharacters]="false"
+        placeholder="dd/mm/aaaa"
+      />
       <label for="endDate">Até:</label>
-      <input type="date" id="endDate" [(ngModel)]="endDate" />
+      <input
+        type="text"
+        id="endDate"
+        [(ngModel)]="endDate"
+        mask="00/00/0000"
+        [dropSpecialCharacters]="false"
+        placeholder="dd/mm/aaaa"
+      />
     </div>
   </div>
 

@@ -3,13 +3,15 @@ import { FormsModule } from '@angular/forms';
 import { CremationEntryService } from '../../services/cremation-entry.service';
 import { CremationEntryResponse, DeceasedStatus } from '../../utils/models';
 import { CommonModule } from '@angular/common';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 @Component({
   selector: 'app-cremation-entry',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NgxMaskDirective],
   templateUrl: './cremation-entry.component.html',
   styleUrl: './cremation-entry.component.scss',
+  providers: [provideNgxMask()],
 })
 export class CremationEntryComponent implements OnInit {
   private cremationService = inject(CremationEntryService);
@@ -21,18 +23,47 @@ export class CremationEntryComponent implements OnInit {
   public selectedStatus: DeceasedStatus | 'ALL' = 'ALL';
   public DeceasedStatusEnum = DeceasedStatus;
 
+  private parseDate(dateString: string): Date | null {
+    if (!dateString || dateString.length !== 10) {
+      return null;
+    }
+    const parts = dateString.split('/');
+    if (parts.length !== 3) {
+      return null;
+    }
+    const day = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10) - 1;
+    const year = parseInt(parts[2], 10);
+
+    if (isNaN(day) || isNaN(month) || isNaN(year)) {
+      return null;
+    }
+
+    const date = new Date(year, month, day);
+    if (
+      date.getFullYear() !== year ||
+      date.getMonth() !== month ||
+      date.getDate() !== day
+    ) {
+      return null;
+    }
+
+    return date;
+  }
+
   public get filteredEntries(): CremationEntryResponse[] {
     let entries = this.allEntries;
 
-    if (this.startDate) {
-      const start = new Date(this.startDate);
+    const start = this.parseDate(this.startDate);
+    if (start) {
       start.setUTCHours(0, 0, 0, 0);
       entries = entries.filter(
         (entry) => new Date(entry.creationDate) >= start
       );
     }
-    if (this.endDate) {
-      const end = new Date(this.endDate);
+
+    const end = this.parseDate(this.endDate);
+    if (end) {
       end.setUTCHours(23, 59, 59, 999);
       entries = entries.filter((entry) => new Date(entry.creationDate) <= end);
     }
@@ -40,15 +71,14 @@ export class CremationEntryComponent implements OnInit {
       return entries;
     }
 
-    return entries.map((entry) => {
-      const filteredEntry = { ...entry };
-      if (entry.deceaseds) {
-        filteredEntry.deceaseds = entry.deceaseds.filter(
+    return entries
+      .map((entry) => {
+        const filteredDeceaseds = entry.deceaseds?.filter(
           (deceased) => deceased.status === this.selectedStatus
         );
-      }
-      return filteredEntry;
-    });
+        return { ...entry, deceaseds: filteredDeceaseds };
+      })
+      .filter((entry) => entry.deceaseds && entry.deceaseds.length > 0);
   }
 
   ngOnInit(): void {
