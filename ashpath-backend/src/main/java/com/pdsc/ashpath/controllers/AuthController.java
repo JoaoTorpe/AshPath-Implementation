@@ -32,7 +32,6 @@ public class AuthController
   public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request)
   {
     User user = authService.login(request);
-
     if(Objects.isNull(user)){
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Falha ao fazer login");
     } 

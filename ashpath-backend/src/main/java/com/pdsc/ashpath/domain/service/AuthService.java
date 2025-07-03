@@ -21,10 +21,10 @@ public class AuthService
   public User login(LoginRequest request)
   {
     var optionalUser = userRepository.findByEmail(request.getEmail());
-    if(optionalUser.isEmpty() || !optionalUser.get().getApproved())
+    if(optionalUser.isEmpty())
       return null;
 
-    boolean isValidPassword = passwordUtils.checkPassword(request.getPassword(),optionalUser.get().getPassword());
+    boolean isValidPassword = passwordUtils.checkPassword(request.getPassword(), optionalUser.get().getPassword());
 
     return isValidPassword ? optionalUser.get() : null;
   }
