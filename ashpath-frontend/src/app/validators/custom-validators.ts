@@ -9,7 +9,7 @@ export class CustomValidators {
     ];
     static emailValidators = [
         Validators.required,
-        Validators.maxLength(64),
+        Validators.maxLength(254),
         Validators.email,
     ];
 
