@@ -30,38 +30,38 @@ public class User
   @Column(name = "ID")
   private Long id;
 
-  @NotNull(message = "'email' field on 'User' entity cannot be null.")
-  @Size(min = 3, max = 254, message = "'email' field on 'User' entity must have a minimum of 3 characters and a maximum of 254 characters.")
-  @Email(message = "'email' field on 'User' entity must have a valid email.")
+  @NotNull(message = "{NotNull.user.email}")
+  @Size(min = 3, max = 254, message = "{Size.user.email}")
+  @Email(message = "{Email.user.email}")
   @Column(name = "EMAIL", length = 254)
   private String email;
 
-  @NotNull(message = "'password' field on 'User' entity cannot be null.")
-  @Size(min = 3, max = 64, message = "'password' field on 'User' entity must have a minimum of 3 characters and a maximum of 64 characters.")
+  @NotNull(message = "{NotNull.user.password}")
+  @Size(min = 3, max = 64, message = "{Size.user.password}")
   @Pattern(
     regexp = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*()\\-+_={}\\[\\]|:;\"'<>,.?/~`]).+$",
-    message = "'password' field on 'User' entity must include 1 number, 1 uppercase letter, and 1 special character."
+    message = "{Pattern.user.password}"
   )
   @Column(name = "PASSWORD", length = 64)
   private String password;
 
-  @NotNull(message = "'fullname' field on 'User' entity cannot be null.")
-  @Size(min = 3, max = 64, message = "'fullname' field on 'User' entity must have a minimum of 3 characters and maximum of 64 characters.")
+  @NotNull(message = "{NotNull.user.fullname}")
+  @Size(min = 3, max = 64, message = "{Size.user.fullname}")
   @Column(name = "FULL_NAME", length = 64)
   private String fullname;
 
-  @PastOrPresent(message = "'registrationDate' field on 'User' entity must be earlier or equals than current date.")
+  @PastOrPresent(message = "{PastOrPresent.user.registrationDate}")
   @Column(name = "REGISTRATION_DATE", columnDefinition = "TIMESTAMP")
   private LocalDateTime registrationDate;
 
-  @PastOrPresent(message = "'lastActivityDate' field on 'User' entity must be earlier or equals than current date.")
+  @PastOrPresent(message = "{PastOrPresent.user.lastActivityDate}")
   @Column(name = "LAST_ACTIVITY_DATE", columnDefinition = "TIMESTAMP")
   private LocalDateTime lastActivityDate;
 
   @Column(name = "SPECIALIZATION", length = 64)
   private String specialization;
 
-  @NotNull(message = "'approved' field on 'User' entity cannot be null.")
+  @NotNull(message = "{NotNull.user.approved}")
   @Column(name = "approved")
   private Boolean approved;
 

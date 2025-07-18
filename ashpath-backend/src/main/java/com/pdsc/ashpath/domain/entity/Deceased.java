@@ -31,23 +31,23 @@ public class Deceased
   @Column(name = "ID")
   private Long id;
 
-  @NotNull(message = "'fullname' field on 'Deceased' entity cannot be null.")
-  @Size(min = 3, max = 128, message = "'fullname' field on 'Deceased' entity must have a minimum of 3 characters and a maximum of 128 characters.")
+  @NotNull(message = "{NotNull.deceased.fullname}")
+  @Size(min = 3, max = 128, message = "{Size.deceased.fullname}")
   @Column(name = "FULL_NAME", length = 128)
   private String fullname;
 
-  @NotNull(message = "'birthDate' field on 'Deceased' entity cannot be null.")
-  @Past(message = "'birthDate' field on 'Deceased' entity must be earlier than current date.")
+  @NotNull(message = "{NotNull.deceased.birthDate}")
+  @Past(message = "{Past.deceased.birthDate}")
   @Column(name = "BIRTH_DATE", columnDefinition = "DATE")
   private LocalDate birthDate;
 
-  @NotNull(message = "'deathDate' field on 'Deceased' entity cannot be null.")
-  @PastOrPresent(message = "'deathDate' field on 'Deceased' entity must be earlier or equals than current date.")
+  @NotNull(message = "{NotNull.deceased.deathDate}")
+  @PastOrPresent(message = "{PastOrPresent.deceased.deathDate}")
   @Column(name = "DEATH_DATE", columnDefinition = "DATE")
   private LocalDate deathDate;
 
-  @NotNull(message = "'causeOfDeath' field on 'Deceased' entity cannot be null.")
-  @Size(min = 3, max = 128, message = "'causeOfDeath' field on 'Deceased' entity must have a minimum of 3 characters and a maximum of 128 characters.")
+  @NotNull(message = "{NotNull.deceased.causeOfDeath}")
+  @Size(min = 3, max = 128, message = "{Size.deceased.causeOfDeath}")
   @Column(name = "CAUSE_OF_DEATH", length = 128)
   private String causeOfDeath;
 
