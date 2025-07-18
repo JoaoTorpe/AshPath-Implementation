@@ -23,8 +23,8 @@ public class Grave
   @Column(name = "ID")
   private Long id;
 
-  @NotNull(message = "'location' field on 'Grave' entity cannot be null.")
-  @Size(min = 3, max = 128, message = "'location' field on 'Grave' entity must have a minimum of 3 characters and a maximum of 128 characters.")
+  @NotNull(message = "{NotNull.grave.location}")
+  @Size(min = 3, max = 128, message = "{Size.grave.location}")
   @Column(name = "LOCATION", length = 128)
   private String location;
 

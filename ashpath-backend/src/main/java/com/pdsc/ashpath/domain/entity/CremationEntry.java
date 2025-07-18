@@ -26,8 +26,8 @@ public class CremationEntry
   @Column(name = "ID")
   private Long id;
 
-  @NotNull(message = "'creationDate' field on 'CremationEntry' entity cannot be null.")
-  @PastOrPresent(message = "'creationDate' field on 'CremationEntry' entity must be earlier or equals than current date.")
+  @NotNull(message = "{NotNull.cremationEntry.creationDate}")
+  @PastOrPresent(message = "{PastOrPresent.cremationEntry.creationDate}")
   @Column(name = "ENTERED_DATE", columnDefinition = "TIMESTAMP")
   private LocalDateTime creationDate;
 
