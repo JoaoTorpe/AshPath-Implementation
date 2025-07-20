@@ -7,7 +7,7 @@ pushd ashpath-frontend || (
 )
 
 :: Run the command
-npm start
+call npm start
 
 :: Return to the original directory
 popd

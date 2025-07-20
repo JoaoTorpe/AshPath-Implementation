@@ -22,6 +22,7 @@ public abstract class BasePage {
     }
 
     protected WebElement find(By locator) {
+        // wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
         return driver.findElement(locator);
     }
 
