@@ -5,6 +5,7 @@ import { DeceasedService } from '../../services/deceased.service';
 import { DeceasedResponse, DeceasedStatus } from '../../utils/models';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-deceased',
@@ -14,11 +15,11 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
   styleUrls: ['./deceased.component.scss'],
   providers: [provideNgxMask()],
 })
-export class DeceasedComponent implements OnInit
-{
+export class DeceasedComponent implements OnInit {
   private deceasedService = inject(DeceasedService);
   private sanitizer = inject(DomSanitizer);
   protected readonly DeceasedStatus = DeceasedStatus;
+  private route = inject(ActivatedRoute);
 
   public startDate: string = '';
   public endDate: string = '';
@@ -26,61 +27,68 @@ export class DeceasedComponent implements OnInit
 
   private allDeceaseds: DeceasedResponse[] = [];
   public filteredDeceaseds: DeceasedResponse[] = [];
-  
+
   public showPdfModal = false;
   public showDetailsModal = false;
   public selectedDeceased: DeceasedResponse | null = null;
 
-  public pdfUrl : SafeResourceUrl | null = null;
+  public pdfUrl: SafeResourceUrl | null = null;
   public pdfBlob: Blob | null = null;
   public blobUrl: string | null = null;
 
-  ngOnInit(): void
-  {
+  ngOnInit(): void {
+    const locationParam = this.route.snapshot.paramMap.get('location');
+    if (locationParam) {
+      this.graveLocation = locationParam;
+    }
     this.loadDeceaseds();
-    this.applyFilters();
+    //this.applyFilters();
   }
 
-  private setPdfBlob(blob: Blob)
-  {
+  private setPdfBlob(blob: Blob) {
     this.cleanupBlobUrl();
 
     this.pdfBlob = blob;
     this.blobUrl = URL.createObjectURL(blob);
-    this.pdfUrl  = this.sanitizer.bypassSecurityTrustResourceUrl(this.blobUrl);
+    this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.blobUrl);
   }
 
-  public applyFilters(): void
-  {
+  public applyFilters(): void {
     this.filteredDeceaseds = Array.from(this.allDeceaseds);
 
-    const filterStartDate = this.startDate ? this.parseDate(this.startDate) : null;
-    const filterEndDate   = this.endDate   ? this.parseDate(this.endDate)   : null;
-    const location        = this.graveLocation;
+    const filterStartDate = this.startDate
+      ? this.parseDate(this.startDate)
+      : null;
+    const filterEndDate = this.endDate ? this.parseDate(this.endDate) : null;
+    const location = this.graveLocation;
 
     if (filterStartDate !== null && filterEndDate !== null)
-      this.filteredDeceaseds = this.filterByDeathDateRange(filterStartDate, filterEndDate, this.filteredDeceaseds);
+      this.filteredDeceaseds = this.filterByDeathDateRange(
+        filterStartDate,
+        filterEndDate,
+        this.filteredDeceaseds
+      );
 
-    if (location !== undefined && location !== null && location !== "")
-      this.filteredDeceaseds = this.filterByGraveLocation(location, this.filteredDeceaseds);
+    if (location !== undefined && location !== null && location !== '')
+      this.filteredDeceaseds = this.filterByGraveLocation(
+        location,
+        this.filteredDeceaseds
+      );
   }
 
-  public resetFilters(): void
-  {
+  public resetFilters(): void {
     this.startDate = '';
     this.endDate = '';
     this.graveLocation = '';
     this.filteredDeceaseds = [...this.allDeceaseds];
   }
 
-  public viewDetails(deceased: DeceasedResponse): void
-  {
+  public viewDetails(deceased: DeceasedResponse): void {
     this.selectedDeceased = deceased;
     this.showDetailsModal = true;
   }
 
-  public openCertificate(id: number): void
-  {
+  public openCertificate(id: number): void {
     this.deceasedService.getCertificatePdf(id).subscribe({
       next: (blob) => {
         this.setPdfBlob(blob);
@@ -94,64 +102,72 @@ export class DeceasedComponent implements OnInit
     });
   }
 
-  public closeModal(): void
-  {
+  public closeModal(): void {
     this.showPdfModal = false;
     this.showDetailsModal = false;
     this.pdfUrl = null;
   }
 
-  private loadDeceaseds(): void
-  {
+  private loadDeceaseds(): void {
     this.deceasedService.findAll().subscribe({
-      next: data => {
-        this.allDeceaseds      = Array.from(data);
-        this.filteredDeceaseds = Array.from(data);
+      next: (data) => {
+        this.allDeceaseds = Array.from(data);
+        this.applyFilters();
+        //this.filteredDeceaseds = Array.from(data);
       },
-      error: err => { console.error("Falha ao carregar os dados dos falecidos:", err); }
+      error: (err) => {
+        console.error('Falha ao carregar os dados dos falecidos:', err);
+      },
     });
   }
 
-  private filterByDeathDateRange(startDate: Date | null, endDate: Date | null, deceaseds: DeceasedResponse[]): DeceasedResponse[]
-  {
-    if (startDate === null || endDate === null)
-      return deceaseds;
+  private filterByDeathDateRange(
+    startDate: Date | null,
+    endDate: Date | null,
+    deceaseds: DeceasedResponse[]
+  ): DeceasedResponse[] {
+    if (startDate === null || endDate === null) return deceaseds;
 
-    let filteredDeceaseds: DeceasedResponse[] = deceaseds.filter(deceased => {
+    let filteredDeceaseds: DeceasedResponse[] = deceaseds.filter((deceased) => {
       const deathDate = new Date(deceased.deathDate);
-      return (deathDate >= startDate && deathDate <= endDate)
+      return deathDate >= startDate && deathDate <= endDate;
     });
 
     return filteredDeceaseds;
   }
 
-  private filterByGraveLocation(graveLocation: string, deceaseds: DeceasedResponse[]): DeceasedResponse[]
-  {
-    let gravedDeceaseds = deceaseds.filter(deceased => deceased.status === DeceasedStatus.GRAVED);
-    let gravedDeceasedsByLocation = gravedDeceaseds.filter(deceased => deceased.graveLocation?.toLowerCase().includes(graveLocation.toLowerCase()));
+  private filterByGraveLocation(
+    graveLocation: string,
+    deceaseds: DeceasedResponse[]
+  ): DeceasedResponse[] {
+    let gravedDeceaseds = deceaseds.filter(
+      (deceased) => deceased.status === DeceasedStatus.GRAVED
+    );
+    let gravedDeceasedsByLocation = gravedDeceaseds.filter((deceased) =>
+      deceased.graveLocation
+        ?.toLowerCase()
+        .includes(graveLocation.toLowerCase())
+    );
 
     return gravedDeceasedsByLocation;
   }
 
-  private parseDate(dateString: string | null): Date | null
-  {
-    if (!dateString || dateString.length !== 8)
-      return null;
+  private parseDate(dateString: string | null): Date | null {
+    if (!dateString || dateString.length !== 8) return null;
 
-    dateString = dateString.replaceAll("/", "");
+    dateString = dateString.replaceAll('/', '');
 
-    const day   = parseInt(dateString.slice(0, 2), 10);
+    const day = parseInt(dateString.slice(0, 2), 10);
     const month = parseInt(dateString.slice(2, 4), 10) - 1;
-    const year  = parseInt(dateString.slice(4)   , 10);
+    const year = parseInt(dateString.slice(4), 10);
 
-    if (isNaN(day) || isNaN(month) || isNaN(year))
-      return null;
-    
+    if (isNaN(day) || isNaN(month) || isNaN(year)) return null;
+
     const date = new Date(year, month, day);
     if (
-      date.getFullYear() !== year  ||
-      date.getMonth()    !== month ||
-      date.getDate()     !== day
+      date.getFullYear() !== year ||
+      date.getMonth() !== month ||
+      date.getDate() !== day
     ) {
       return null;
     }
@@ -159,18 +175,15 @@ export class DeceasedComponent implements OnInit
     return date;
   }
 
-  private cleanupBlobUrl()
-  {
-    if (this.blobUrl)
-    {
+  private cleanupBlobUrl() {
+    if (this.blobUrl) {
       URL.revokeObjectURL(this.blobUrl);
       this.blobUrl = null;
-      this.pdfUrl  = null;
+      this.pdfUrl = null;
     }
   }
 
-  ngOnDestroy()
-  {
+  ngOnDestroy() {
     this.cleanupBlobUrl();
   }
 }
