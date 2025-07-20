@@ -5,30 +5,52 @@
   <div class="filter-section card mb-4">
     <div class="card-body">
       <h5 class="card-title">Filtros</h5>
+
       <div class="row">
         <div class="col-md-3">
           <label for="startDate" class="form-label">Data de Falecimento (Início)</label>
-          <input type="text" class="form-control" id="startDate"
-                 [(ngModel)]="startDate" name="startDate"
-                 mask="00/00/0000" placeholder="dd/mm/aaaa">
+          <input
+            type="text"
+            class="form-control"
+            id="startDate"
+            [(ngModel)]="startDate"
+            name="startDate"
+            mask="00/00/0000"
+            placeholder="dd/mm/aaaa"
+          >
         </div>
+
         <div class="col-md-3">
           <label for="endDate" class="form-label">Data de Falecimento (Fim)</label>
-          <input type="text" class="form-control" id="endDate"
-                 [(ngModel)]="endDate" name="endDate"
-                 mask="00/00/0000" placeholder="dd/mm/aaaa">
+          <input
+            type="text"
+            class="form-control"
+            id="endDate"
+            [(ngModel)]="endDate"
+            name="endDate"
+            mask="00/00/0000"
+            placeholder="dd/mm/aaaa"
+          >
         </div>
+
         <div class="col-md-4">
           <label for="graveLocation" class="form-label">Localização da Cova</label>
-          <input type="text" class="form-control" id="graveLocation"
-                 [(ngModel)]="graveLocation" name="graveLocation"
-                 placeholder="Digite a localização da cova">
+          <input
+            type="text"
+            class="form-control"
+            id="graveLocation"
+            [(ngModel)]="graveLocation"
+            name="graveLocation"
+            placeholder="Digite a localização da cova"
+          >
         </div>
+
         <div class="col-md-2 d-flex align-items-end">
           <button type="button" class="btn btn-primary me-2" (click)="applyFilters()">Filtrar</button>
           <button type="button" class="btn btn-secondary" (click)="resetFilters()">Limpar</button>
         </div>
       </div>
+
     </div>
   </div>
 
@@ -49,40 +71,43 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let deceased of filteredDeceaseds">
-            <td>{{ deceased.fullname }}</td>
-            <td>{{ deceased.birthDate | date:'dd/MM/yyyy' }}</td>
-            <td>{{ deceased.deathDate | date:'dd/MM/yyyy' }}</td>
-            <td>{{ deceased.causeOfDeath }}</td>
-            <td>
-              <!-- Para: -->
-              <span class="badge" [ngClass]="{
-  'bg-success': deceased.status === DeceasedStatus.CREMATED,
-  'bg-primary': deceased.status === DeceasedStatus.GRAVED,
-  'bg-warning': deceased.status === DeceasedStatus.WAITING_CREMATION
-}">
-  {{ deceased.status }}
-</span>
-            </td>
-            <td>
-  <span *ngIf="deceased.status === DeceasedStatus.GRAVED && deceased.graveLocation">
-    {{ deceased.graveLocation }}
-  </span>
-              <span *ngIf="deceased.status !== DeceasedStatus.GRAVED || !deceased.graveLocation">-</span>
-            </td>
-            <td>
-              <button class="btn btn-sm btn-info me-2" (click)="viewDetails(deceased)">
-                Detalhes
-              </button>
-              <button class="btn btn-sm btn-primary" (click)="openCertificate(deceased.id)"
-                      [disabled]="!deceased.deathCertificateDownloadLink">
-                Certificado
-              </button>
-            </td>
-          </tr>
-          <tr *ngIf="filteredDeceaseds.length === 0">
-            <td colspan="7" class="text-center">Nenhum falecido encontrado</td>
-          </tr>
+
+          @for (deceased of filteredDeceaseds; track deceased.id)
+          {  
+            <tr>
+              <td>{{ deceased.fullname }}</td>
+              <td>{{ deceased.birthDate | date:'dd/MM/yyyy' }}</td>
+              <td>{{ deceased.deathDate | date:'dd/MM/yyyy' }}</td>
+              <td>{{ deceased.causeOfDeath }}</td>
+              <td>
+                <!-- Para: -->
+                <span class="badge" [ngClass]="{
+                  'bg-success': deceased.status === DeceasedStatus.CREMATED,
+                  'bg-primary': deceased.status === DeceasedStatus.GRAVED,
+                  'bg-warning': deceased.status === DeceasedStatus.WAITING_CREMATION
+                }">
+                  {{ deceased.status }}
+                </span>
+              </td>
+              
+              <td>
+                <span *ngIf="deceased.status === DeceasedStatus.GRAVED && deceased.graveLocation">{{ deceased.graveLocation }}</span>
+                <span *ngIf="deceased.status !== DeceasedStatus.GRAVED || !deceased.graveLocation">-</span>
+              </td>
+
+              <td>
+                <button class="btn btn-sm btn-info me-2" (click)="viewDetails(deceased)">Detalhes</button>
+                <button class="btn btn-sm btn-primary"   (click)="openCertificate(deceased.id)" [disabled]="!deceased.deathCertificateDownloadLink">Certificado</button>
+              </td>
+            </tr>
+          }
+          @empty
+          {
+            <tr>
+              <td colspan="7" class="text-center">Nenhum falecido encontrado</td>
+            </tr>
+          }
+
           </tbody>
         </table>
       </div>
@@ -143,7 +168,11 @@
       </div>
       <div class="modal-body">
         <div *ngIf="pdfUrl" class="pdf-container">
-          <iframe [src]="pdfUrl" width="100%" height="600px"></iframe>
+
+          <iframe
+            [src]="pdfUrl"
+          ></iframe>
+
         </div>
         <div *ngIf="!pdfUrl" class="alert alert-danger">
           Não foi possível carregar o certificado de óbito.

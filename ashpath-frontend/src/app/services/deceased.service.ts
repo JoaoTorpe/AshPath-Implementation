@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DeceasedResponse } from '../utils/models';
@@ -6,25 +6,33 @@ import { DeceasedResponse } from '../utils/models';
 @Injectable({
   providedIn: 'root',
 })
-export class DeceasedService {
+export class DeceasedService
+{
   private readonly baseUrl = '/deceased';  // Pode ser ajustado para a URL completa
 
   constructor(private http: HttpClient) {}
 
-  // Busca todos os registros
-  findAll(): Observable<DeceasedResponse[]> {
+  findAll(): Observable<DeceasedResponse[]>
+  {
     return this.http.get<DeceasedResponse[]>(`${this.baseUrl}/findAll`);
   }
 
-  // Busca por ID
-  findById(id: number): Observable<DeceasedResponse> {
-    return this.http.get<DeceasedResponse>(`${this.baseUrl}/find/${id}`);
+  findById(id: number): Observable<DeceasedResponse>
+  {
+    return this.http.get<DeceasedResponse>(`${this.baseUrl}/${id}`);
   }
 
   // Busca certificado em PDF
-  getCertificatePdf(id: number): Observable<Blob> {
-    return this.http.get(`${this.baseUrl}/certificate/${id}`, {
-      responseType: 'blob',
-    });
+  getCertificatePdf(id: number): Observable<Blob>
+  {
+    const headers = new HttpHeaders({ "Accept": "application/pdf" });
+
+    return this.http.get(
+      `${this.baseUrl}/${id}/deathCertificate`,
+      {
+        headers: headers,
+        responseType: 'blob',
+      }
+    );
   }
 }
