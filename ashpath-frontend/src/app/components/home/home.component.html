@@ -1,4 +1,43 @@
-<div class="app-home">
-  <h1>{{ message }}</h1>
-  <p>This is the home page of AshPath. Enjoy your stay!</p>
+<div class="home-container">
+  <section class="welcome-section">
+    <h1>Bem-vindo ao AshPath</h1>
+    <p>Seu portal para consulta de informações de obituários. 🕊️</p>
+  </section>
+
+  <section class="latest-section">
+    <h2>ÚLTIMOS FALECIDOS</h2>
+    @if (latestDeceased$ | async; as latest) { @if(latest.length > 0) {
+    <div class="latest-cards-grid">
+      @for (deceased of latest; track deceased.id) {
+      <div class="latest-card">
+        <h3>{{ deceased.fullname }}</h3>
+        <p>{{ deceased.graveLocation }}</p>
+      </div>
+      }
+    </div>
+    } @else {
+    <p class="no-data">Nenhum registro recente encontrado.</p>
+    } } @else {
+    <p class="loading">Carregando...</p>
+    }
+  </section>
+
+  <section class="cities-section">
+    <h2>OBITUÁRIOS DISPONÍVEIS</h2>
+    @if (availableCities$ | async; as cities) { @if (cities.length > 0) {
+    <div class="city-cards-grid">
+      @for (city of cities; track city) {
+      <a class="city-card" [routerLink]="['/deceased', city]">
+        <h3>{{ city }}</h3>
+      </a>
+      }
+    </div>
+    } @else {
+    <p class="no-data">
+      Nenhuma localidade de obituário disponível no momento.
+    </p>
+    } } @else {
+    <p class="loading">Carregando...</p>
+    }
+  </section>
 </div>

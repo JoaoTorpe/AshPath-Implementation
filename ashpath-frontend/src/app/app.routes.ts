@@ -41,6 +41,12 @@ export const routes: Routes = [
     canActivate: [isLogged],
   },
 
+  {
+    path: 'deceased/:location',
+    component: DeceasedComponent,
+    canActivate: [isLogged],
+  },
+
   // Admin Route (requires isLogged and isAdmin)
   {
     path: 'user-approval',
