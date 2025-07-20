@@ -42,7 +42,6 @@ export class DeceasedComponent implements OnInit {
       this.graveLocation = locationParam;
     }
     this.loadDeceaseds();
-    //this.applyFilters();
   }
 
   private setPdfBlob(blob: Blob) {
@@ -56,24 +55,38 @@ export class DeceasedComponent implements OnInit {
   public applyFilters(): void {
     this.filteredDeceaseds = Array.from(this.allDeceaseds);
 
-    const filterStartDate = this.startDate
-      ? this.parseDate(this.startDate)
-      : null;
+    const filterStartDate = this.startDate ? this.parseDate(this.startDate) : null;
     const filterEndDate = this.endDate ? this.parseDate(this.endDate) : null;
     const location = this.graveLocation;
 
-    if (filterStartDate !== null && filterEndDate !== null)
-      this.filteredDeceaseds = this.filterByDeathDateRange(
-        filterStartDate,
-        filterEndDate,
-        this.filteredDeceaseds
-      );
+    if (filterStartDate !== null)
+      this.filteredDeceaseds = this.applyStartDateDeath(filterStartDate, this.filteredDeceaseds);
+    
+    if (filterEndDate !== null)
+      this.filteredDeceaseds = this.applyEndDateDeath(filterEndDate, this.filteredDeceaseds);
 
     if (location !== undefined && location !== null && location !== '')
-      this.filteredDeceaseds = this.filterByGraveLocation(
-        location,
-        this.filteredDeceaseds
-      );
+      this.filteredDeceaseds = this.filterByGraveLocation(location, this.filteredDeceaseds);
+  }
+
+  private applyStartDateDeath(startDate: Date, deceaseds: DeceasedResponse[]): DeceasedResponse[]
+  {
+    let filteredDeceaseds: DeceasedResponse[] = deceaseds.filter(deceased => {
+      const deathDate = new Date(deceased.deathDate);
+      return deathDate >= startDate;
+    });
+
+    return filteredDeceaseds;
+  }
+
+  private applyEndDateDeath(endDate: Date, deceaseds: DeceasedResponse[]): DeceasedResponse[]
+  {
+    let filteredDeceaseds: DeceasedResponse[] = deceaseds.filter(deceased => {
+      const deathDate = new Date(deceased.deathDate);
+      return deathDate <= endDate;
+    });
+
+    return filteredDeceaseds;
   }
 
   public resetFilters(): void {
@@ -113,27 +126,11 @@ export class DeceasedComponent implements OnInit {
       next: (data) => {
         this.allDeceaseds = Array.from(data);
         this.applyFilters();
-        //this.filteredDeceaseds = Array.from(data);
       },
       error: (err) => {
         console.error('Falha ao carregar os dados dos falecidos:', err);
       },
     });
-  }
-
-  private filterByDeathDateRange(
-    startDate: Date | null,
-    endDate: Date | null,
-    deceaseds: DeceasedResponse[]
-  ): DeceasedResponse[] {
-    if (startDate === null || endDate === null) return deceaseds;
-
-    let filteredDeceaseds: DeceasedResponse[] = deceaseds.filter((deceased) => {
-      const deathDate = new Date(deceased.deathDate);
-      return deathDate >= startDate && deathDate <= endDate;
-    });
-
-    return filteredDeceaseds;
   }
 
   private filterByGraveLocation(
