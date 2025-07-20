@@ -242,8 +242,11 @@
   border: 1px solid #dee2e6;
 
   iframe {
-    width: 100%;
+    width : 100%;
+    min-width: 800px;
+
     height: 100%;
+
     border: none;
   }
 }
