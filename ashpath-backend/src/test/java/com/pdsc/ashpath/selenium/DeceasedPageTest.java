@@ -11,7 +11,6 @@ import com.pdsc.ashpath.pages.deceased.DeceasedPage;
 import com.pdsc.ashpath.pages.home.HomePage;
 
 public class DeceasedPageTest extends BaseTest {
-
         private HomePage homePage;
         private DeceasedPage deceasedPage;
 
@@ -28,7 +27,6 @@ public class DeceasedPageTest extends BaseTest {
 
         @Test
         public void verifyPageLayout() {
-
                 Assert.assertTrue(deceasedPage.isPageTitleDisplayed(),
                                 "Page title should be displayed");
                 Assert.assertEquals(deceasedPage.getPageTitle(), "Consulta de Falecidos",
@@ -45,7 +43,6 @@ public class DeceasedPageTest extends BaseTest {
 
         @Test
         public void verifyFilterSection() {
-
                 Assert.assertTrue(deceasedPage.isFilterButtonDisplayed(),
                                 "Filter button should be displayed");
                 Assert.assertTrue(deceasedPage.isClearButtonDisplayed(),
@@ -65,7 +62,6 @@ public class DeceasedPageTest extends BaseTest {
 
         @Test
         public void verifyTableStructure() {
-
                 Assert.assertTrue(deceasedPage.hasTableHeaders(),
                                 "Table should have headers");
                 Assert.assertTrue(deceasedPage.validateTableHeaders(),
@@ -85,7 +81,6 @@ public class DeceasedPageTest extends BaseTest {
 
         @Test
         public void verifyDataDisplay() {
-
                 if (deceasedPage.hasDataInTable()) {
 
                         Assert.assertTrue(deceasedPage.getTableRowCount() > 0,
@@ -101,7 +96,6 @@ public class DeceasedPageTest extends BaseTest {
                                         "Should have certificate button for each row");
 
                 } else {
-
                         Assert.assertTrue(deceasedPage.isNoResultsMessageDisplayed(),
                                         "No results message should be displayed when no data");
                         Assert.assertEquals(deceasedPage.getNoResultsMessage(), "Nenhum falecido encontrado",
@@ -111,7 +105,6 @@ public class DeceasedPageTest extends BaseTest {
 
         @Test
         public void verifyFilterFunctionality() {
-
                 deceasedPage.setStartDate("01/01/2024");
                 deceasedPage.setEndDate("31/12/2024");
                 deceasedPage.clickFilterButton();
@@ -295,7 +288,6 @@ public class DeceasedPageTest extends BaseTest {
 
         @Test
         public void verifyDateMaskFormatting() {
-
                 deceasedPage.setStartDate("01012020");
                 String formattedStartDate = deceasedPage.getStartDate();
 
@@ -311,7 +303,6 @@ public class DeceasedPageTest extends BaseTest {
 
         @Test
         public void verifyEmptyStateHandling() {
-
                 deceasedPage.applyFilters("01/01/1900", "02/01/1900", "NonExistentLocation");
 
                 Assert.assertTrue(deceasedPage.isNoResultsMessageDisplayed(),

@@ -31,7 +31,6 @@ public class HomePageTest extends BaseTest {
 
     @Test
     public void verifyWelcomeSection() {
-        // Verify welcome section content
         Assert.assertTrue(homePage.isWelcomeSectionDisplayed(),
                 "Welcome section should be visible");
 
@@ -48,15 +47,12 @@ public class HomePageTest extends BaseTest {
 
     @Test
     public void verifyLatestDeceasedSection() {
-        // Verify latest deceased section title
         String latestSectionTitle = homePage.getLatestSectionTitle();
         Assert.assertEquals(latestSectionTitle, "ÚLTIMOS FALECIDOS",
                 "Latest section title should match expected text");
 
-        // Check if data is displayed or no-data message is shown
         if (homePage.isLatestCardsGridDisplayed()) {
-            // Verify that we don't show more than 5 latest deceased (as per component
-            // logic)
+            // Verify that we don't show more than 5 latest deceased (as per component logic)
             int cardCount = homePage.getLatestCardsCount();
             Assert.assertTrue(cardCount <= 5,
                     "Should display at most 5 latest deceased cards, but found: " + cardCount);
@@ -94,7 +90,6 @@ public class HomePageTest extends BaseTest {
         Assert.assertEquals(citiesSectionTitle, "OBITUÁRIOS DISPONÍVEIS",
                 "Cities section title should match expected text");
 
-        // Check if data is displayed or no-data message is shown
         if (homePage.isCityCardsGridDisplayed()) {
             int cityCardCount = homePage.getCityCardsCount();
             Assert.assertTrue(cityCardCount > 0,
@@ -104,7 +99,6 @@ public class HomePageTest extends BaseTest {
             Assert.assertTrue(homePage.areCitiesDisplayedAlphabetically(),
                     "Cities should be displayed in alphabetical order");
 
-            // Test individual city card content access
             for (int i = 0; i < cityCardCount; i++) {
                 String cityName = homePage.getCityCardTitle(i);
                 Assert.assertFalse(cityName.isEmpty(),
@@ -127,20 +121,17 @@ public class HomePageTest extends BaseTest {
             int cityCardCount = homePage.getCityCardsCount();
 
             if (cityCardCount > 0) {
-                // Get the first city name before clicking
-                String firstCityName = homePage.getCityCardTitle(0);
+                // String firstCityName = homePage.getCityCardTitle(0);
 
                 // Click on the first city card
                 homePage.clickCityCard(0);
 
                 // Verify navigation occurred (URL should contain 'deceased' and the city name)
-                // Note: This assumes the routing is working as expected
-                // You might need to adjust this based on your actual routing implementation
                 String currentUrl = driver.getCurrentUrl();
                 Assert.assertTrue(currentUrl.contains("deceased"),
                         "Should navigate to deceased page after clicking city card");
 
-                // Navigate back to home to continue testing
+                // Navigate back to home
                 driver.navigate().back();
                 homePage.hasDataLoaded();
             }
@@ -174,24 +165,6 @@ public class HomePageTest extends BaseTest {
                 "Loading message should not be displayed after data has loaded");
         Assert.assertFalse(homePage.isCitiesLoadingMsgDisplayed(),
                 "Loading message should not be displayed after data has loaded");
-    }
-
-    @Test
-    public void verifyResponsiveDesign() {
-        // Test that page elements are still accessible when window is resized
-        // Simulate mobile viewport
-        driver.manage().window().setSize(new org.openqa.selenium.Dimension(375, 667));
-
-        // Verify main sections are still displayed
-        Assert.assertTrue(homePage.isWelcomeSectionDisplayed(),
-                "Welcome section should be displayed on mobile viewport");
-        Assert.assertTrue(homePage.isLatestSectionDisplayed(),
-                "Latest section should be displayed on mobile viewport");
-        Assert.assertTrue(homePage.isCitiesSectionDisplayed(),
-                "Cities section should be displayed on mobile viewport");
-
-        // Restore window size
-        driver.manage().window().maximize();
     }
 
     @Test

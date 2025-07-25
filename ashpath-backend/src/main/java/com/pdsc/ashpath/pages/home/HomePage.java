@@ -20,8 +20,8 @@ public class HomePage extends BasePage {
     private final By latestSectionTitle = By.cssSelector(".latest-section h2");
     private final By latestCardsGrid = By.className("latest-cards-grid");
     private final By latestCards = By.className("latest-card");
-    private final By latestCardName = By.cssSelector(".latest-card h3");
-    private final By latestCardLocation = By.cssSelector(".latest-card p");
+    // private final By latestCardName = By.cssSelector(".latest-card h3");
+    // private final By latestCardLocation = By.cssSelector(".latest-card p");
     private final By latestNoDataMsg = By.cssSelector(".latest-section .no-data");
     private final By latestLoadingMsg = By.cssSelector(".latest-section .loading");
 
@@ -29,7 +29,7 @@ public class HomePage extends BasePage {
     private final By citiesSectionTitle = By.cssSelector(".cities-section h2");
     private final By cityCardsGrid = By.className("city-cards-grid");
     private final By cityCards = By.className("city-card");
-    private final By cityCardTitle = By.cssSelector(".city-card h3");
+    // private final By cityCardTitle = By.cssSelector(".city-card h3");
     private final By citiesNoDataMsg = By.cssSelector(".cities-section .no-data");
     private final By citiesLoadingMsg = By.cssSelector(".cities-section .loading");
 
