@@ -5,8 +5,8 @@ import jakarta.validation.constraints.NotNull;
 
 public class CreateCremationEntryRequest
 {
-  @NotNull(message = "'cremationEntryId' field is required.")
-  @Min(value = 1, message = "IDs values must be greater or equals than 1.")
+  @NotNull(message = "{NotNull.cremationEntry.necrotomistId}")
+  @Min(value = 1, message = "{Min.cremationEntry.necrotomistId}")
   private Long necrotomistId;
 
   public CreateCremationEntryRequest()
