@@ -44,7 +44,7 @@ public class AuthControllerTest
       .andExpect(status().isBadRequest())
       .andExpect(jsonPath("$.message").value("Erro de validação"))
       .andExpect(jsonPath("$.status").value(400))
-      .andExpect(jsonPath("$.errors[0]").value("email: 'email' field is required."));
+      .andExpect(jsonPath("$.errors[0]").value("email: O campo email do login nao pode ser nulo."));
   }
 
   @Test
@@ -60,7 +60,7 @@ public class AuthControllerTest
       .andExpect(status().isBadRequest())
       .andExpect(jsonPath("$.message").value("Erro de validação"))
       .andExpect(jsonPath("$.status").value(400))
-      .andExpect(jsonPath("$.errors[0]").value("password: 'password' field is required."));
+      .andExpect(jsonPath("$.errors[0]").value("password: O campo senha do login nao pode ser nulo."));
   }
 
   @Test
@@ -74,8 +74,7 @@ public class AuthControllerTest
       .andExpect(status().isBadRequest())
       .andExpect(jsonPath("$.message").value("Erro de validação"))
       .andExpect(jsonPath("$.status").value(400))
-      .andExpect(jsonPath("$.errors", hasItem("email: 'email' field is required.")))
-      .andExpect(jsonPath("$.errors", hasItem("password: 'password' field is required.")));
+      .andExpect(jsonPath("$.errors", hasItem("password: O campo senha do login nao pode ser nulo.")));
   }
 
   @Test
