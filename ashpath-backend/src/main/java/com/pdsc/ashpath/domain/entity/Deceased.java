@@ -54,13 +54,13 @@ public class Deceased
   @Lob
   private byte[] deathCertificate;
 
-  @NotNull(message = "'fatherName' field on 'Deceased' entity cannot be null.")
-  @Size(min = 3, max = 128, message = "'fatherName' field on 'Deceased' entity must have a minimum of 3 characters and a maximum of 128 characters.")
+  @NotNull(message = "{NotNull.deceased.fatherName}")
+  @Size(min = 3, max = 128, message = "{Size.deceased.fatherName}")
   @Column(name = "FATHER_NAME", length = 128)
   private String fatherName;
 
-  @NotNull(message = "'motherName' field on 'Deceased' entity cannot be null.")
-  @Size(min = 3, max = 128, message = "'motherName' field on 'Deceased' entity must have a minimum of 3 characters and a maximum of 128 characters.")
+  @NotNull(message = "{NotNull.deceased.motherName}")
+  @Size(min = 3, max = 128, message = "{Size.deceased.motherName}")
   @Column(name = "MOTHER_NAME", length = 128)
   private String motherName;
 
@@ -68,7 +68,7 @@ public class Deceased
   @Column(name = "STATUS")
   private DeceasedStatus status;
 
-  @PastOrPresent(message = "'cremationEnteredDate' field on 'Deceased' entity must be earlier or equals than current date.")
+  @PastOrPresent(message = "{PastOrPresent.deceased.cremationEnteredDate}")
   @Column(name = "CREMATION_ENTERED_DATE", columnDefinition = "TIMESTAMP")
   private LocalDateTime cremationEnteredDate;
 

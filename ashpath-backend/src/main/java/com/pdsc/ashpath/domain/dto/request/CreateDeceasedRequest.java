@@ -10,31 +10,31 @@ import jakarta.validation.constraints.Size;
 
 public class CreateDeceasedRequest
 {
-  @NotNull(message = "'fullname' field is required.")
-  @Size(min = 3, max = 128, message = "'fullname' field must have a minimum of 3 characters and a maximum of 128 characters.")
+  @NotNull(message = "{NotNull.deceased.fullname}")
+  @Size(min = 3, max = 128, message = "{Size.deceased.fullname}")
   private String fullname;
 
-  @NotNull(message = "'birthDate' field is required.")
-  @Past(message = "'birthDate' field must be earlier than current date.")
+  @NotNull(message = "{NotNull.deceased.birthDate}")
+  @Past(message = "{Past.deceased.birthDate}")
   private LocalDate birthDate;
 
-  @NotNull(message = "'deathDate' field is required.")
-  @PastOrPresent(message = "'deathDate' must be earlier or equals than current date.")
+  @NotNull(message = "{NotNull.deceased.deathDate}")
+  @PastOrPresent(message = "{PastOrPresent.deceased.deathDate}")
   private LocalDate deathDate;
 
-  @NotNull(message = "'causeOfDeath' field is required.")
-  @Size(min = 3, max = 128, message = "'causeOfDeath' field must have a minimum of 3 characters and a maximum of 128 characters.")
+  @NotNull(message = "{NotNull.deceased.causeOfDeath}")
+  @Size(min = 3, max = 128, message = "{Size.deceased.causeOfDeath}")
   private String causeOfDeath;
 
-  @NotNull(message = "'fatherName' field is required.")
-  @Size(min = 3, max = 128, message = "'fatherName' field must have a minimum of 3 characters and a maximum of 128 characters.")
+  @NotNull(message = "{NotNull.deceased.fatherName}")
+  @Size(min = 3, max = 128, message = "{Size.deceased.fatherName}")
   private String fatherName;
 
-  @NotNull(message = "'motherName' field is required.")
-  @Size(min = 3, max = 128, message = "'motherName' field must have a minimum of 3 characters and a maximum of 128 characters.")
+  @NotNull(message = "{NotNull.deceased.motherName}")
+  @Size(min = 3, max = 128, message = "{Size.deceased.motherName}")
   private String motherName;
 
-  @Min(value = 1, message = "IDs values must be greater or equals than 1.")
+  @Min(value = 1, message = "{Min.deceased.graveID}")
   private Long graveID;
 
   public CreateDeceasedRequest() {

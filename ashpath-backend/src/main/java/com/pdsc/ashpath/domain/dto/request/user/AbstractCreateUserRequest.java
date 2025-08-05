@@ -7,21 +7,21 @@ import jakarta.validation.constraints.Size;
 
 public abstract class AbstractCreateUserRequest
 {
-  @NotNull(message = "'email' field is required.")
-  @Size(min = 3, max = 254, message = "'email' field must have a minimum of 3 characters and a maximum of 254 characters.")
-  @Email(message = "'email' field must be a valid email.")
+  @NotNull(message = "{NotNull.user.email}")
+  @Size(min = 3, max = 254, message = "{Size.user.email}")
+  @Email(message = "{Email.user.email}")
   protected String email;
 
-  @NotNull(message = "'password' field is required.")
-  @Size(min = 6, max = 12, message = "'password' field must have a minimum of 6 characters and a maximum of 12 characters.")
+  @NotNull(message = "{NotNull.user.password}")
+  @Size(min = 6, max = 12, message = "{Size.user.password}")
   @Pattern(
     regexp = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*()\\-+_={}\\[\\]|:;\"'<>,.?/~`]).+$",
-    message = "'password' field must include 1 number, 1 uppercase letter, and 1 special character."
+    message = "{Pattern.user.password}"
   )
   protected String password;
 
-  @NotNull(message = "'fullname' field is required.")
-  @Size(min = 3, max = 64, message = "'fullname' field must have a minimum of 3 characters and a maximum of 64 characteres.")
+  @NotNull(message = "{NotNull.user.fullname}")
+  @Size(min = 3, max = 64, message = "{Size.user.fullname}")
   protected String fullname;
 
   public String getEmail()

@@ -4,10 +4,10 @@ import jakarta.validation.constraints.NotNull;
 
 public class LoginRequest
 {
-  @NotNull(message = "'email' field is required.")
+  @NotNull(message = "{NotNull.login.email}")
   private String email;
 
-  @NotNull(message = "'password' field is required.")
+  @NotNull(message = "{NotNull.login.password}")
   private String password;
 
   public LoginRequest()

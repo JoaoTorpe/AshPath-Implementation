@@ -4,7 +4,7 @@ import jakarta.validation.constraints.Size;
 
 public class CreateNecrotomistRequest extends AbstractCreateUserRequest
 {
-  @Size(min = 3, max = 64, message = "'specialization' field must have a minimum of 3 characters and a maximum of 64 characters.")
+  @Size(min = 3, max = 64, message = "{Size.user.fullname}")
   private String specialization;
 
   public CreateNecrotomistRequest()
