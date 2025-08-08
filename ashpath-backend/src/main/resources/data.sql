@@ -116,94 +116,86 @@ INSERT INTO GRAVE (Location) VALUES
 ('Memorial Paz Eterna'),
 ('Jardim da Saudade');
 
--- 4. Inserir falecidos com certificado de óbito em PDF (BLOB)
+-- 4. Inserir falecidos sem certificado de óbito em PDF (BLOB)
 INSERT INTO DECEASED (
-    Full_Name, Birth_Date, Death_Date, Cause_Of_Death, Death_Certificate,
+    Full_Name, Birth_Date, Death_Date, Cause_Of_Death,
     Father_Name, Mother_Name, Status,
     Cremation_Entered_Date, Cremation_Entry_Id, Grave_Id
 ) VALUES
 ('Carlos Alberto', '1950-05-15', '2017-01-10', 'Doença cardiovascular',
- X'255044462D312E0D0A25B5B5B5B50D0A312030206F626A0D0A3C3C2F547970652F436174616C6F672F50616765732032203020520D0A2F4F75746C696E65732033203020520D0A2F4D657461646174612034203020520D0A3E3E0D0A656E646F626A0D0A',
  'José Alberto', 'Maria Silva', 'GRAVED', '2023-01-10 08:30:00', 1, 1),
 
 ('Ana Paula', '1975-08-22', '2020-02-15', 'Acidente automobilístico',
- X'255044462D312E0D0A25B5B5B5B50D0A312030206F626A0D0A3C3C2F547970652F436174616C6F672F50616765732032203020520D0A2F4F75746C696E65732033203020520D0A2F4D657461646174612034203020520D0A3E3E0D0A656E646F626A0D0A', -- PDF simples
  'Pedro Henrique', 'Claudia Santos', 'WAITING_CREMATION', NOW(), 2, 2),
 
 ('Roberto Nascimento', '1962-11-30', '2015-03-20', 'COVID-19',
- X'255044462D312E0D0A25B5B5B5B50D0A312030206F626A0D0A3C3C2F547970652F436174616C6F672F50616765732032203020520D0A2F4F75746C696E65732033203020520D0A2F4D657461646174612034203020520D0A3E3E0D0A656E646F626A0D0A', -- PDF simples
  'Antônio Nascimento', 'Beatriz Oliveira', 'CREMATED', '2023-03-21 10:00:00', 3, 3),
 
 ('Mariana Costa', '1988-07-14', '2022-04-05', 'Câncer',
- X'255044462D312E0D0A25B5B5B5B50D0A312030206F626A0D0A3C3C2F547970652F436174616C6F672F50616765732032203020520D0A2F4F75746C696E65732033203020520D0A2F4D657461646174612034203020520D0A3E3E0D0A656E646F626A0D0A', -- PDF simples
  'Fernando Costa', 'Isabela Rodrigues', 'GRAVED', '2023-04-05 14:15:00', 1, 4),
 
 ('Belal Mohamend', '1992-12-25', '2019-05-18', 'Acidente de trabalho',
- X'255044462D312E0D0A25B5B5B5B50D0A312030206F626A0D0A3C3C2F547970652F436174616C6F672F50616765732032203020520D0A2F4F75746C696E65732033203020520D0A2F4D657461646174612034203020520D0A3E3E0D0A656E646F626A0D0A', -- PDF simples
  'Ricardo Oliveira', 'Patrícia Souza', 'WAITING_CREMATION', NOW(), 2, 5),
 
 ('Della Maddalena', '1973-09-30', '2010-06-22', 'Insuficiência renal',
- X'255044462D312E0D0A25B5B5B5B50D0A312030206F626A0D0A3C3C2F547970652F436174616C6F672F50616765732032203020520D0A2F4F75746C696E65732033203020520D0A2F4D657461646174612034203020520D0A3E3E0D0A656E646F626A0D0A', -- PDF simples
  'Carlos Silva', 'Ana Maria', 'CREMATED', '2023-06-23 14:30:00', 3, 6),
+
 ('Eduardo Reis', '1951-12-30', '2023-07-10', 'AVC',
- X'25504446', 'João Reis', 'Marisa Reis', 'CREMATED', NOW(), 4, 1),
+ 'João Reis', 'Marisa Reis', 'CREMATED', NOW(), 4, 1),
 
 ('Luciana Prado', '1982-06-11', '2014-07-15', 'Pneumonia',
- X'25504446', 'Carlos Prado', 'Fernanda Prado', 'GRAVED', NOW(), 5, 2),
+ 'Carlos Prado', 'Fernanda Prado', 'GRAVED', NOW(), 5, 2),
 
 ('Guilherme Rocha', '1970-01-01', '2021-07-20', 'Câncer',
- X'25504446', 'Roberto Rocha', 'Adriana Rocha', 'CREMATED', NOW(), 6, 3),
+ 'Roberto Rocha', 'Adriana Rocha', 'CREMATED', NOW(), 6, 3),
 
 ('Patrícia Alves', '1995-09-09', '2010-07-25', 'Infecção generalizada',
- X'25504446', 'Bruno Alves', 'Sara Alves', 'WAITING_CREMATION', NOW(), 7, 4),
+ 'Bruno Alves', 'Sara Alves', 'WAITING_CREMATION', NOW(), 7, 4),
 
 ('Renan Oliveira', '1966-03-21', '2020-08-01', 'Diabetes',
- X'25504446', 'Lucas Oliveira', 'Verônica Oliveira', 'CREMATED', NOW(), 8, 5),
+ 'Lucas Oliveira', 'Verônica Oliveira', 'CREMATED', NOW(), 8, 5),
 
 ('Tiago Cunha', '1980-04-12', '2020-08-05', 'Acidente doméstico',
- X'25504446', 'Ricardo Cunha', 'Luiza Cunha', 'GRAVED', NOW(), 9, 6),
+ 'Ricardo Cunha', 'Luiza Cunha', 'GRAVED', NOW(), 9, 6),
 
 ('Elisa Martins', '2000-02-18', '2023-08-10', 'Suicídio',
- X'25504446', 'Fernando Martins', 'Juliana Martins', 'WAITING_CREMATION', NOW(), 10, 1),
+ 'Fernando Martins', 'Juliana Martins', 'WAITING_CREMATION', NOW(), 10, 1),
 
 ('Rafael Souza', '1977-07-07', '2014-08-15', 'COVID-19',
- X'25504446', 'Paulo Souza', 'Marta Souza', 'CREMATED', NOW(), 11, 2),
+ 'Paulo Souza', 'Marta Souza', 'CREMATED', NOW(), 11, 2),
 
 ('Juliana Pires', '1963-11-29', '2017-08-22', 'AVC',
- X'25504446', 'Eduardo Pires', 'Cecília Pires', 'GRAVED', NOW(), 12, 3),
+ 'Eduardo Pires', 'Cecília Pires', 'GRAVED', NOW(), 12, 3),
 
 ('Gabriel Barros', '1999-05-05', '2016-08-30', 'Afogamento',
- X'25504446', 'Sérgio Barros', 'Nina Barros', 'WAITING_CREMATION', NOW(), 13, 4),
+ 'Sérgio Barros', 'Nina Barros', 'WAITING_CREMATION', NOW(), 13, 4),
 
 ('Amanda Ferreira', '1984-10-10', '2019-09-01', 'Câncer',
- X'25504446', 'Marcos Ferreira', 'Denise Ferreira', 'CREMATED', NOW(), 14, 5),
+ 'Marcos Ferreira', 'Denise Ferreira', 'CREMATED', NOW(), 14, 5),
 
 ('Douglas Lima', '1958-08-16', '2000-09-05', 'Embolia pulmonar',
- X'25504446', 'Geraldo Lima', 'Iracema Lima', 'GRAVED', NOW(), 15, 6),
+ 'Geraldo Lima', 'Iracema Lima', 'GRAVED', NOW(), 15, 6),
 
 ('Fernanda Dias', '1993-06-23', '2023-09-10', 'Acidente de moto',
- X'25504446', 'Otávio Dias', 'Milena Dias', 'WAITING_CREMATION', NOW(), 4, 1),
+ 'Otávio Dias', 'Milena Dias', 'WAITING_CREMATION', NOW(), 4, 1),
 
 ('João Pedro Nunes', '2001-01-15', '2023-09-14', 'Homicídio',
- X'25504446', 'Leandro Nunes', 'Bianca Nunes', 'CREMATED', NOW(), 5, 2),
+ 'Leandro Nunes', 'Bianca Nunes', 'CREMATED', NOW(), 5, 2),
 
 ('Marta Gomes', '1974-03-03', '2023-09-18', 'Doença pulmonar',
- X'25504446', 'César Gomes', 'Tereza Gomes', 'GRAVED', NOW(), 6, 3),
+ 'César Gomes', 'Tereza Gomes', 'GRAVED', NOW(), 6, 3),
 
 ('Marcelo Bastos', '1961-12-01', '2023-09-22', 'Câncer de próstata',
- X'25504446', 'Arnaldo Bastos', 'Norma Bastos', 'CREMATED', NOW(), 7, 4),
+ 'Arnaldo Bastos', 'Norma Bastos', 'CREMATED', NOW(), 7, 4),
 
 ('Isabela Fontes', '1987-07-27', '2023-09-26', 'Leucemia',
- X'25504446', 'Vicente Fontes', 'Patrícia Fontes', 'GRAVED', NOW(), 8, 5),
+ 'Vicente Fontes', 'Patrícia Fontes', 'GRAVED', NOW(), 8, 5),
 
 ('Jonas Castro', '1949-04-09', '2020-09-30', 'Falência múltipla dos órgãos',
- X'25504446', 'Rubens Castro', 'Rita Castro', 'CREMATED', NOW(), 9, 6),
+ 'Rubens Castro', 'Rita Castro', 'CREMATED', NOW(), 9, 6),
 
 ('Tatiane Lima', '1996-12-19', '2024-10-02', 'Suicídio',
- X'25504446', 'Alex Lima', 'Cristina Lima', 'WAITING_CREMATION', NOW(), 10, 1),
+ 'Alex Lima', 'Cristina Lima', 'WAITING_CREMATION', NOW(), 10, 1),
 
 ('Nelson Faria', '1955-10-30', '2023-10-06', 'Acidente vascular isquêmico',
- X'25504446', 'Ivan Faria', 'Neide Faria', 'CREMATED', NOW(), 11, 2) 
-;
-
- 
+ 'Ivan Faria', 'Neide Faria', 'CREMATED', NOW(), 11, 2);
