@@ -1,0 +1,181 @@
+<div class="container">
+  <h1>Cadastrar Falecido</h1>
+
+  <div class="form-wrapper">
+    <form [formGroup]="deceasedForm" (ngSubmit)="onSubmit()" novalidate>
+      <div class="form-group">
+        <label class="form-label">Nome Completo</label>
+        <input
+          type="text"
+          class="form-input"
+          formControlName="fullname"
+          maxlength="128"
+        />
+        @if (deceasedForm.get('fullname')?.touched &&
+        deceasedForm.get('fullname')?.errors) { @if
+        (deceasedForm.get('fullname')?.errors?.['required'] ||
+        deceasedForm.get('fullname')?.errors?.['minlength']) {
+        <div class="error-message">
+          O nome completo deve conter pelo menos três caracteres.
+        </div>
+        } }
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Data de Nascimento</label>
+          <input
+            type="text"
+            class="form-input"
+            formControlName="birthDate"
+            mask="00/00/0000"
+            [dropSpecialCharacters]="false"
+            placeholder="dd/mm/aaaa"
+          />
+          @if (deceasedForm.get('birthDate')?.touched) { @if
+          (deceasedForm.get('birthDate')?.errors?.['required']) {
+          <div class="error-message">A data de nascimento é obrigatória.</div>
+          } @else if (deceasedForm.get('birthDate')?.errors?.['invalidDate']) {
+          <div class="error-message">A data de nascimento é inválida.</div>
+          } @else if (deceasedForm.get('birthDate')?.errors?.['noFutureDate']) {
+          <div class="error-message">
+            A data de nascimento não pode ser futura.
+          </div>
+          } }
+        </div>
+        <div class="form-group">
+          <label class="form-label">Data de Falecimento</label>
+          <input
+            type="text"
+            class="form-input"
+            formControlName="deathDate"
+            mask="00/00/0000"
+            [dropSpecialCharacters]="false"
+            placeholder="dd/mm/aaaa"
+          />
+          @if (deceasedForm.get('deathDate')?.touched) { @if
+          (deceasedForm.get('deathDate')?.errors?.['required']) {
+          <div class="error-message">A data de falecimento é obrigatória.</div>
+          } @else if (deceasedForm.get('deathDate')?.errors?.['invalidDate']) {
+          <div class="error-message">A data de falecimento é inválida.</div>
+          } @else if
+          (deceasedForm.get('deathDate')?.errors?.['pastOrPresentDate']) {
+          <div class="error-message">
+            A data de falecimento não pode ser futura.
+          </div>
+          } }
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Causa da Morte</label>
+        <input
+          type="text"
+          class="form-input"
+          formControlName="causeOfDeath"
+          maxlength="128"
+        />
+        @if (deceasedForm.get('causeOfDeath')?.touched &&
+        deceasedForm.get('causeOfDeath')?.errors) { @if
+        (deceasedForm.get('causeOfDeath')?.errors?.['required']) {
+        <div class="error-message">A causa da morte é obrigatória.</div>
+        } @else if (deceasedForm.get('causeOfDeath')?.errors?.['minlength']) {
+        <div class="error-message">
+          A causa da morte deve conter pelo menos três caracteres.
+        </div>
+        } }
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Entrada de Cremação (Opcional)</label>
+          <select class="form-input" formControlName="cremationEntryID">
+            <option [ngValue]="null">Nenhuma / Não se aplica</option>
+            @for (entry of cremationEntries$ | async; track entry.id) {
+            <option [value]="entry.id">
+              Entrada #{{ entry.id }} - Criada em
+              {{ entry.creationDate | date : "dd/MM/yyyy" }}
+            </option>
+            }
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Cova (Opcional)</label>
+          <select class="form-input" formControlName="graveID">
+            <option [ngValue]="null">Nenhuma / Não se aplica</option>
+            @for (grave of allGraves$ | async; track grave.id) {
+            <option [value]="grave.id">{{ grave.location }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Nome do Pai</label>
+          <input
+            type="text"
+            class="form-input"
+            formControlName="fatherName"
+            maxlength="128"
+          />
+          @if (deceasedForm.get('fatherName')?.touched &&
+          deceasedForm.get('fatherName')?.errors) { @if
+          (deceasedForm.get('fatherName')?.errors?.['required'] ||
+          deceasedForm.get('fatherName')?.errors?.['minlength']) {
+          <div class="error-message">
+            O nome do pai deve conter pelo menos três caracteres.
+          </div>
+          } }
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nome da Mãe</label>
+          <input
+            type="text"
+            class="form-input"
+            formControlName="motherName"
+            maxlength="128"
+          />
+          @if (deceasedForm.get('motherName')?.touched &&
+          deceasedForm.get('motherName')?.errors) { @if
+          (deceasedForm.get('motherName')?.errors?.['required'] ||
+          deceasedForm.get('motherName')?.errors?.['minlength']) {
+          <div class="error-message">
+            O nome da mãe deve conter pelo menos três caracteres.
+          </div>
+          } }
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Atestado de Óbito</label>
+        <input
+          type="file"
+          class="form-input-file"
+          (change)="onFileSelected($event)"
+          accept=".pdf"
+        />
+        @if (deceasedForm.get('deathCertificate')?.touched &&
+        deceasedForm.get('deathCertificate')?.errors?.['required']) {
+        <div class="error-message">O atestado de óbito é obrigatório.</div>
+        }
+      </div>
+
+      <div class="submit-button-wrapper">
+        <button
+          type="submit"
+          class="submit-button"
+          [disabled]="deceasedForm.invalid"
+        >
+          Cadastrar
+        </button>
+      </div>
+
+      @if (errorMessage) {
+      <div class="error-feedback">{{ errorMessage }}</div>
+      } @if (successMessage) {
+      <div class="success-feedback">{{ successMessage }}</div>
+      }
+    </form>
+  </div>
+</div>

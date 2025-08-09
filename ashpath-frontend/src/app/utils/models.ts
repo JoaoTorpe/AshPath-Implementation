@@ -45,7 +45,9 @@ export interface NecrotomistUserResponse extends AbstractUserResponse {
   specialization: string;
 }
 
-export type UserResponse = AdminUserResponse & ViewerUserResponse & NecrotomistUserResponse;
+export type UserResponse = AdminUserResponse &
+  ViewerUserResponse &
+  NecrotomistUserResponse;
 
 export enum AppRole {
   VIEWER = 'VIEWER',
@@ -55,6 +57,17 @@ export enum AppRole {
 
 export interface UserCredentials {
   id: number;
+}
+
+export interface CreateDeceasedRequest {
+  fullname: string;
+  birthDate: string;
+  deathDate: string;
+  causeOfDeath: string;
+  fatherName: string;
+  motherName: string;
+  graveID: number | null;
+  cremationEntryID: number | null;
 }
 
 export interface DeceasedDetailResponse {
@@ -90,6 +103,12 @@ export interface CremationEntryResponse {
   creationDate: string;
   necrotomist: NecrotomistUserResponse;
   deceaseds?: DeceasedDetailResponse[];
+}
+
+export interface GraveResponse {
+  id: number;
+  location: string;
+  deceasedSet: DeceasedDetailResponse[];
 }
 
 export enum DeceasedStatus {

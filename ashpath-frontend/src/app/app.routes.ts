@@ -7,6 +7,7 @@ import { CremationEntryComponent } from './components/cremation-entry/cremation-
 import { DeceasedComponent } from './components/deceased/deceased.component';
 import { NotFoundPageComponent } from './components/not-found-page/not-found-page.component';
 import { UserApprovalPageComponent } from './components/user-approval-page/user-approval-page.component';
+import { CreateDeceasedComponent } from './components/create-deceased/create-deceased.component';
 
 export const routes: Routes = [
   // Public Routes
@@ -31,16 +32,20 @@ export const routes: Routes = [
     canActivate: [isLogged],
   },
   {
+    path: 'deceased',
+    component: DeceasedComponent,
+    canActivate: [isLogged],
+  },
+  {
     path: 'cremation-entry',
     component: CremationEntryComponent,
     canActivate: [isLogged],
   },
   {
-    path: 'deceased',
-    component: DeceasedComponent,
+    path: 'necrotomist',
+    component: CreateDeceasedComponent,
     canActivate: [isLogged],
   },
-
   {
     path: 'deceased/:location',
     component: DeceasedComponent,

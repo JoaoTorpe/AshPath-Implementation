@@ -45,9 +45,9 @@ public class DeceasedService
 
     Deceased createdDeceased = deceasedRepository.save(deceased);
 
-    if (request.getCremationEntryId() != null)
+    if (request.getCremationEntryID() != null)
     {
-      this.cremationEntryService.addDeceasedToCremationEntry(request.getCremationEntryId(), createdDeceased.getId());
+      this.cremationEntryService.addDeceasedToCremationEntry(request.getCremationEntryID(), createdDeceased.getId());
     }
 
     if (request.getGraveID() != null)

@@ -122,12 +122,12 @@ public class CreateDeceasedRequest
     this.graveID = graveID;
   }
 
-  public void setCremationEntryId(Long cremationEntryID)
+  public void setCremationEntryID(Long cremationEntryID)
   {
     this.cremationEntryID = cremationEntryID;
   }
 
-  public Long getCremationEntryId()
+  public Long getCremationEntryID()
   {
     return this.cremationEntryID;
   }
