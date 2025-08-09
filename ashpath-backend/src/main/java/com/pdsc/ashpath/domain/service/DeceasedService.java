@@ -3,7 +3,6 @@ package com.pdsc.ashpath.domain.service;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,10 +21,14 @@ import com.pdsc.ashpath.repository.DeceasedRepository;
 public class DeceasedService
 {
   private final DeceasedRepository deceasedRepository;
+  private final CremationEntryService cremationEntryService;
+  private final GraveService graveService;
 
-  public DeceasedService(DeceasedRepository deceasedRepository)
+  public DeceasedService(DeceasedRepository deceasedRepository, CremationEntryService cremationEntryService, GraveService graveService)
   {
     this.deceasedRepository = deceasedRepository;
+    this.cremationEntryService = cremationEntryService;
+    this.graveService = graveService;
   }
 
   public void createDeceased(CreateDeceasedRequest request, MultipartFile certificate) throws IOException
@@ -40,7 +43,17 @@ public class DeceasedService
     deceased.setMotherName(request.getMotherName());
     deceased.setDeathCertificate(certificate.getBytes());
 
-    deceasedRepository.save(deceased);
+    Deceased createdDeceased = deceasedRepository.save(deceased);
+
+    if (request.getCremationEntryId() != null)
+    {
+      this.cremationEntryService.addDeceasedToCremationEntry(request.getCremationEntryId(), createdDeceased.getId());
+    }
+
+    if (request.getGraveID() != null)
+    {
+      this.graveService.buryDeceased(request.getGraveID(), createdDeceased.getId());
+    }
   }
 
   public DeceasedResponse readDeceasedById(Long deceasedId)

@@ -37,6 +37,8 @@ public class CreateDeceasedRequest
   @Min(value = 1, message = "{Min.deceased.graveID}")
   private Long graveID;
 
+  private Long cremationEntryID;
+
   public CreateDeceasedRequest() {
   }
 
@@ -118,5 +120,15 @@ public class CreateDeceasedRequest
   public void setGraveID(Long graveID)
   {
     this.graveID = graveID;
+  }
+
+  public void setCremationEntryId(Long cremationEntryID)
+  {
+    this.cremationEntryID = cremationEntryID;
+  }
+
+  public Long getCremationEntryId()
+  {
+    return this.cremationEntryID;
   }
 }
