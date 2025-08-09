@@ -1,6 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { AppRole } from '../../utils/models';
@@ -11,7 +16,7 @@ import { CustomValidators } from '../../validators/custom-validators';
   selector: 'app-register',
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  styleUrl: './register.component.scss',
 })
 export class RegisterComponent {
   errorMessage: string | null = null;
@@ -23,25 +28,34 @@ export class RegisterComponent {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private authService: AuthService,
+    private authService: AuthService
   ) {
-    this.registerForm = this.fb.group({
-      fullname: ['', [...CustomValidators.fullnameValidators]],
-      email: ['', [...CustomValidators.emailValidators]],
-      password: ['', [...CustomValidators.passwordValidators]],
-      repeatPassword: ['', [...CustomValidators.passwordValidators]],
-      specialization: ['', []],
-    }, {
-      validators: [CustomValidators.passwordMatchValidator]
-    });
+    this.registerForm = this.fb.group(
+      {
+        fullname: ['', [...CustomValidators.fullnameValidators]],
+        email: ['', [...CustomValidators.emailValidators]],
+        password: ['', [...CustomValidators.passwordValidators]],
+        repeatPassword: ['', [...CustomValidators.passwordValidators]],
+        specialization: ['', []],
+      },
+      {
+        validators: [CustomValidators.passwordMatchValidator],
+      }
+    );
   }
 
   onFormTypeChange(event: Event): void {
     const selected = (event.target as HTMLSelectElement).value;
     this.formType = selected;
-    
+
     if (this.formType === 'NECROTOMIST') {
-      this.registerForm.get('specialization')?.setValidators([Validators.required, Validators.maxLength(64), Validators.minLength(3)]);
+      this.registerForm
+        .get('specialization')
+        ?.setValidators([
+          Validators.required,
+          Validators.maxLength(64),
+          Validators.minLength(3),
+        ]);
     } else {
       this.registerForm.get('specialization')?.clearValidators();
     }
@@ -55,10 +69,10 @@ export class RegisterComponent {
     let request;
 
     switch (this.formType) {
-      case "ADMIN":
+      case 'ADMIN':
         request = this.authService.registerAdmin(this.registerForm.value);
         break;
-      case "NECROTOMIST":
+      case 'NECROTOMIST':
         request = this.authService.registerNecrotomist(this.registerForm.value);
         break;
       default:
@@ -67,7 +81,7 @@ export class RegisterComponent {
 
     request.subscribe({
       next: (res) => this.onSuccess(),
-      error: this.onError.bind(this)
+      error: this.onError.bind(this),
     });
   }
 
@@ -77,7 +91,7 @@ export class RegisterComponent {
 
   private onError(err: HttpErrorResponse) {
     console.log(err);
-    this.errorMessage = 'Failed to register. Please try again.';
+    this.errorMessage = 'Falha ao registrar. Tente novamente.';
   }
 
   navigateToLogin(): void {
