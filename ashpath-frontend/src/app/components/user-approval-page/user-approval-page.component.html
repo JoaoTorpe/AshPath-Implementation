@@ -1,33 +1,37 @@
 <div class="container">
-    <h1 class="title">User Approval Dashboard</h1>
+  <h1 class="title">Painel de Aprovação de Usuário</h1>
 
-    @for(user of usersPendingApproval; track user.id) {
-    <div class="user-card">
-        <div class="user-info">
-            <div class="name-role-container">
-                <div class="user-name">{{ user.fullname }}</div>
-                <div class="user-role">{{ user.appRoleSet[0].name }}</div>
-            </div>
-            <div class="user-email">{{ user.email }}</div>
-        </div>
-        <div class="action-buttons">
-            <button class="approve-button" (click)="approve(user)">Approve</button>
-            <button class="unapprove-button" (click)="reject(user)">Reject</button>
-        </div>
+  @for(user of usersPendingApproval; track user.id) {
+  <div class="user-card">
+    <div class="user-info">
+      <div class="name-role-container">
+        <div class="user-name">{{ user.fullname }}</div>
+        <div class="user-role">{{ user.appRoleSet[0].name }}</div>
+      </div>
+      <div class="user-email">{{ user.email }}</div>
     </div>
-    }@empty {
-    <div class="empty-state">
-        <h1>No Users Pending Approval</h1>
-        <p>All user approval requests have been processed. Check back later for new requests.</p>
+    <div class="action-buttons">
+      <button class="approve-button" (click)="approve(user)">Aprovar</button>
+      <button class="unapprove-button" (click)="reject(user)">Rejeitar</button>
     </div>
-    }
-
-    @if(showSnackbar) {
-    <div class="snackbar-container">
-        <div class="custom-snackbar" [ngClass]="[snackbarType, hideAnimation ? 'hide' : '']">
-            {{ snackbarMessage }}
-            <button class="close-btn" (click)="hideSnackbar()">Close</button>
-        </div>
+  </div>
+  }@empty {
+  <div class="empty-state">
+    <h1>Nenhum usuário aguardando aprovação.</h1>
+    <p>
+      Todas as solicitações de aprovação do usuário foram processadas. Volte
+      mais tarde para novas solicitações.
+    </p>
+  </div>
+  } @if(showSnackbar) {
+  <div class="snackbar-container">
+    <div
+      class="custom-snackbar"
+      [ngClass]="[snackbarType, hideAnimation ? 'hide' : '']"
+    >
+      {{ snackbarMessage }}
+      <button class="close-btn" (click)="hideSnackbar()">Fechar</button>
     </div>
-    }
+  </div>
+  }
 </div>

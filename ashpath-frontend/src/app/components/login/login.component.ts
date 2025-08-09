@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -12,7 +17,7 @@ import { CustomValidators } from '../../validators/custom-validators';
   templateUrl: './login.component.html',
   styleUrls: ['login.component.scss'],
   standalone: true,
-  imports: [ReactiveFormsModule, RouterModule]
+  imports: [ReactiveFormsModule, RouterModule],
 })
 export class LoginComponent {
   errorMessage: string | null = null;
@@ -21,7 +26,7 @@ export class LoginComponent {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private authService: AuthService,
+    private authService: AuthService
   ) {
     this.loginForm = this.fb.group({
       email: ['mohg.silva@gmail.com', [...CustomValidators.emailValidators]],
@@ -42,17 +47,15 @@ export class LoginComponent {
     this.authService.signIn(request).subscribe({
       next: (response) => {
         // console.log('Login bem-sucedido', response);
-        this.router.navigate(['/home']); 
+        this.router.navigate(['/home']);
       },
       error: (err: HttpErrorResponse) => {
         if (err.status === 401) {
-          this.errorMessage = 'Invalid email/password.';
-        } 
-        else if(err.status === 403) {
-          this.errorMessage = 'Your account is pending approval.';
-        }
-        else {
-          this.errorMessage = 'Failed to login. Please try again.';
+          this.errorMessage = 'email/password Inválido.';
+        } else if (err.status === 403) {
+          this.errorMessage = 'Sua conta está pendente de aprovação.';
+        } else {
+          this.errorMessage = 'Falha ao efetuar login. Tente novamente.';
         }
       },
     });

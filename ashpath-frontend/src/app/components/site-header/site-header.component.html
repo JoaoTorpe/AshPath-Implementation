@@ -1,18 +1,20 @@
 <div class="container">
-    <div class="left">
-        <a routerLink="/home" routerLinkActive="active">Home</a>
-        <a routerLink="/deceased" routerLinkActive="active">Deceased</a>
-        <a routerLink="/cremation-entry" routerLinkActive="active">Cremation Entry</a>
-        <a routerLink="/necrotomist" routerLinkActive="active">Necrotomist</a>
-    </div>
-    <div class="right">
-        <!-- <a routerLink="/register" routerLinkActive="active" *ngIf="userSig()">Register</a>
+  <div class="left">
+    <a routerLink="/home" routerLinkActive="active">Início</a>
+    <a routerLink="/deceased" routerLinkActive="active">Falecidos</a>
+    <a routerLink="/cremation-entry" routerLinkActive="active"
+      >Entradas de Cremação</a
+    >
+    <a routerLink="/necrotomist" routerLinkActive="active">Necrotomista</a>
+  </div>
+  <div class="right">
+    <!-- <a routerLink="/register" routerLinkActive="active" *ngIf="userSig()">Register</a>
         <a routerLink="/login" routerLinkActive="active" *ngIf="!userSig()">Login</a> -->
-        <div class="logout" *ngIf="userSig() && isAdmin()">
-            <a routerLink="/user-approval" class="cta">User Approval</a>
-        </div>
-        <div class="logout" *ngIf="userSig()">
-            <a routerLink="/login" (click)="logout()" class="cta">Logout</a>
-        </div>
+    <div class="logout" *ngIf="userSig() && isAdmin()">
+      <a routerLink="/user-approval" class="cta"> Aprovação de usuário</a>
     </div>
+    <div class="logout" *ngIf="userSig()">
+      <a routerLink="/login" (click)="logout()" class="cta">Logout</a>
+    </div>
+  </div>
 </div>
