@@ -104,4 +104,47 @@ export class CustomValidators {
 
     return null;
   }
+
+  static deathAfterBirth: ValidatorFn = (
+    control: AbstractControl
+  ): ValidationErrors | null => {
+    const birthDateControl = control.get('birthDate');
+    const deathDateControl = control.get('deathDate');
+
+    if (!birthDateControl || !deathDateControl) {
+      return null;
+    }
+
+    const birthDateStr = birthDateControl.value;
+    const deathDateStr = deathDateControl.value;
+
+    if (!birthDateStr || !deathDateStr || 
+        birthDateStr.length !== 10 || deathDateStr.length !== 10) {
+      return null;
+    }
+
+    const birthParts = birthDateStr.split('/');
+    const deathParts = deathDateStr.split('/');
+    
+    const birthDate = new Date(+birthParts[2], +birthParts[1] - 1, +birthParts[0]);
+    const deathDate = new Date(+deathParts[2], +deathParts[1] - 1, +deathParts[0]);
+
+    if (deathDate <= birthDate) {
+      deathDateControl.setErrors({ 
+        ...deathDateControl.errors, 
+        deathAfterBirth: true 
+      });
+      return { deathAfterBirth: true };
+    }
+
+    // Remove the error if dates are valid
+    if (deathDateControl.errors) {
+      delete deathDateControl.errors['deathAfterBirth'];
+      if (Object.keys(deathDateControl.errors).length === 0) {
+        deathDateControl.setErrors(null);
+      }
+    }
+
+    return null;
+  };
 }

@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { CreateDeceasedRequest, DeceasedResponse } from '../utils/models';
 
 @Injectable({
@@ -12,7 +12,7 @@ export class DeceasedService {
   constructor(private http: HttpClient) {}
 
   findAll(): Observable<DeceasedResponse[]> {
-    return this.http.get<DeceasedResponse[]>(`${this.baseUrl}/findAll`);
+    return this.http.get<DeceasedResponse[]>(`${this.baseUrl}/findAll`).pipe(tap(console.log));
   }
 
   findById(id: number): Observable<DeceasedResponse> {

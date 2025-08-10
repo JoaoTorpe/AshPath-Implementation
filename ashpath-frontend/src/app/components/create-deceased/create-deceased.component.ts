@@ -77,7 +77,7 @@ export class CreateDeceasedComponent implements OnInit {
       graveID: [null],
       cremationEntryID: [null],
       deathCertificate: [null, [Validators.required]],
-    });
+    }, { validators: [CustomValidators.deathAfterBirth] });
   }
 
   ngOnInit(): void {

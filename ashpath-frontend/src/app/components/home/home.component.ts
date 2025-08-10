@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
 
     // Filtro para pegar os últimos 5 deceased adicionados no banco
     this.latestDeceased$ = this.allDeceased$.pipe(
-      map((deceased) => [...deceased].sort((a, b) => b.id - a.id).slice(0, 5))
+      map((deceased) => [...deceased].filter(d => d.graveLocation).sort((a, b) => b.id - a.id).slice(0, 5))
     );
 
     // Pega as cidades em ordem alfabética

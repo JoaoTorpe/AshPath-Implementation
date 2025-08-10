@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.pdsc.ashpath.pages.base.BasePage;
 import com.pdsc.ashpath.pages.deceased.DeceasedPage;
+import com.pdsc.ashpath.pages.createdeceased.CreateDeceasedPage;
 
 public class HomePage extends BasePage {
 
@@ -36,6 +37,11 @@ public class HomePage extends BasePage {
     public DeceasedPage navigateToDeceasedPage() {
         driver.get("http://localhost:4200/#/deceased");
         return new DeceasedPage();
+    }
+
+    public CreateDeceasedPage navigateToCreateDeceasedPage() {
+        driver.get("http://localhost:4200/#/necrotomist");
+        return new CreateDeceasedPage();
     }
 
     public boolean isDisplayed() {

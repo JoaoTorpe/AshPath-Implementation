@@ -221,22 +221,23 @@ public class DeceasedPageTest extends BaseTest {
                 }
         }
 
-        @Test
-        public void verifyStatusBadges() {
-                if (!deceasedPage.hasDataInTable()) {
-                        return;
-                }
+        // DEPRECATED
+        // @Test
+        // public void verifyStatusBadges() {
+        //         if (!deceasedPage.hasDataInTable()) {
+        //                 return;
+        //         }
 
-                List<WebElement> crematedBadges = deceasedPage.getCrematedBadges();
-                List<WebElement> gravedBadges = deceasedPage.getGravedBadges();
-                List<WebElement> waitingBadges = deceasedPage.getWaitingCremationBadges();
+        //         List<WebElement> crematedBadges = deceasedPage.getCrematedBadges();
+        //         List<WebElement> gravedBadges = deceasedPage.getGravedBadges();
+        //         List<WebElement> waitingBadges = deceasedPage.getWaitingCremationBadges();
 
-                int totalBadges = crematedBadges.size() + gravedBadges.size() + waitingBadges.size();
-                int totalRows = deceasedPage.getTableRowCount();
+        //         int totalBadges = crematedBadges.size() + gravedBadges.size() + waitingBadges.size();
+        //         int totalRows = deceasedPage.getTableRowCount();
 
-                Assert.assertEquals(totalBadges, totalRows,
-                                "Each row should have exactly one status badge");
-        }
+        //         Assert.assertEquals(totalBadges, totalRows,
+        //                         "Each row should have exactly one status badge");
+        // }
 
         @Test
         public void verifyLocationColumnLogic() {

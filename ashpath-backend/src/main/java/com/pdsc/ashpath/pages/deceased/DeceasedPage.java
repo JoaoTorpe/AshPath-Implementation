@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import com.pdsc.ashpath.pages.base.BasePage;
 
 public class DeceasedPage extends BasePage {
-    private final By pageTitle = By.xpath("//h2[text()='Consulta de Falecidos']");
+    private final By pageTitle = By.xpath("//h1[normalize-space(text())='Consulta de Falecidos']");
 
     private final By filterSection = By.className("filter-section");
     private final By filterTitle = By.cssSelector(".filter-section .card-title");
@@ -18,13 +18,13 @@ public class DeceasedPage extends BasePage {
     private final By endDateInput = By.id("endDate");
     private final By graveLocationInput = By.id("graveLocation");
 
-    private final By filterButton = By.xpath("//button[text()='Filtrar']");
-    private final By clearButton = By.xpath("//button[text()='Limpar']");
+    private final By filterButton = By.xpath("//button[normalize-space(text())='Filtrar']");
+    private final By clearButton = By.xpath("//button[normalize-space(text())='Limpar']");
 
     private final By resultsTable = By.cssSelector(".table-responsive .table");
     private final By tableHeaders = By.xpath("//thead/tr/th");
     private final By tableRows = By.xpath("//tbody/tr");
-    private final By noResultsMessage = By.xpath("//td[text()='Nenhum falecido encontrado']");
+    private final By noResultsMessage = By.xpath("//td[normalize-space(text())='Nenhum falecido encontrado']");
 
     private final By nameColumn = By.xpath("//tbody/tr/td[1]");
     private final By birthDateColumn = By.xpath("//tbody/tr/td[2]");
@@ -34,17 +34,17 @@ public class DeceasedPage extends BasePage {
     private final By locationColumn = By.xpath("//tbody/tr/td[6]");
     private final By actionsColumn = By.xpath("//tbody/tr/td[7]");
 
-    private final By detailsButtons = By.xpath("//button[text()='Detalhes']");
-    private final By certificateButtons = By.xpath("//button[text()='Certificado']");
+    private final By detailsButtons = By.xpath("//button[normalize-space(text())='Detalhes']");
+    private final By certificateButtons = By.xpath("//button[normalize-space(text())='Certificado']");
 
     private final By crematedBadge = By.xpath("//tbody/tr/td[5]//span[contains(@class, 'bg-success')]");
     private final By gravedBadge = By.xpath("//tbody/tr/td[5]//span[contains(@class, 'bg-primary')]");
     private final By waitingCremationBadge = By.xpath("//tbody/tr/td[5]//span[contains(@class, 'bg-warning')]");
 
     private final By detailsModal = By.cssSelector(".modal[style*='display: block']");
-    private final By detailsModalTitle = By.xpath("//h5[text()='Detalhes do Falecido']");
+    private final By detailsModalTitle = By.xpath("//h5[normalize-space(text())='Detalhes do Falecido']");
     private final By detailsModalCloseButton = By.className("btn-close");
-    private final By detailsModalCloseFooterButton = By.xpath("//div[@class='modal-footer']//button[text()='Fechar']");
+    private final By detailsModalCloseFooterButton = By.xpath("//div[@class='modal-footer']//button[normalize-space(text())='Fechar']");
 
     private final By modalFullname = By.xpath("//p/strong[contains(text(), 'Nome Completo:')]");
     private final By modalBirthDate = By.xpath("//p/strong[contains(text(), 'Data de Nascimento:')]");
@@ -56,7 +56,7 @@ public class DeceasedPage extends BasePage {
     private final By modalCremationEntry = By.xpath("//p/strong[contains(text(), 'Entrada de Crematório:')]");
 
     private final By pdfModal = By.cssSelector(".modal[style*='display: block'] .modal-xl");
-    private final By pdfModalTitle = By.xpath("//h5[text()='Certificado de Óbito']");
+    private final By pdfModalTitle = By.xpath("//h5[normalize-space(text())='Certificado de Óbito']");
     private final By pdfIframe = By.tagName("iframe");
     private final By pdfErrorMessage = By.xpath(
             "[contains(@class, 'alert-danger') and contains(text(), 'Não foi possível carregar o certificado de óbito')]");

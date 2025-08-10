@@ -9,7 +9,7 @@
           type="text"
           class="form-input"
           formControlName="fullname"
-          maxlength="128"
+          maxlength="64"
         />
         @if (deceasedForm.get('fullname')?.touched &&
         deceasedForm.get('fullname')?.errors) { @if
@@ -62,6 +62,10 @@
           (deceasedForm.get('deathDate')?.errors?.['pastOrPresentDate']) {
           <div class="error-message">
             A data de falecimento não pode ser futura.
+          </div>
+          } @else if (deceasedForm.get('deathDate')?.errors?.['deathAfterBirth']) {
+          <div class="error-message">
+            A data de falecimento deve ser posterior à data de nascimento.
           </div>
           } }
         </div>

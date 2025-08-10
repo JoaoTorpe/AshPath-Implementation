@@ -17,7 +17,7 @@ public class LoginPage extends BasePage {
     private By passwordMsgEl = By.cssSelector("input[type='password'] + .error-message");
     private By loginBtnEl = By.cssSelector("button[type='submit']");
     private By errorMessageEl = By.className("error");
-    public By registerBtnEl = By.xpath("//button[@type='button'][text()='Register']");
+    public By registerBtnEl = By.xpath("//button[@type='button'][normalize-space(text())='Cadastrar']");
 
     public boolean isDisplayed() {
         return wait.until(ExpectedConditions.urlContains("login"));
@@ -41,7 +41,7 @@ public class LoginPage extends BasePage {
     }
 
     public HomePage logInAsAdmin() {
-        set(this.emailEl, "admin@ashpath.com");
+        set(this.emailEl, "mohg.silva@gmail.com");
         set(this.passwordEl, "s3nh4@S");
         return clickLoginBtn();
     }
