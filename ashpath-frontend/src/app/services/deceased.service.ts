@@ -28,6 +28,7 @@ export class DeceasedService {
       responseType: 'blob',
     });
   }
+  
   createDeceased(
     deceasedData: CreateDeceasedRequest,
     deathCertificateFile: File
