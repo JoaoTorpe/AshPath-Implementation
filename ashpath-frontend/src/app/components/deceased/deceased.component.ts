@@ -6,6 +6,7 @@ import { DeceasedResponse, DeceasedStatus } from '../../utils/models';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { ActivatedRoute } from '@angular/router';
+import { CremationEntryService } from '../../services/cremation-entry.service';
 
 @Component({
   selector: 'app-deceased',
@@ -35,6 +36,8 @@ export class DeceasedComponent implements OnInit {
   public pdfUrl: SafeResourceUrl | null = null;
   public pdfBlob: Blob | null = null;
   public blobUrl: string | null = null;
+
+  private cremationEntryService = inject(CremationEntryService);
 
   ngOnInit(): void {
     const locationParam = this.route.snapshot.paramMap.get('location');
@@ -119,6 +122,22 @@ export class DeceasedComponent implements OnInit {
     this.showPdfModal = false;
     this.showDetailsModal = false;
     this.pdfUrl = null;
+  }
+
+  public executeCremation(deceasedId: number | undefined): void
+  {
+    if (deceasedId)
+    {
+      console.log(`Informed 'deceasedId': ${deceasedId}`);
+
+      this.cremationEntryService.executeCremation(deceasedId).subscribe({
+        next: () => {},
+        error: (err) => {}
+      });
+      this.closeModal();
+
+      window.location.reload();
+    }
   }
 
   private loadDeceaseds(): void {

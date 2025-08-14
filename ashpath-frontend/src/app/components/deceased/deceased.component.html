@@ -227,8 +227,48 @@
           </div>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="closeModal()">
+      <div
+        class="modal-footer"
+        style="
+          display: flex;
+          justify-content: space-around;
+        "
+      >
+        @if (selectedDeceased?.status === "WAITING_CREMATION" )
+        {
+          <button
+            type="button"
+            (click)="executeCremation(selectedDeceased?.id)"
+            style="
+              background-color: #e63946;
+              color: #fff;
+              border: none;
+              padding: 10px 20px;
+              font-size: 16px;
+              font-weight: bold;
+              border-radius: 6px;
+              cursor: pointer;
+            "
+          >
+            Cremar
+          </button>
+        }
+
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="closeModal()"
+          style="
+            background-color: #6c757d;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+          "
+        >
           Fechar
         </button>
       </div>

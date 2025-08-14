@@ -18,4 +18,9 @@ export class CremationEntryService {
   findById(id: number): Observable<CremationEntryResponse> {
     return this.http.get<CremationEntryResponse>(`${this.baseUrl}/find/${id}`);
   }
+
+  executeCremation(deceasedId: number): Observable<any>
+  {
+    return this.http.post(`${this.baseUrl}/execute_cremation/${deceasedId}`, {});
+  }
 }
